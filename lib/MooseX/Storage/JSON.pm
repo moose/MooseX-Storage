@@ -4,32 +4,46 @@ use Moose::Role;
 
 with 'MooseX::Storage::Base';
 
-use JSON::Syck;
+use JSON::Syck ();
 use MooseX::Storage::Engine;
 
-has '_storage' => (
-	is => 'ro',
-	isa => 'MooseX::Storage::Engine',
-	default => sub {
-		my $self = shift;
-		warn "Building Storage Engine\n";
-		MooseX::Storage::Engine->new(object => $self);
-	},
-	handles => {
-		'pack' => 'collapse_object',
-		# unpack here ...
-	}
-);
+sub pack {
+    my $self = shift;
+    my $e = MooseX::Storage::Engine->new(object => $self);
+    $e->collapse_object;    
+}
 
-sub load {}
-sub store {}
-sub thaw {}
+sub unpack {
+    my ($class, $data) = @_;
+    my $e = MooseX::Storage::Engine->new(class => $class);
+    $class->new($e->expand_object($data));    
+}
+
+sub load {
+    my ($class, $filename) = @_;
+    $class->unpack(JSON::Syck::LoadFile($filename));    
+}
+
+sub store {
+    my ($self, $filename) = @_;
+    JSON::Syck::DumpFile($filename, $self->pack());    
+}
+
+sub thaw {
+    my ($class, $json) = @_;
+    $class->unpack(JSON::Syck::Load($json));
+}
 
 sub freeze {
     my $self = shift;
-    JSON::Syck::Dump($self->pack());    
+    JSON::Syck::Dump($self->pack());
 }
 
-
 1;
+
 __END__
+
+=pod
+
+=cut
+

@@ -14,8 +14,9 @@ use Test::More no_plan => 1;
     
     has 'number' => (is => 'ro', isa => 'Int');
     has 'string' => (is => 'ro', isa => 'Str');
-    has 'float' => (is => 'ro', isa => 'Num');        
-    has 'array' => (is => 'ro', isa => 'ArrayRef');
+    has 'float'  => (is => 'ro', isa => 'Num');        
+    has 'array'  => (is => 'ro', isa => 'ArrayRef');
+    has 'hash'   => (is => 'ro', isa => 'HashRef');    
 	has 'object' => (is => 'ro', isa => 'Object');    
 }
 
@@ -23,9 +24,24 @@ my $foo = Foo->new(
     number => 10,
     string => 'foo',
     float  => 10.5,
-    array => [ 1 .. 10 ],
+    array  => [ 1 .. 10 ],
+    hash   => { map { $_ => undef } (1 .. 10) },
 	object => Foo->new( number => 2 ),
 );
 
-diag $foo->freeze;
+is($foo->freeze, 
+'{"array":[1,2,3,4,5,6,7,8,9,10],"hash":{"6":null,"3":null,"7":null,"9":null,"2":null,"8":null,"1":null,"4":null,"10":null,"5":null},"float":10.5,"object":{"number":2,"__class__":"Foo"},"number":10,"__class__":"Foo","string":"foo"}',
+'... got the right JSON');
+
+my $foo2 = Foo->thaw('{"array":[1,2,3,4,5,6,7,8,9,10],"hash":{"6":null,"3":null,"7":null,"9":null,"2":null,"8":null,"1":null,"4":null,"10":null,"5":null},"float":10.5,"object":{"number":2,"__class__":"Foo"},"number":10,"__class__":"Foo","string":"foo"}');
+isa_ok($foo2, 'Foo');
+
+is($foo2->number, 10, '... got the right number');
+is($foo2->string, 'foo', '... got the right string');
+is($foo2->float, 10.5, '... got the right float');
+is_deeply($foo2->array, [ 1 .. 10], '... got the right array');
+is_deeply($foo2->hash, { map { $_ => undef } (1 .. 10) }, '... got the right hash');
+
+isa_ok($foo2->object, 'Foo');
+is($foo2->object->number, 2, '... got the right number (in the embedded object)');
 
