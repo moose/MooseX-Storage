@@ -120,6 +120,9 @@ sub match_type {
     # --- pass it on
     # this should cover 80% of all use cases
 
+	# CHRIS: To cover the last 20% we need a way 
+	# for people to extend this process.
+
     # NOTE:
     # if this method hasnt returned by now
     # then we have no been able to find a 
