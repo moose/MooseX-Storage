@@ -15,7 +15,7 @@ BEGIN {
     use Moose;
     use MooseX::Storage;
 
-    with Storage();
+    with Storage;
 
     has 'number' => ( is => 'ro', isa => 'Int' );
     has 'string' => ( is => 'ro', isa => 'Str' );

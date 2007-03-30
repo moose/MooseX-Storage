@@ -18,7 +18,7 @@ BEGIN {
 
     use Scalar::Util 'looks_like_number';
 
-    with Storage();    
+    with Storage;    
     
     subtype 'Natural' 
         => as 'Int'

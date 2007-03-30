@@ -68,26 +68,72 @@ sub map_attributes {
     } ($self->object || $self->class)->meta->compute_all_applicable_attributes;
 }
 
+## ------------------------------------------------------------------
+## Everything below here might need some re-thinking ...
+## ------------------------------------------------------------------
+
+# NOTE:
+# these are needed by the 
+# ArrayRef and HashRef handlers
+# below, so I need easy access 
+my %OBJECT_HANDLERS = (
+    expand => sub {
+        my $data = shift;   
+        (exists $data->{'__class__'})
+            || confess "Serialized item has no class marker";
+        $data->{'__class__'}->unpack($data);
+    },
+    collapse => sub {
+        my $obj = shift;
+        ($obj->can('does') && $obj->does('MooseX::Storage::Basic'))
+            || confess "Bad object ($obj) does not do MooseX::Storage::Basic role";
+        $obj->pack();
+    },
+);
+
+
 my %TYPES = (
     'Int'      => { expand => sub { shift }, collapse => sub { shift } },
     'Num'      => { expand => sub { shift }, collapse => sub { shift } },
     'Str'      => { expand => sub { shift }, collapse => sub { shift } },
-    'ArrayRef' => { expand => sub { shift }, collapse => sub { shift } },
-    'HashRef'  => { expand => sub { shift }, collapse => sub { shift } },
-    'Object'   => {
+    'ArrayRef' => { 
+        # FIXME:
+        # these should also probably be
+        # recursive as well, so they 
+        # can handle arbitrarily deep
+        # arrays and such. Or perhaps
+        # we force the user to handle 
+        # the types in a custom way. 
+        # This would require a more 
+        # sophisticated way of handling
+        # this %TYPES hash.
         expand => sub {
-            my $data = shift;   
-            (exists $data->{'__class__'})
-                || confess "Serialized item has no class marker";
-            $data->{'__class__'}->unpack($data);
-        },
-        collapse => sub {
-            my $obj = shift;
-            ($obj->can('does') && $obj->does('MooseX::Storage::Basic'))
-                || confess "Bad object ($obj) does not do MooseX::Storage::Basic role";
-            $obj->pack();
-        },
+            my $array = shift;
+            foreach my $i (0 .. $#{$array}) {
+                next unless ref($array->[$i]) eq 'HASH' 
+                         && exists $array->[$i]->{'__class__'};
+                $array->[$i] = $OBJECT_HANDLERS{expand}->($array->[$i])
+            }
+            $array;
+        }, 
+        collapse => sub { 
+            my $array = shift;   
+            # NOTE:         
+            # we need to make a copy cause
+            # otherwise it will affect the 
+            # other real version.
+            [ map {
+                blessed($_)
+                    ? $OBJECT_HANDLERS{collapse}->($_)
+                    : $_
+            } @$array ] 
+        } 
     },
+    'HashRef'  => { 
+        expand   => sub { shift }, 
+        collapse => sub { shift } 
+    },
+    'Object'   => \%OBJECT_HANDLERS,
     # NOTE:
     # The sanity of enabling this feature by 
     # default is very questionable.
@@ -137,7 +183,7 @@ sub match_type {
 	# process. Which they can do by subclassing
 	# this class and overriding the method 
 	# below to handle things.
-	my $match = $self->custom_type_match($type_constraint);
+	my $match = $self->_custom_type_match($type_constraint);
 	return $match if defined $match;
 
     # NOTE:
@@ -147,7 +193,7 @@ sub match_type {
     confess "Cannot handle type constraint (" . $type_constraint->name . ")";    
 }
 
-sub custom_type_match {
+sub _custom_type_match {
     return;
     # my ($self, $type_constraint) = @_;
 }
