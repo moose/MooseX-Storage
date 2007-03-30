@@ -1,21 +1,24 @@
 
 package MooseX::Storage::IO::File;
-use Moose;
+use Moose::Role;
 
-has file => (
-	isa => 'Str',
-	is  => 'ro',
-	required => 1,
-);
+use MooseX::Storage::IO::File;
 
-sub load { 
-	my ($self) = @_;
-	my $fh = IO::File->new($self->file, 'r');
-	return do { local $/; <$fh>; };
+sub load {
+    my ( $class, $filename ) = @_;
+    $class->thaw( MooseX::Storage::IO::File->new( file => $filename )->load() );
 }
 
 sub store {
-	my ($self, $data) = @_;
-	my $fh = IO::File->new($self->file, 'w');
-	print $fh $data;
+    my ( $self, $filename ) = @_;
+    MooseX::Storage::IO::File->new( file => $filename )->store( $self->freeze() );
 }
+
+1;
+
+__END__
+
+=pod
+
+=cut
+
