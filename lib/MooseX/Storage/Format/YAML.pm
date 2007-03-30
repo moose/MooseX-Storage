@@ -1,32 +1,23 @@
 
-package MooseX::Storage::Engine::IO::AtomicFile;
-use Moose;
+package MooseX::Storage::Format::YAML;
+use Moose::Role;
 
-use IO::AtomicFile;
+use Best [
+    [ qw[YAML::Syck YAML] ], 
+    [ qw[Load Dump] ]
+];
 
-has 'file' => (
-	is       => 'ro',
-	isa      => 'Str',	
-	required => 1,
-);
+requires 'pack';
+requires 'unpack';
 
-sub load { 
-	my ($self) = @_;
-	# NOTE:sv
-	# AtomicFile gives us no real 
-	# benefit when reading, so why
-	# bother
-	# - SL
-	my $fh = IO::File->new($self->file, 'r');
-	return do { local $/; <$fh>; };
+sub thaw {
+    my ( $class, $json ) = @_;
+    $class->unpack( Load($json) );
 }
 
-sub store {
-	my ($self, $data) = @_;
-	my $fh = IO::AtomicFile->new($self->file, 'w');
-	print $fh $data;
-	$fh->close() 
-	    || confess "Could not write atomic file (" . $self->file . ") because: $!";
+sub freeze {
+    my $self = shift;
+    Dump( $self->pack() );
 }
 
 1;
@@ -37,7 +28,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Engine::IO::File
+MooseX::Storage::Format::YAML
 
 =head1 SYNOPSIS
 
@@ -47,11 +38,9 @@ MooseX::Storage::Engine::IO::File
 
 =over 4
 
-=item B<file>
+=item B<freeze>
 
-=item B<load>
-
-=item B<store ($data)>
+=item B<thaw ($json)>
 
 =back
 
@@ -85,3 +74,5 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
+
+
