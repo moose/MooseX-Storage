@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More no_plan => 1;
+use Test::JSON;
 
 BEGIN {
     use_ok('MooseX::Storage');
@@ -15,7 +16,7 @@ BEGIN {
     use Moose;
     use MooseX::Storage;
 
-    with Storage();
+    with Storage( 'format' => 'JSON' );
 
     has 'number' => ( is => 'ro', isa => 'Int' );
     has 'string' => ( is => 'ro', isa => 'Str' );
@@ -36,38 +37,20 @@ BEGIN {
     );
     isa_ok( $foo, 'Foo' );
     
-    is_deeply(
-        $foo->pack,
-        {
-            __class__ => 'Foo',
-            number    => 10,
-            string    => 'foo',
-            float     => 10.5,
-            array     => [ 1 .. 10 ],
-            hash      => { map { $_ => undef } ( 1 .. 10 ) },
-            object    => { 
-                            __class__ => 'Foo',                
-                            number    => 2 
-                         },            
-        },
-        '... got the right frozen class'
+    my $json = $foo->freeze;
+    
+    is_valid_json($json);
+    
+    is_json(
+        $json,
+        '{"array":[1,2,3,4,5,6,7,8,9,10],"hash":{"6":null,"3":null,"7":null,"9":null,"2":null,"8":null,"1":null,"4":null,"10":null,"5":null},"float":10.5,"object":{"number":2,"__class__":"Foo"},"number":10,"__class__":"Foo","string":"foo"}',
+        '... got the right JSON'
     );
 }
 
 {
-    my $foo = Foo->unpack(
-        {
-            __class__ => 'Foo',
-            number    => 10,
-            string    => 'foo',
-            float     => 10.5,
-            array     => [ 1 .. 10 ],
-            hash      => { map { $_ => undef } ( 1 .. 10 ) },
-            object    => { 
-                            __class__ => 'Foo',                
-                            number    => 2 
-                         },            
-        }        
+    my $foo = Foo->thaw(
+        '{"array":[1,2,3,4,5,6,7,8,9,10],"hash":{"6":null,"3":null,"7":null,"9":null,"2":null,"8":null,"1":null,"4":null,"10":null,"5":null},"float":10.5,"object":{"number":2,"__class__":"Foo"},"number":10,"__class__":"Foo","string":"foo"}'
     );
     isa_ok( $foo, 'Foo' );
 
@@ -85,3 +68,4 @@ BEGIN {
     is( $foo->object->number, 2,
         '... got the right number (in the embedded object)' );
 }
+

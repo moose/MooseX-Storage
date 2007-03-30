@@ -136,6 +136,86 @@ __END__
 
 =pod
 
+=head1 NAME
+
+MooseX::Storage::Engine
+
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
+
+=head1 METHODS
+
+=head2 Accessors
+
+=over 4
+
+=item B<class>
+
+=item B<object>
+
+=item B<storage>
+
+=back
+
+=head2 API
+
+=over 4
+
+=item B<expand_object>
+
+=item B<collapse_object>
+
+=back
+
+=head2 ...
+
+=over 4
+
+=item B<collapse_attribute>
+
+=item B<collapse_attribute_value>
+
+=item B<expand_attribute>
+
+=item B<expand_attribute_value>
+
+=item B<map_attributes>
+
+=item B<match_type>
+
+=back
+
+=head2 Introspection
+
+=over 4
+
+=item B<meta>
+
+=back
+
+=head1 BUGS
+
+All complex software has bugs lurking in it, and this module is no 
+exception. If you find a bug please either email me, or add the bug
+to cpan-RT.
+
+=head1 AUTHOR
+
+Chris Prather E<lt>chris.prather@iinteractive.comE<gt>
+
+Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2007 by Infinity Interactive, Inc.
+
+L<http://www.iinteractive.com>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
 =cut
+
 
 

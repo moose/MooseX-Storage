@@ -1,20 +1,19 @@
 
-package MooseX::Storage::Format::JSON;
+package MooseX::Storage::Basic;
 use Moose::Role;
 
-use JSON::Any;
+use MooseX::Storage::Engine;
 
-requires 'pack';
-requires 'unpack';
-
-sub thaw {
-    my ( $class, $json ) = @_;
-    $class->unpack( JSON::Any->jsonToObj($json) );
+sub pack {
+    my $self = shift;
+    my $e = MooseX::Storage::Engine->new( object => $self );
+    $e->collapse_object;
 }
 
-sub freeze {
-    my $self = shift;
-    JSON::Any->objToJson( $self->pack() );
+sub unpack {
+    my ( $class, $data ) = @_;
+    my $e = MooseX::Storage::Engine->new( class => $class );
+    $class->new( $e->expand_object($data) );
 }
 
 1;
@@ -25,7 +24,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Format::JSON
+MooseX::Storage::Basic
 
 =head1 SYNOPSIS
 
@@ -35,9 +34,9 @@ MooseX::Storage::Format::JSON
 
 =over 4
 
-=item B<freeze>
+=item B<pack>
 
-=item B<thaw ($json)>
+=item B<unpack ($data)>
 
 =back
 
@@ -71,5 +70,3 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
-
-
