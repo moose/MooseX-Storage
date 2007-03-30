@@ -1,17 +1,14 @@
 
-package MooseX::Storage::Engine::IO::AtomicFile;
-use Moose;
+package MooseX::Storage::IO::AtomicFile;
+use Moose::Role;
 
-use IO::AtomicFile;
+use MooseX::Storage::Engine::IO::AtomicFile;
 
-extends 'MooseX::Storage::Engine::IO::File';
+with 'MooseX::Storage::IO::File';
 
 sub store {
-	my ($self, $data) = @_;
-	my $fh = IO::AtomicFile->new($self->file, 'w');
-	print $fh $data;
-	$fh->close() 
-	    || confess "Could not write atomic file (" . $self->file . ") because: $!";
+    my ( $self, $filename ) = @_;
+    MooseX::Storage::Engine::IO::AtomicFile->new( file => $filename )->store( $self->freeze() );
 }
 
 1;
@@ -22,7 +19,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Engine::IO::AtomicFile
+MooseX::Storage::IO::AtomicFile
 
 =head1 SYNOPSIS
 
@@ -32,11 +29,9 @@ MooseX::Storage::Engine::IO::AtomicFile
 
 =over 4
 
-=item B<file>
+=item B<load ($filename)>
 
-=item B<load>
-
-=item B<store ($data)>
+=item B<store ($filename)>
 
 =back
 
@@ -70,3 +65,5 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
+
+
