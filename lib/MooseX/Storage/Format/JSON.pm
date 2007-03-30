@@ -2,19 +2,19 @@
 package MooseX::Storage::Format::JSON;
 use Moose::Role;
 
-use JSON::Syck ();
+use JSON::Any;
 
 requires 'pack';
 requires 'unpack';
 
 sub thaw {
     my ( $class, $json ) = @_;
-    $class->unpack( JSON::Syck::Load($json) );
+    $class->unpack( JSON::Any->jsonToObj($json) );
 }
 
 sub freeze {
     my $self = shift;
-    JSON::Syck::Dump( $self->pack() );
+    JSON::Any->objToJson( $self->pack() );
 }
 
 1;
