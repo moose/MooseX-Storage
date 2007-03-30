@@ -1,5 +1,5 @@
 
-package MooseX::Storage::IO::File;
+package MooseX::Storage::Engine::IO::File;
 use Moose;
 
 use IO::File;
@@ -21,3 +21,5 @@ sub store {
 	my $fh = IO::File->new($self->file, 'w');
 	print $fh $data;
 }
+
+1;

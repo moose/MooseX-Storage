@@ -10,7 +10,7 @@ use Test::More no_plan => 1;
     use Moose;
     use MooseX::Storage;
     
-    with Storage('JSON');
+    with Storage('format' => 'JSON');
     
     has 'number' => (is => 'ro', isa => 'Int');
     has 'string' => (is => 'ro', isa => 'Str');
@@ -50,34 +50,3 @@ use Test::More no_plan => 1;
     is($foo->object->number, 2, '... got the right number (in the embedded object)');
 }
 
-my $file = 'temp.json';
-
-{
-    my $foo = Foo->new(
-        number => 10,
-        string => 'foo',
-        float  => 10.5,
-        array  => [ 1 .. 10 ],
-        hash   => { map { $_ => undef } (1 .. 10) },
-    	object => Foo->new( number => 2 ),
-    );
-    isa_ok($foo, 'Foo');
-
-    $foo->store($file);
-}
-
-{
-    my $foo = Foo->load($file);
-    isa_ok($foo, 'Foo');
-
-    is($foo->number, 10, '... got the right number');
-    is($foo->string, 'foo', '... got the right string');
-    is($foo->float, 10.5, '... got the right float');
-    is_deeply($foo->array, [ 1 .. 10], '... got the right array');
-    is_deeply($foo->hash, { map { $_ => undef } (1 .. 10) }, '... got the right hash');
-
-    isa_ok($foo->object, 'Foo');
-    is($foo->object->number, 2, '... got the right number (in the embedded object)');
-}
-
-unlink $file;

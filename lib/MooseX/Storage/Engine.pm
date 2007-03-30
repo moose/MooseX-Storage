@@ -92,7 +92,7 @@ my %TYPES = (
         },
         collapse => sub {
             my $obj = shift;
-            ($obj->can('does') && $obj->does('MooseX::Storage::Base'))
+            ($obj->can('does') && $obj->does('MooseX::Storage::Basic'))
                 || confess "Bad object ($obj) does not do MooseX::Storage::Base role";
             $obj->pack();
         },

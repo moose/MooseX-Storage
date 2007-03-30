@@ -4,24 +4,42 @@ package MooseX::Storage;
 sub import {
     my $pkg = caller();
     $pkg->meta->alias_method('Storage' => sub {
-        my $engine_name = 'MooseX::Storage::' . (shift);
-        Class::MOP::load_class($engine_name) 
-            || die "Could not load engine ($engine_name) for package ($pkg)";
-        return $engine_name;
+        my %params = @_;
+        
+        my @roles = (
+            'MooseX::Storage::Basic'
+        );
+        
+        push @roles => 'MooseX::Storage::Format::' . $params{'format'};
+        Class::MOP::load_class($roles[-1]) 
+            || die "Could not load format role (" . $roles[-1] . ") for package ($pkg)";
+           
+        if (exists $params{'io'}) {
+            push @roles => 'MooseX::Storage::IO::' . $params{'io'};
+            Class::MOP::load_class($roles[-1]) 
+                || die "Could not load IO role (" . $roles[-1] . ") for package ($pkg)";            
+        }
+        
+        return @roles;
     });
 }
 
-package MooseX::Storage::Base;
+package MooseX::Storage::Basic;
 use Moose::Role;
 
-requires 'pack';
-requires 'unpack';
+use MooseX::Storage::Engine;
 
-requires 'freeze';
-requires 'thaw';
+sub pack {
+    my $self = shift;
+    my $e = MooseX::Storage::Engine->new( object => $self );
+    $e->collapse_object;
+}
 
-requires 'load';
-requires 'store';
+sub unpack {
+    my ( $class, $data ) = @_;
+    my $e = MooseX::Storage::Engine->new( class => $class );
+    $class->new( $e->expand_object($data) );
+}
 
 1;
 
