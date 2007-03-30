@@ -41,11 +41,6 @@ sub expand_attribute {
 sub collapse_attribute_value {
     my ($self, $attr)  = @_;
 	my $value = $attr->get_value($self->object);
-	# TODO:
-	# we want to explicitly disallow 
-	# cycles here, because the base
-	# storage engine does not support 
-	# them
     if (defined $value && $attr->has_type_constraint) {
         my $type_converter = $self->match_type($attr->type_constraint);
         (defined $type_converter)
@@ -57,10 +52,6 @@ sub collapse_attribute_value {
 
 sub expand_attribute_value {
     my ($self, $attr, $value)  = @_;
-    # TODO:
-    # we need to check $value here to 
-    # make sure that we do not have
-    # a cycle here.
     if (defined $value && $attr->has_type_constraint) {
         my $type_converter = $self->match_type($attr->type_constraint);
         $value = $type_converter->{expand}->($value);
@@ -93,41 +84,72 @@ my %TYPES = (
         collapse => sub {
             my $obj = shift;
             ($obj->can('does') && $obj->does('MooseX::Storage::Basic'))
-                || confess "Bad object ($obj) does not do MooseX::Storage::Base role";
+                || confess "Bad object ($obj) does not do MooseX::Storage::Basic role";
             $obj->pack();
         },
-    }       
+    },
+    # NOTE:
+    # The sanity of enabling this feature by 
+    # default is very questionable.
+    # - SL
+    #'CodeRef' => {
+    #    expand   => sub {}, # use eval ...
+    #    collapse => sub {}, # use B::Deparse ...        
+    #}       
 );
 
 sub match_type {
     my ($self, $type_constraint) = @_;
-    return $TYPES{$type_constraint->name} if exists $TYPES{$type_constraint->name};
+    
+    # this should handle most type usages
+    # since they they are usually just 
+    # the standard set of built-ins
+    return $TYPES{$type_constraint->name} 
+        if exists $TYPES{$type_constraint->name};
+      
+    # the next possibility is they are 
+    # a subtype of the built-in types, 
+    # in which case this will DWIM in 
+    # most cases. It is probably not 
+    # 100% ideal though, but until I 
+    # come up with a decent test case 
+    # it will do for now.
     foreach my $type (keys %TYPES) {
         return $TYPES{$type} 
             if $type_constraint->is_subtype_of($type);
     }
-    # TODO:
-    # from here we can expand this to support the following:
-    # - if it is subtype of Ref
-    # -- if it is a subtype of Object
-    # --- treat it like an object
-    # -- else 
-    # --- treat it like any other Ref
-    # - else
-    # -- if it is a subtype of Num or Str
-    # --- treat it like Num or Str
-    # -- else
-    # --- pass it on
-    # this should cover 80% of all use cases
+    
+    # NOTE:
+    # the reason the above will work has to 
+    # do with the fact that custom subtypes
+    # are mostly used for validation of 
+    # the guts of a type, and not for some
+    # weird structural thing which would 
+    # need to be accomidated by the serializer.
+    # Of course, mst or phaylon will probably  
+    # do something to throw this assumption 
+    # totally out the door ;)
+    # - SL
+    
 
-	# CHRIS: To cover the last 20% we need a way 
-	# for people to extend this process.
+	# To cover the last possibilities we 
+	# need a way for people to extend this 
+	# process. Which they can do by subclassing
+	# this class and overriding the method 
+	# below to handle things.
+	my $match = $self->custom_type_match($type_constraint);
+	return $match if defined $match;
 
     # NOTE:
     # if this method hasnt returned by now
     # then we have no been able to find a 
     # type constraint handler to match 
     confess "Cannot handle type constraint (" . $type_constraint->name . ")";    
+}
+
+sub custom_type_match {
+    return;
+    # my ($self, $type_constraint) = @_;
 }
 
 1;

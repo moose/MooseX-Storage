@@ -13,15 +13,38 @@ BEGIN {
 
     package Foo;
     use Moose;
+    use Moose::Util::TypeConstraints;
     use MooseX::Storage;
 
-    with Storage();
+    use Scalar::Util 'looks_like_number';
 
-    has 'number' => ( is => 'ro', isa => 'Int' );
-    has 'string' => ( is => 'ro', isa => 'Str' );
-    has 'float'  => ( is => 'ro', isa => 'Num' );
-    has 'array'  => ( is => 'ro', isa => 'ArrayRef' );
-    has 'hash'   => ( is => 'ro', isa => 'HashRef' );
+    with Storage();    
+    
+    subtype 'Natural' 
+        => as 'Int'
+        => where { $_ > 0 };
+        
+    subtype 'HalfNum' 
+        => as 'Num'
+        => where { "$_" =~ /\.5$/ };    
+    
+    subtype 'FooString'
+        => as 'Str'
+        => where { lc($_) eq 'foo' };
+        
+    subtype 'IntArray' 
+        => as 'ArrayRef'
+        => where { scalar grep { looks_like_number($_) } @{$_} };
+
+    subtype 'UndefHash' 
+        => as 'HashRef'
+        => where { scalar grep { !defined($_) } values %{$_} };
+
+    has 'number' => ( is => 'ro', isa => 'Natural' );
+    has 'string' => ( is => 'ro', isa => 'FooString' );
+    has 'float'  => ( is => 'ro', isa => 'HalfNum' );
+    has 'array'  => ( is => 'ro', isa => 'IntArray' );
+    has 'hash'   => ( is => 'ro', isa => 'UndefHash' );
     has 'object' => ( is => 'ro', isa => 'Foo' );
 }
 
