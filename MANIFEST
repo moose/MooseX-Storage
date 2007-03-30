@@ -4,8 +4,11 @@ MANIFEST
 META.yml # Will be created by "make dist"
 Makefile.PL
 README
-lib/MooseX/Storage/JSON.pm
-t/00.load.t
-t/perlcritic.t
+lib/MooseX/Storage.pm
+lib/MooseX/Storage/Engine.pm
+lib/MooseX/Storage/Engine/IO/File.pm
+lib/MooseX/Storage/Format/JSON.pm
+lib/MooseX/Storage/IO/File.pm
+t/001_basic.t
 t/pod-coverage.t
 t/pod.t
