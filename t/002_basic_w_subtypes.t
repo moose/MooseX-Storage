@@ -9,6 +9,14 @@ BEGIN {
     use_ok('MooseX::Storage');
 }
 
+=pod
+
+This extends the 001_basic test to 
+show that subtypes will DWIM in most 
+cases.
+
+=cut
+
 {
 
     package Foo;

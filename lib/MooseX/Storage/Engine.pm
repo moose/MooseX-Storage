@@ -150,7 +150,7 @@ my %TYPES = (
             # otherwise it will affect the 
             # other real version.
             +{ map {
-                blessed($_)
+                blessed($hash->{$_})
                     ? ($_ => $OBJECT_HANDLERS{collapse}->($hash->{$_}))
                     : ($_ => $hash->{$_})
             } keys %$hash }            

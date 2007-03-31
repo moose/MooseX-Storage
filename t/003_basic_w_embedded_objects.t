@@ -9,6 +9,14 @@ BEGIN {
     use_ok('MooseX::Storage');
 }
 
+=pod
+
+This test checks the single level 
+expansion and collpasing of the 
+ArrayRef and HashRef type handlers.
+
+=cut
+
 {
     package Bar;
     use Moose;
@@ -16,7 +24,7 @@ BEGIN {
 
     with Storage;
     
-    has 'baz' => (is => 'ro', isa => 'Int');
+    has 'number' => (is => 'ro', isa => 'Int');
     
     package Foo;
     use Moose;
@@ -28,11 +36,22 @@ BEGIN {
         is  => 'ro', 
         isa => 'ArrayRef' 
     );
+    
+    package Baz;
+    use Moose;
+    use MooseX::Storage;
+
+    with Storage;    
+
+    has 'bars' => ( 
+        is  => 'ro', 
+        isa => 'HashRef' 
+    );    
 }
 
 {
     my $foo = Foo->new(
-        bars => [ map { Bar->new(baz => $_) } (1 .. 10) ]
+        bars => [ map { Bar->new(number => $_) } (1 .. 10) ]
     );
     isa_ok( $foo, 'Foo' );
     
@@ -44,7 +63,7 @@ BEGIN {
                 map {
                   {
                       __class__ => 'Bar',
-                      baz       => $_,
+                      number    => $_,
                   }  
                 } (1 .. 10)
             ],           
@@ -61,7 +80,7 @@ BEGIN {
                 map {
                   {
                       __class__ => 'Bar',
-                      baz       => $_,
+                      number    => $_,
                   }  
                 } (1 .. 10)
             ],           
@@ -71,6 +90,52 @@ BEGIN {
 
     foreach my $i (1 .. scalar @{$foo->bars}) {
         isa_ok($foo->bars->[$i - 1], 'Bar');
-        is($foo->bars->[$i - 1]->baz, $i, "... got the right baz ($i) in the Bar in Foo");
+        is($foo->bars->[$i - 1]->number, $i, "... got the right number ($i) in the Bar in Foo");
+    }
+}
+
+
+{
+    my $baz = Baz->new(
+        bars => { map { ($_ => Bar->new(number => $_)) } (1 .. 10) }
+    );
+    isa_ok( $baz, 'Baz' );
+    
+    is_deeply(
+        $baz->pack,
+        {
+            __class__ => 'Baz',
+            bars      => {
+                map {
+                  ($_ => {
+                      __class__ => 'Bar',
+                      number    => $_,
+                  })  
+                } (1 .. 10)
+            },           
+        },
+        '... got the right frozen class'
+    );
+}
+
+{
+    my $baz = Baz->unpack(
+        {
+            __class__ => 'Baz',
+            bars      => {
+                map {
+                  ($_ => {
+                      __class__ => 'Bar',
+                      number    => $_,
+                  })  
+                } (1 .. 10)
+            },           
+        }      
+    );
+    isa_ok( $baz, 'Baz' );
+
+    foreach my $k (keys %{$baz->bars}) {
+        isa_ok($baz->bars->{$k}, 'Bar');
+        is($baz->bars->{$k}->number, $k, "... got the right number ($k) in the Bar in Baz");
     }
 }
