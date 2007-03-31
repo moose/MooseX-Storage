@@ -42,7 +42,7 @@ sub collapse_attribute_value {
     my ($self, $attr)  = @_;
 	my $value = $attr->get_value($self->object);
     if (defined $value && $attr->has_type_constraint) {
-        my $type_converter = $self->match_type($attr->type_constraint);
+        my $type_converter = $self->find_type_handler($attr->type_constraint);
         (defined $type_converter)
             || confess "Cannot convert " . $attr->type_constraint->name;
         $value = $type_converter->{collapse}->($value);
@@ -53,7 +53,7 @@ sub collapse_attribute_value {
 sub expand_attribute_value {
     my ($self, $attr, $value)  = @_;
     if (defined $value && $attr->has_type_constraint) {
-        my $type_converter = $self->match_type($attr->type_constraint);
+        my $type_converter = $self->find_type_handler($attr->type_constraint);
         $value = $type_converter->{expand}->($value);
     }
 	return $value;
@@ -69,7 +69,9 @@ sub map_attributes {
 }
 
 ## ------------------------------------------------------------------
-## Everything below here might need some re-thinking ...
+## This is all the type handler stuff, it is in a state of flux
+## right now, so this may change, or it may just continue to be 
+## improved upon. Comments and suggestions are welcomed.
 ## ------------------------------------------------------------------
 
 # NOTE:
@@ -93,20 +95,22 @@ my %OBJECT_HANDLERS = (
 
 
 my %TYPES = (
+    # These are boring ones, so they use the identity function ...
     'Int'      => { expand => sub { shift }, collapse => sub { shift } },
     'Num'      => { expand => sub { shift }, collapse => sub { shift } },
     'Str'      => { expand => sub { shift }, collapse => sub { shift } },
+    # These are the trickier ones, (see notes)
+    # NOTE:
+    # Because we are nice guys, we will check 
+    # your ArrayRef and/or HashRef one level 
+    # down and inflate any objects we find. 
+    # But this is where it ends, it is too
+    # expensive to try and do this any more  
+    # recursively, when it is probably not 
+    # nessecary in most of the use cases.
+    # However, if you need more then this, subtype 
+    # and add a custom handler.    
     'ArrayRef' => { 
-        # FIXME:
-        # these should also probably be
-        # recursive as well, so they 
-        # can handle arbitrarily deep
-        # arrays and such. Or perhaps
-        # we force the user to handle 
-        # the types in a custom way. 
-        # This would require a more 
-        # sophisticated way of handling
-        # this %TYPES hash.
         expand => sub {
             my $array = shift;
             foreach my $i (0 .. $#{$array}) {
@@ -130,8 +134,27 @@ my %TYPES = (
         } 
     },
     'HashRef'  => { 
-        expand   => sub { shift }, 
-        collapse => sub { shift } 
+        expand   => sub {
+            my $hash = shift;
+            foreach my $k (keys %$hash) {
+                next unless ref($hash->{$k}) eq 'HASH' 
+                         && exists $hash->{$k}->{'__class__'};
+                $hash->{$k} = $OBJECT_HANDLERS{expand}->($hash->{$k})
+            }
+            $hash;            
+        }, 
+        collapse => sub {
+            my $hash = shift;   
+            # NOTE:         
+            # we need to make a copy cause
+            # otherwise it will affect the 
+            # other real version.
+            +{ map {
+                blessed($_)
+                    ? ($_ => $OBJECT_HANDLERS{collapse}->($hash->{$_}))
+                    : ($_ => $hash->{$_})
+            } keys %$hash }            
+        } 
     },
     'Object'   => \%OBJECT_HANDLERS,
     # NOTE:
@@ -144,7 +167,19 @@ my %TYPES = (
     #}       
 );
 
-sub match_type {
+sub add_custom_type_handler {
+    my ($class, $type_name, %handlers) = @_;
+    (exists $handlers{expand} && exists $handlers{collapse})
+        || confess "Custom type handlers need an expand *and* a collapse method";
+    $TYPES{$type_name} = \%handlers;
+}
+
+sub remove_custom_type_handler {
+    my ($class, $type_name) = @_;
+    delete $TYPES{$type_name} if exists $TYPES{$type_name};
+}
+
+sub find_type_handler {
     my ($self, $type_constraint) = @_;
     
     # this should handle most type usages
@@ -177,25 +212,11 @@ sub match_type {
     # totally out the door ;)
     # - SL
     
-
-	# To cover the last possibilities we 
-	# need a way for people to extend this 
-	# process. Which they can do by subclassing
-	# this class and overriding the method 
-	# below to handle things.
-	my $match = $self->_custom_type_match($type_constraint);
-	return $match if defined $match;
-
     # NOTE:
     # if this method hasnt returned by now
     # then we have no been able to find a 
     # type constraint handler to match 
     confess "Cannot handle type constraint (" . $type_constraint->name . ")";    
-}
-
-sub _custom_type_match {
-    return;
-    # my ($self, $type_constraint) = @_;
 }
 
 1;
@@ -250,7 +271,17 @@ MooseX::Storage::Engine
 
 =item B<map_attributes>
 
-=item B<match_type>
+=back
+
+=head2 Type Constraint Handlers
+
+=over 4
+
+=item B<find_type_handler>
+
+=item B<add_custom_type_handler>
+
+=item B<remove_custom_type_handler>
 
 =back
 
