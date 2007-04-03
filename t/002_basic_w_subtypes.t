@@ -70,14 +70,14 @@ cases.
     is_deeply(
         $foo->pack,
         {
-            __class__ => 'Foo',
+            __CLASS__ => 'Foo',
             number    => 10,
             string    => 'foo',
             float     => 10.5,
             array     => [ 1 .. 10 ],
             hash      => { map { $_ => undef } ( 1 .. 10 ) },
             object    => { 
-                            __class__ => 'Foo',                
+                            __CLASS__ => 'Foo',                
                             number    => 2 
                          },            
         },
@@ -88,14 +88,14 @@ cases.
 {
     my $foo = Foo->unpack(
         {
-            __class__ => 'Foo',
+            __CLASS__ => 'Foo',
             number    => 10,
             string    => 'foo',
             float     => 10.5,
             array     => [ 1 .. 10 ],
             hash      => { map { $_ => undef } ( 1 .. 10 ) },
             object    => { 
-                            __class__ => 'Foo',                
+                            __CLASS__ => 'Foo',                
                             number    => 2 
                          },            
         }        

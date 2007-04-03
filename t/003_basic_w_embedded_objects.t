@@ -58,11 +58,11 @@ ArrayRef and HashRef type handlers.
     is_deeply(
         $foo->pack,
         {
-            __class__ => 'Foo',
+            __CLASS__ => 'Foo',
             bars      => [ 
                 map {
                   {
-                      __class__ => 'Bar',
+                      __CLASS__ => 'Bar',
                       number    => $_,
                   }  
                 } (1 .. 10)
@@ -75,11 +75,11 @@ ArrayRef and HashRef type handlers.
 {
     my $foo = Foo->unpack(
         {
-            __class__ => 'Foo',
+            __CLASS__ => 'Foo',
             bars      => [ 
                 map {
                   {
-                      __class__ => 'Bar',
+                      __CLASS__ => 'Bar',
                       number    => $_,
                   }  
                 } (1 .. 10)
@@ -104,11 +104,11 @@ ArrayRef and HashRef type handlers.
     is_deeply(
         $baz->pack,
         {
-            __class__ => 'Baz',
+            __CLASS__ => 'Baz',
             bars      => {
                 map {
                   ($_ => {
-                      __class__ => 'Bar',
+                      __CLASS__ => 'Bar',
                       number    => $_,
                   })  
                 } (1 .. 10)
@@ -121,11 +121,11 @@ ArrayRef and HashRef type handlers.
 {
     my $baz = Baz->unpack(
         {
-            __class__ => 'Baz',
+            __CLASS__ => 'Baz',
             bars      => {
                 map {
                   ($_ => {
-                      __class__ => 'Bar',
+                      __CLASS__ => 'Bar',
                       number    => $_,
                   })  
                 } (1 .. 10)

@@ -44,7 +44,7 @@ BEGIN {
     is(
         $yaml,
         q{--- 
-__class__: Foo
+__CLASS__: Foo
 array: 
   - 1
   - 2
@@ -70,7 +70,7 @@ hash:
   9: ~
 number: 10
 object: 
-  __class__: Foo
+  __CLASS__: Foo
   number: 2
 string: foo
 },
@@ -80,7 +80,7 @@ string: foo
 
 {
     my $foo = Foo->thaw(q{--- 
-__class__: Foo
+__CLASS__: Foo
 array: 
   - 1
   - 2
@@ -106,7 +106,7 @@ hash:
   9: ~
 number: 10
 object: 
-  __class__: Foo
+  __CLASS__: Foo
   number: 2
 string: foo
 });

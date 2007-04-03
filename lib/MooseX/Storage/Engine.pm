@@ -2,6 +2,12 @@
 package MooseX::Storage::Engine;
 use Moose;
 
+our $VERSION = '0.01';
+
+# the class marker when 
+# serializing an object. 
+our $CLASS_MARKER = '__CLASS__';
+
 has 'storage' => (
     is      => 'rw',
     isa     => 'HashRef',
@@ -16,7 +22,7 @@ has 'class'  => (is => 'rw', isa => 'Str');
 sub collapse_object {
 	my $self = shift;
     $self->map_attributes('collapse_attribute');
-    $self->storage->{'__class__'} = $self->object->meta->name;    
+    $self->storage->{$CLASS_MARKER} = $self->object->meta->name;    
 	return $self->storage;
 }
 
@@ -81,9 +87,9 @@ sub map_attributes {
 my %OBJECT_HANDLERS = (
     expand => sub {
         my $data = shift;   
-        (exists $data->{'__class__'})
+        (exists $data->{$CLASS_MARKER})
             || confess "Serialized item has no class marker";
-        $data->{'__class__'}->unpack($data);
+        $data->{$CLASS_MARKER}->unpack($data);
     },
     collapse => sub {
         my $obj = shift;
@@ -115,7 +121,7 @@ my %TYPES = (
             my $array = shift;
             foreach my $i (0 .. $#{$array}) {
                 next unless ref($array->[$i]) eq 'HASH' 
-                         && exists $array->[$i]->{'__class__'};
+                         && exists $array->[$i]->{$CLASS_MARKER};
                 $array->[$i] = $OBJECT_HANDLERS{expand}->($array->[$i])
             }
             $array;
@@ -138,7 +144,7 @@ my %TYPES = (
             my $hash = shift;
             foreach my $k (keys %$hash) {
                 next unless ref($hash->{$k}) eq 'HASH' 
-                         && exists $hash->{$k}->{'__class__'};
+                         && exists $hash->{$k}->{$CLASS_MARKER};
                 $hash->{$k} = $OBJECT_HANDLERS{expand}->($hash->{$k})
             }
             $hash;            
