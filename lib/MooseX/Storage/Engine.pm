@@ -64,6 +64,10 @@ sub collapse_attribute_value {
     my ($self, $attr)  = @_;
 	my $value = $attr->get_value($self->object);
 	
+	# NOTE:
+	# this might not be enough, we might 
+	# need to make it possible for the 
+	# cycle checker to return the value
     $self->check_for_cycle_in_collapse($value) 
         if ref $value;
 	
@@ -79,6 +83,8 @@ sub collapse_attribute_value {
 sub expand_attribute_value {
     my ($self, $attr, $value)  = @_;
 
+	# NOTE:
+	# (see comment in method above ^^)
     $self->check_for_cycle_in_expansion($value) 
         if ref $value;    
     
@@ -89,7 +95,12 @@ sub expand_attribute_value {
 	return $value;
 }
 
-# util methods ...
+# NOTE:
+# possibly these two methods will 
+# be used by a cycle supporting 
+# engine. However, I am not sure 
+# if I can make a cycle one work 
+# anyway.
 
 sub check_for_cycle_in_collapse {
     my ($self, $value) = @_;
@@ -105,10 +116,15 @@ sub check_for_cycle_in_expansion {
     $self->seen->{$value} = undef;
 }
 
+# util methods ...
+
 sub map_attributes {
     my ($self, $method_name, @args) = @_;
     map { 
         $self->$method_name($_, @args) 
+    } grep {
+        # Skip our special skip attribute :)
+        !$_->isa('MooseX::Storage::Meta::Attribute::DoNotSerialize')
     } ($self->object || $self->class)->meta->compute_all_applicable_attributes;
 }
 
@@ -289,6 +305,8 @@ MooseX::Storage::Engine
 
 =item B<storage>
 
+=item B<seen>
+
 =back
 
 =head2 API
@@ -312,6 +330,10 @@ MooseX::Storage::Engine
 =item B<expand_attribute>
 
 =item B<expand_attribute_value>
+
+=item B<check_for_cycle_in_collapse>
+
+=item B<check_for_cycle_in_expansion>
 
 =item B<map_attributes>
 
