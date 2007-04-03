@@ -9,7 +9,13 @@ our $VERSION = '0.01';
 our $CLASS_MARKER = '__CLASS__';
 
 has 'storage' => (
-    is      => 'rw',
+    is      => 'ro',
+    isa     => 'HashRef',
+    default => sub {{}}
+);
+
+has 'seen' => (
+    is      => 'ro',
     isa     => 'HashRef',
     default => sub {{}}
 );
@@ -21,6 +27,11 @@ has 'class'  => (is => 'rw', isa => 'Str');
 
 sub collapse_object {
 	my $self = shift;
+
+	# NOTE:
+	# mark the root object as seen ...
+	$self->seen->{$self->object} = undef;
+	
     $self->map_attributes('collapse_attribute');
     $self->storage->{$CLASS_MARKER} = $self->object->meta->name;    
 	return $self->storage;
@@ -28,6 +39,11 @@ sub collapse_object {
 
 sub expand_object {
     my ($self, $data) = @_;
+    
+	# NOTE:
+	# mark the root object as seen ...
+	$self->seen->{$data} = undef;    
+    
     $self->map_attributes('expand_attribute', $data);
 	return $self->storage;    
 }
@@ -47,6 +63,10 @@ sub expand_attribute {
 sub collapse_attribute_value {
     my ($self, $attr)  = @_;
 	my $value = $attr->get_value($self->object);
+	
+    $self->check_for_cycle_in_collapse($value) 
+        if ref $value;
+	
     if (defined $value && $attr->has_type_constraint) {
         my $type_converter = $self->find_type_handler($attr->type_constraint);
         (defined $type_converter)
@@ -58,6 +78,10 @@ sub collapse_attribute_value {
 
 sub expand_attribute_value {
     my ($self, $attr, $value)  = @_;
+
+    $self->check_for_cycle_in_expansion($value) 
+        if ref $value;    
+    
     if (defined $value && $attr->has_type_constraint) {
         my $type_converter = $self->find_type_handler($attr->type_constraint);
         $value = $type_converter->{expand}->($value);
@@ -66,6 +90,20 @@ sub expand_attribute_value {
 }
 
 # util methods ...
+
+sub check_for_cycle_in_collapse {
+    my ($self, $value) = @_;
+    (!exists $self->seen->{$value})
+        || confess "Basic Engine does not support cycles";
+    $self->seen->{$value} = undef;
+}
+
+sub check_for_cycle_in_expansion {
+    my ($self, $value) = @_;
+    (!exists $self->seen->{$value})
+        || confess "Basic Engine does not support cycles";
+    $self->seen->{$value} = undef;
+}
 
 sub map_attributes {
     my ($self, $method_name, @args) = @_;
@@ -170,7 +208,7 @@ my %TYPES = (
     #'CodeRef' => {
     #    expand   => sub {}, # use eval ...
     #    collapse => sub {}, # use B::Deparse ...        
-    #}       
+    #} 
 );
 
 sub add_custom_type_handler {
