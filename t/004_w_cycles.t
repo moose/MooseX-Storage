@@ -70,7 +70,7 @@ This test demonstrates two things:
     );
     
     has 'parent' => (
-        metaclass => 'MooseX::Storage::Meta::Attribute::DoNotSerialize',
+        metaclass => 'DoNotSerialize',
         is        => 'rw', 
         isa       => 'Tree',
     );

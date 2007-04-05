@@ -4,6 +4,10 @@ use Moose;
 
 extends 'Moose::Meta::Attribute';
 
+# register this alias ...
+package Moose::Meta::Attribute::Custom::DoNotSerialize;
+sub register_implementation { 'MooseX::Storage::Meta::Attribute::DoNotSerialize' }
+
 1;
 
 __END__

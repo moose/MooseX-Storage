@@ -2,6 +2,8 @@
 package MooseX::Storage;
 use Moose qw(confess);
 
+use MooseX::Storage::Meta::Attribute::DoNotSerialize;
+
 sub import {
     my $pkg = caller();
     
