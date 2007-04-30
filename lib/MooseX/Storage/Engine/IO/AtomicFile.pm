@@ -22,11 +22,11 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Engine::IO::AtomicFile
-
-=head1 SYNOPSIS
+MooseX::Storage::Engine::IO::AtomicFile - The actually atomic file storage mechanism.
 
 =head1 DESCRIPTION
+
+This provides the actual means to store data to a file atomically.
 
 =head1 METHODS
 

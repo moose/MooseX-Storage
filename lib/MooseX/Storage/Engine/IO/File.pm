@@ -30,11 +30,11 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Engine::IO::File
-
-=head1 SYNOPSIS
+MooseX::Storage::Engine::IO::File - The actually file storage mechanism.
 
 =head1 DESCRIPTION
+
+This provides the actual means to store data to a file.
 
 =head1 METHODS
 

@@ -64,8 +64,6 @@ MooseX::Storage::Format::YAML
   x: 10
   y: 10
   YAML
-  
-=head1 DESCRIPTION
 
 =head1 METHODS
 

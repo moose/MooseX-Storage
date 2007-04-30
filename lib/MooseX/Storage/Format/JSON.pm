@@ -52,8 +52,6 @@ MooseX::Storage::Format::JSON
   # unpack the JSON string into a class
   my $p2 = Point->thaw('{ "__CLASS__" : "Point", "x" : 10, "y" : 10 }');  
 
-=head1 DESCRIPTION
-
 =head1 METHODS
 
 =over 4

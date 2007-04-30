@@ -23,7 +23,25 @@ MooseX::Storage::IO::AtomicFile
 
 =head1 SYNOPSIS
 
-=head1 DESCRIPTION
+  package Point;
+  use Moose;
+  use MooseX::Storage;
+  
+  with Storage('format' => 'JSON', 'io' => 'AtomicFile');
+  
+  has 'x' => (is => 'rw', isa => 'Int');
+  has 'y' => (is => 'rw', isa => 'Int');
+  
+  1;
+  
+  my $p = Point->new(x => 10, y => 10);
+  
+  ## methods to load/store a class 
+  ## on the file system
+  
+  $p->store('my_point.json');
+  
+  my $p2 = Point->load('my_point.json');
 
 =head1 METHODS
 

@@ -20,7 +20,29 @@ MooseX::Storage::Meta::Attribute::DoNotSerialize
 
 =head1 SYNOPSIS
 
+  package Point;
+  use Moose;
+  use MooseX::Storage;
+  
+  with Storage('format' => 'JSON', 'io' => 'File');
+  
+  has 'x' => (is => 'rw', isa => 'Int');
+  has 'y' => (is => 'rw', isa => 'Int');
+  
+  has 'foo' => (
+      metaclass => 'DoNotSerialize',
+      is        => 'rw',
+      isa       => 'CodeRef',
+  );
+  
+  1;
+
 =head1 DESCRIPTION
+
+Sometimes you don't want a particular attribute to be part of the 
+serialization, in this case, you want to make sure that attribute 
+uses this custom meta-attribute. See the SYNOPSIS for a nice example
+that can be easily cargo-culted.
 
 =head1 METHODS
 
