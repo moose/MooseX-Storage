@@ -287,11 +287,11 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Engine
-
-=head1 SYNOPSIS
+MooseX::Storage::Engine - The meta-engine to handle collapsing and expanding objects
 
 =head1 DESCRIPTION
+
+No user serviceable parts inside. If you really want to know, read the source :)
 
 =head1 METHODS
 

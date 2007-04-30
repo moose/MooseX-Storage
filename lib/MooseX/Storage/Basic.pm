@@ -24,11 +24,36 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Basic
+MooseX::Storage::Basic - The simplest level of serialization
 
 =head1 SYNOPSIS
 
+  package Point;
+  use Moose;
+  use MooseX::Storage;
+  
+  with Storage;
+  
+  has 'x' => (is => 'rw', isa => 'Int');
+  has 'y' => (is => 'rw', isa => 'Int');
+  
+  1;
+  
+  my $p = Point->new(x => 10, y => 10);
+  
+  ## methods to pack/unpack an 
+  ## object in perl data structures
+  
+  # pack the class into a hash
+  $p->pack(); # { __CLASS__ => 'Point', x => 10, y => 10 }
+  
+  # unpack the hash into a class
+  my $p2 = Point->unpack({ __CLASS__ => 'Point', x => 10, y => 10 });
+
 =head1 DESCRIPTION
+
+This is the most basic form of serialization. This is used by default 
+but the exported C<Storage> function.
 
 =head1 METHODS
 

@@ -29,6 +29,29 @@ MooseX::Storage::Format::JSON
 
 =head1 SYNOPSIS
 
+  package Point;
+  use Moose;
+  use MooseX::Storage;
+  
+  with Storage('format' => 'JSON');
+  
+  has 'x' => (is => 'rw', isa => 'Int');
+  has 'y' => (is => 'rw', isa => 'Int');
+  
+  1;
+  
+  my $p = Point->new(x => 10, y => 10);
+  
+  ## methods to freeze/thaw into 
+  ## a specified serialization format
+  ## (in this case JSON)
+  
+  # pack the class into a JSON string
+  $p->freeze(); # { "__CLASS__" : "Point", "x" : 10, "y" : 10 }
+  
+  # unpack the JSON string into a class
+  my $p2 = Point->thaw('{ "__CLASS__" : "Point", "x" : 10, "y" : 10 }');  
+
 =head1 DESCRIPTION
 
 =head1 METHODS
