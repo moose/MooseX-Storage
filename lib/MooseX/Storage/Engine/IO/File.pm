@@ -4,6 +4,8 @@ use Moose;
 
 use IO::File;
 
+our $VERSION = '0.01';
+
 has 'file' => (
 	is       => 'ro',
 	isa      => 'Str',	

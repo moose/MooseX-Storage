@@ -4,6 +4,8 @@ use Moose::Role;
 
 use MooseX::Storage::Engine::IO::AtomicFile;
 
+our $VERSION = '0.01';
+
 with 'MooseX::Storage::IO::File';
 
 sub store {

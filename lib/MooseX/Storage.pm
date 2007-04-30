@@ -4,6 +4,8 @@ use Moose qw(confess);
 
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;
 
+our $VERSION = '0.01';
+
 sub import {
     my $pkg = caller();
     
@@ -102,6 +104,14 @@ MooseX::Storage - An serialization framework for Moose classes
 MooseX::Storage is a serialization framework for Moose, it provides 
 a very flexible and highly pluggable way to serialize Moose classes
 to a number of different formats and styles.
+
+=head2 Important Note
+
+This is still an early release of this module, so use with caution. 
+It's outward facing serialization API should be considered stable, 
+but I still reserve the right to make tweaks if I need too. Anything
+beyond the basic pack/unpack, freeze/thaw and load/store should not 
+be relied on.
 
 =head2 Levels of Serialization
 
@@ -216,8 +226,8 @@ hand if you like.
 
 =head1 TODO
 
-This module needs docs and probably a couple a Cookbook of some kind 
-as well. This is an early release, so that is my excuse for now :)
+This module needs docs and probably a Cookbook of some kind as well. 
+This is an early release, so that is my excuse for now :)
 
 For the time being, please read the tests and feel free to email me 
 if you have any questions. This module can also be discussed on IRC 

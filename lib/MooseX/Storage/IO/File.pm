@@ -4,6 +4,8 @@ use Moose::Role;
 
 use MooseX::Storage::Engine::IO::File;
 
+our $VERSION = '0.01';
+
 requires 'thaw';
 requires 'freeze';
 

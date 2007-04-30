@@ -2,10 +2,15 @@
 package MooseX::Storage::Meta::Attribute::DoNotSerialize;
 use Moose;
 
+our $VERSION = '0.01';
+
 extends 'Moose::Meta::Attribute';
 
 # register this alias ...
 package Moose::Meta::Attribute::Custom::DoNotSerialize;
+
+our $VERSION = '0.01';
+
 sub register_implementation { 'MooseX::Storage::Meta::Attribute::DoNotSerialize' }
 
 1;

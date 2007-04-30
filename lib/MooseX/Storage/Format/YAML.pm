@@ -7,6 +7,8 @@ use Best [
     [ qw[Load Dump] ]
 ];
 
+our $VERSION = '0.01';
+
 requires 'pack';
 requires 'unpack';
 

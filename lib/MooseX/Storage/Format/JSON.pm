@@ -4,6 +4,8 @@ use Moose::Role;
 
 use JSON::Any;
 
+our $VERSION = '0.01';
+
 requires 'pack';
 requires 'unpack';
 
