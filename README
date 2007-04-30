@@ -18,7 +18,16 @@ Alternatively, to install with Module::Build, you can use the following commands
 
 DEPENDENCIES
 
-Moose!!!!!!!
+    Moose
+    JSON::Any
+    Best (in order to load a YAML file)
+    IO::Fole
+    
+OPTIONAL DEPENDENCIES
+
+    IO::AtomicFile
+    Test::YAML::Valid
+    Test::JSON
 
 COPYRIGHT AND LICENCE
 

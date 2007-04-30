@@ -3,10 +3,12 @@
 use strict;
 use warnings;
 
-use Test::More no_plan => 1;
-use Test::JSON;
+use Test::More;
 
 BEGIN {
+    eval "use Test::JSON";
+    plan skip_all => "Test::JSON is required for this test" if $@;        
+    plan tests => 12;
     use_ok('MooseX::Storage');
 }
 
@@ -39,7 +41,7 @@ BEGIN {
     
     my $json = $foo->freeze;
     
-    is_valid_json($json);
+    is_valid_json($json, '.. this is valid JSON');
     
     is_json(
         $json,

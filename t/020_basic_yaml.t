@@ -3,10 +3,12 @@
 use strict;
 use warnings;
 
-use Test::More no_plan => 1;
-use Test::YAML::Valid;
+use Test::More;
 
 BEGIN {
+    eval "use Test::YAML::Valid";
+    plan skip_all => "Test::YAML::Valid is required for this test" if $@;        
+    plan tests => 12;
     use_ok('MooseX::Storage');
 }
 
