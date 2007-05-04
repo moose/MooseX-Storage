@@ -4,7 +4,7 @@ use Moose qw(confess);
 
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub import {
     my $pkg = caller();

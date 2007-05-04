@@ -2,7 +2,7 @@
 package MooseX::Storage::Engine;
 use Moose;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 # the class marker when 
 # serializing an object. 
@@ -68,7 +68,7 @@ sub collapse_attribute_value {
 	# this might not be enough, we might 
 	# need to make it possible for the 
 	# cycle checker to return the value
-    $self->check_for_cycle_in_collapse($value) 
+    $self->check_for_cycle_in_collapse($attr, $value) 
         if ref $value;
 	
     if (defined $value && $attr->has_type_constraint) {
@@ -85,7 +85,7 @@ sub expand_attribute_value {
 
 	# NOTE:
 	# (see comment in method above ^^)
-    $self->check_for_cycle_in_expansion($value) 
+    $self->check_for_cycle_in_expansion($attr, $value) 
         if ref $value;    
     
     if (defined $value && $attr->has_type_constraint) {
@@ -103,16 +103,20 @@ sub expand_attribute_value {
 # anyway.
 
 sub check_for_cycle_in_collapse {
-    my ($self, $value) = @_;
+    my ($self, $attr, $value) = @_;
     (!exists $self->seen->{$value})
-        || confess "Basic Engine does not support cycles";
+        || confess "Basic Engine does not support cycles in class(" 
+                 . ($attr->associated_metaclass->name) . ").attr("
+                 . ($attr->name) . ") with $value";
     $self->seen->{$value} = undef;
 }
 
 sub check_for_cycle_in_expansion {
-    my ($self, $value) = @_;
+    my ($self, $attr, $value) = @_;
     (!exists $self->seen->{$value})
-        || confess "Basic Engine does not support cycles";
+    || confess "Basic Engine does not support cycles in class(" 
+             . ($attr->associated_metaclass->name) . ").attr("
+             . ($attr->name) . ") with $value";
     $self->seen->{$value} = undef;
 }
 

@@ -1,5 +1,9 @@
 Revision history for MooseX-Storage
 
+0.02 
+    * MooseX::Storage::Engine
+      - better error reporting when cycles are found
+
 0.01  Mon. April 30, 2007
     This was Chris's idea originally (blame him), and 
     we expanded on it to create what you see here :)
