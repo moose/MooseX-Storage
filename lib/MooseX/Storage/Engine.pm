@@ -151,7 +151,7 @@ my %OBJECT_HANDLERS = (
         my ($class, $version, $authority) = (split '-' => $data->{$CLASS_MARKER});
         my $meta = eval { $class->meta };
         confess "Class ($class) is not loaded, cannot unpack" if $@;
-        ($meta->version eq $version)
+        ($meta->version == $version)
             || confess "Class ($class) versions don't match." 
                      . " got=($version) available=(" . ($meta->version || '') . ")"
             if defined $version;
