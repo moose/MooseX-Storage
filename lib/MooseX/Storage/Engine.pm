@@ -33,7 +33,7 @@ sub collapse_object {
 	$self->seen->{$self->object} = undef;
 	
     $self->map_attributes('collapse_attribute');
-    $self->storage->{$CLASS_MARKER} = $self->object->meta->name;    
+    $self->storage->{$CLASS_MARKER} = $self->object->meta->identifier;    
 	return $self->storage;
 }
 
@@ -106,7 +106,7 @@ sub check_for_cycle_in_collapse {
     my ($self, $attr, $value) = @_;
     (!exists $self->seen->{$value})
         || confess "Basic Engine does not support cycles in class(" 
-                 . ($attr->associated_metaclass->name) . ").attr("
+                 . ($attr->associated_class->name) . ").attr("
                  . ($attr->name) . ") with $value";
     $self->seen->{$value} = undef;
 }
@@ -115,7 +115,7 @@ sub check_for_cycle_in_expansion {
     my ($self, $attr, $value) = @_;
     (!exists $self->seen->{$value})
     || confess "Basic Engine does not support cycles in class(" 
-             . ($attr->associated_metaclass->name) . ").attr("
+             . ($attr->associated_class->name) . ").attr("
              . ($attr->name) . ") with $value";
     $self->seen->{$value} = undef;
 }
@@ -147,7 +147,20 @@ my %OBJECT_HANDLERS = (
         my $data = shift;   
         (exists $data->{$CLASS_MARKER})
             || confess "Serialized item has no class marker";
-        $data->{$CLASS_MARKER}->unpack($data);
+        # check the class more thoroughly here ...
+        my ($class, $version, $authority) = (split '-' => $data->{$CLASS_MARKER});
+        my $meta = eval { $class->meta };
+        confess "Class ($class) is not loaded, cannot unpack" if $@;
+        ($meta->version eq $version)
+            || confess "Class ($class) versions don't match." 
+                     . " got=($version) available=(" . ($meta->version || '') . ")"
+            if defined $version;
+        ($meta->authority eq $authority)
+            || confess "Class ($class) authorities don't match." 
+                     . " got=($authority) available=(" . ($meta->authority || '') . ")"
+            if defined $authority;            
+        # all is well ...
+        $class->unpack($data);
     },
     collapse => sub {
         my $obj = shift;

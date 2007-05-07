@@ -64,6 +64,8 @@ MooseX::Storage - An serialization framework for Moose classes
   use Moose;
   use MooseX::Storage;
   
+  our $VERSION = '0.01';
+  
   with Storage('format' => 'JSON', 'io' => 'File');
   
   has 'x' => (is => 'rw', isa => 'Int');
@@ -77,20 +79,20 @@ MooseX::Storage - An serialization framework for Moose classes
   ## object in perl data structures
   
   # pack the class into a hash
-  $p->pack(); # { __CLASS__ => 'Point', x => 10, y => 10 }
+  $p->pack(); # { __CLASS__ => 'Point-0.01', x => 10, y => 10 }
   
   # unpack the hash into a class
-  my $p2 = Point->unpack({ __CLASS__ => 'Point', x => 10, y => 10 });
+  my $p2 = Point->unpack({ __CLASS__ => 'Point-0.01', x => 10, y => 10 });
 
   ## methods to freeze/thaw into 
   ## a specified serialization format
   ## (in this case JSON)
   
   # pack the class into a JSON string
-  $p->freeze(); # { "__CLASS__" : "Point", "x" : 10, "y" : 10 }
+  $p->freeze(); # { "__CLASS__" : "Point-0.01", "x" : 10, "y" : 10 }
   
   # unpack the JSON string into a class
-  my $p2 = Point->thaw('{ "__CLASS__" : "Point", "x" : 10, "y" : 10 }');  
+  my $p2 = Point->thaw('{ "__CLASS__" : "Point-0.01", "x" : 10, "y" : 10 }');  
 
   ## methods to load/store a class 
   ## on the file system

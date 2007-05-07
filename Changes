@@ -3,6 +3,10 @@ Revision history for MooseX-Storage
 0.02 
     * MooseX::Storage::Engine
       - better error reporting when cycles are found
+      - class names are now stored as the full identifier
+        (<class>-<version>-<authority>) and are checked
+        when they are expanded.
+        - added docs and tests for this
 
 0.01  Mon. April 30, 2007
     This was Chris's idea originally (blame him), and 
