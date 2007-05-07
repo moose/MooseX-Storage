@@ -94,13 +94,12 @@ dies_ok {
             }         
         }     
     );
-} '... could not unpack, versions are different';
+} '... could not unpack, versions are different ' . $@;
 
 Moose::Meta::Class->create('Bar', 
     version   => '0.01',
     authority => 'cpan:DSTATIC',
 );
-
 
 dies_ok {
     Foo->unpack(

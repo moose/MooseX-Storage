@@ -38,13 +38,16 @@ sub collapse_object {
 }
 
 sub expand_object {
-    my ($self, $data) = @_;
+    my ($self, $data, %options) = @_;
+    
+    $options{check_version}   = 1 unless exists $options{check_version};
+    $options{check_authority} = 1 unless exists $options{check_authority};   
     
 	# NOTE:
 	# mark the root object as seen ...
 	$self->seen->{$data} = undef;    
     
-    $self->map_attributes('expand_attribute', $data);
+    $self->map_attributes('expand_attribute', $data, \%options);
 	return $self->storage;    
 }
 
@@ -56,8 +59,8 @@ sub collapse_attribute {
 }
 
 sub expand_attribute {
-    my ($self, $attr, $data)  = @_;
-    $self->storage->{$attr->name} = $self->expand_attribute_value($attr, $data->{$attr->name}) || return;
+    my ($self, $attr, $data, $options)  = @_;
+    $self->storage->{$attr->name} = $self->expand_attribute_value($attr, $data->{$attr->name}, $options) || return;
 }
 
 sub collapse_attribute_value {
@@ -81,7 +84,7 @@ sub collapse_attribute_value {
 }
 
 sub expand_attribute_value {
-    my ($self, $attr, $value)  = @_;
+    my ($self, $attr, $value, $options)  = @_;
 
 	# NOTE:
 	# (see comment in method above ^^)
@@ -90,7 +93,7 @@ sub expand_attribute_value {
     
     if (defined $value && $attr->has_type_constraint) {
         my $type_converter = $self->find_type_handler($attr->type_constraint);
-        $value = $type_converter->{expand}->($value);
+        $value = $type_converter->{expand}->($value, $options);
     }
 	return $value;
 }
@@ -144,21 +147,43 @@ sub map_attributes {
 # below, so I need easy access 
 my %OBJECT_HANDLERS = (
     expand => sub {
-        my $data = shift;   
+        my ($data, $options) = @_;   
         (exists $data->{$CLASS_MARKER})
             || confess "Serialized item has no class marker";
         # check the class more thoroughly here ...
         my ($class, $version, $authority) = (split '-' => $data->{$CLASS_MARKER});
         my $meta = eval { $class->meta };
-        confess "Class ($class) is not loaded, cannot unpack" if $@;
-        ($meta->version == $version)
-            || confess "Class ($class) versions don't match." 
-                     . " got=($version) available=(" . ($meta->version || '') . ")"
-            if defined $version;
-        ($meta->authority eq $authority)
-            || confess "Class ($class) authorities don't match." 
-                     . " got=($authority) available=(" . ($meta->authority || '') . ")"
-            if defined $authority;            
+        confess "Class ($class) is not loaded, cannot unpack" if $@;     
+        
+        if ($options->{check_version}) {
+            my $meta_version = $meta->version;
+            if (defined $meta_version && $version) {            
+                if ($options->{check_version} eq 'allow_less_than') {
+                    ($meta_version <= $version)
+                        || confess "Class ($class) versions is not less than currently available." 
+                                 . " got=($version) available=($meta_version)";                
+                }
+                elsif ($options->{check_version} eq 'allow_greater_than') {
+                    ($meta->version >= $version)
+                        || confess "Class ($class) versions is not greater than currently available." 
+                                 . " got=($version) available=($meta_version)";                
+                }            
+                else {
+                    ($meta->version == $version)
+                        || confess "Class ($class) versions don't match." 
+                                 . " got=($version) available=($meta_version)";
+                }
+            }
+        }
+        
+        if ($options->{check_authority}) {
+            my $meta_authority = $meta->authority;
+            ($meta->authority eq $authority)
+                || confess "Class ($class) authorities don't match." 
+                         . " got=($authority) available=($meta_authority)"
+                if defined $meta_authority && defined $authority;            
+        }
+            
         # all is well ...
         $class->unpack($data);
     },
