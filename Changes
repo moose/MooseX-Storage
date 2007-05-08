@@ -1,6 +1,12 @@
 Revision history for MooseX-Storage
 
 0.02 
+    * MooseX::Storage::Base::WithChecksum
+      - added a simple base role which makes a checksum of 
+        the data structure before packing, and checks the
+        checksum before unpacking.
+        - added tests for this
+
     * MooseX::Storage::Engine
       - better error reporting when cycles are found
       - class names are now stored as the full identifier

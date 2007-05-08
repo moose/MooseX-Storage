@@ -189,8 +189,8 @@ my %OBJECT_HANDLERS = (
     },
     collapse => sub {
         my $obj = shift;
-        ($obj->can('does') && $obj->does('MooseX::Storage::Basic'))
-            || confess "Bad object ($obj) does not do MooseX::Storage::Basic role";
+#        ($obj->can('does') && $obj->does('MooseX::Storage::Basic'))
+#            || confess "Bad object ($obj) does not do MooseX::Storage::Basic role";
         $obj->pack();
     },
 );

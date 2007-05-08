@@ -17,7 +17,12 @@ sub import {
     $pkg->meta->alias_method('Storage' => sub {
         my %params = @_;
         
-        $params{'base'} ||= 'Basic';
+        if (exists $params{'base'}) {
+            $params{'base'} = ('Base::' . $params{'base'});        
+        }
+        else {
+            $params{'base'} = 'Basic';        
+        }
         
         my @roles = (
             ('MooseX::Storage::' . $params{'base'}),

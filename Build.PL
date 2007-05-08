@@ -13,7 +13,10 @@ my $build = Module::Build->new(
         'Best'         => '0', # << this if for loading YAML
         # and the ability to save the 
         # file to disk        
-        'IO::File'     => '0',        
+        'IO::File'     => '0',    
+        # this if for the basic role with checksum
+        'Digest::MD5'  => '0',    
+        'Data::Dumper' => '0',
     },
     optional => {
         'IO::AtomicFile'    => '0',  
