@@ -4,19 +4,19 @@ use Moose::Role;
 
 use JSON::Any;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 requires 'pack';
 requires 'unpack';
 
 sub thaw {
-    my ( $class, $json ) = @_;
-    $class->unpack( JSON::Any->jsonToObj($json) );
+    my ( $class, $json, @args ) = @_;
+    $class->unpack( JSON::Any->jsonToObj($json), @args );
 }
 
 sub freeze {
-    my $self = shift;
-    JSON::Any->objToJson( $self->pack() );
+    my ( $self, @args ) = @_;
+    JSON::Any->objToJson( $self->pack(@args) );
 }
 
 1;

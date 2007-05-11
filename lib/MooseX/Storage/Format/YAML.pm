@@ -7,19 +7,19 @@ use Best [
     [ qw[Load Dump] ]
 ];
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 requires 'pack';
 requires 'unpack';
 
 sub thaw {
-    my ( $class, $json ) = @_;
-    $class->unpack( Load($json) );
+    my ( $class, $json, @args ) = @_;
+    $class->unpack( Load($json), @args );
 }
 
 sub freeze {
-    my $self = shift;
-    Dump( $self->pack() );
+    my ( $self, @args ) = @_;
+    Dump( $self->pack(@args) );
 }
 
 1;

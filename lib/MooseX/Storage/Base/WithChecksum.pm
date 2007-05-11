@@ -2,54 +2,67 @@
 package MooseX::Storage::Base::WithChecksum;
 use Moose::Role;
 
-use Digest::MD5  ('md5_hex');
-use Data::Dumper ();
+use Digest ();
+use Storable ();
 use MooseX::Storage::Engine;
 
 our $VERSION = '0.01';
 
 sub pack {
-    my ($self, $salt) = @_;
+    my ($self, @args ) = @_;
+
     my $e = MooseX::Storage::Engine->new( object => $self );
+
     my $collapsed = $e->collapse_object;
     
-    # create checksum
-    
-    local $Data::Dumper::Sortkeys = 1;
-    my $dumped = Data::Dumper::Dumper($collapsed);
-
-    #warn $dumped;
-    
-    $salt ||= $dumped;
-    
-    $collapsed->{checksum} = md5_hex($dumped, $salt);
+    $collapsed->{__DIGEST__} = $self->_digest_packed($collapsed, @args);
     
     return $collapsed;
 }
 
 sub unpack {
-    my ($class, $data, $salt) = @_;
+    my ($class, $data, @args) = @_;
 
     # check checksum on data
     
-    my $old_checksum = $data->{checksum};
-    delete $data->{checksum};
+    my $old_checksum = $data->{__DIGEST__};
+    delete $data->{__DIGEST__};
     
-    local $Data::Dumper::Sortkeys = 1;
-    my $dumped = Data::Dumper::Dumper($data);
-    
-    #warn $dumped;
-    
-    $salt ||= $dumped;
-    
-    my $checksum = md5_hex($dumped, $salt);
-    
+    my $checksum = $class->_digest_packed($data, @args);
+
     ($checksum eq $old_checksum)
-        || confess "Bad Checksum got=($checksum) expected=($data->{checksum})";    
+        || confess "Bad Checksum got=($checksum) expected=($old_checksum)";    
 
     my $e = MooseX::Storage::Engine->new(class => $class);
     $class->new($e->expand_object($data));
 }
+
+
+sub _digest_packed {
+    my ( $self, $collapsed, @args ) = @_;
+
+    my $d = shift @args;
+
+    if ( ref $d ) {
+        if ( $d->can("clone") ) {
+            $d = $d->clone;
+        } elsif ( $d->can("reset") ) {
+            $d->reset;
+        } else {
+            die "Can't clone or reset digest object: $d";
+        }
+    } else {
+        $d = Digest->new($d || "SHA1", @args);
+    }
+
+    {
+        local $Storable::canonical = 1;
+        $d->add( Storable::nfreeze($collapsed) );
+    }
+
+    return $d->hexdigest;
+}
+
 
 1;
 
