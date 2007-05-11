@@ -8,7 +8,7 @@ use MooseX::Storage::Engine;
 
 our $VERSION = '0.01';
 
-our $DIGEST_MARKER = '__DIGEST__'
+our $DIGEST_MARKER = '__DIGEST__';
 
 sub pack {
     my ($self, @args ) = @_;
