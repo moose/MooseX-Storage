@@ -8,6 +8,8 @@ use MooseX::Storage::Engine;
 
 our $VERSION = '0.01';
 
+our $DIGEST_MARKER = '__DIGEST__'
+
 sub pack {
     my ($self, @args ) = @_;
 
@@ -15,7 +17,7 @@ sub pack {
 
     my $collapsed = $e->collapse_object;
     
-    $collapsed->{__DIGEST__} = $self->_digest_packed($collapsed, @args);
+    $collapsed->{$DIGEST_MARKER} = $self->_digest_packed($collapsed, @args);
     
     return $collapsed;
 }
@@ -25,8 +27,8 @@ sub unpack {
 
     # check checksum on data
     
-    my $old_checksum = $data->{__DIGEST__};
-    delete $data->{__DIGEST__};
+    my $old_checksum = $data->{$DIGEST_MARKER};
+    delete $data->{$DIGEST_MARKER};
     
     my $checksum = $class->_digest_packed($data, @args);
 
