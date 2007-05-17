@@ -38,11 +38,11 @@ BEGIN {
         object => Foo->new( number => 2 ),
     );
     isa_ok( $foo, 'Foo' );
-    
+
     my $yaml = $foo->freeze;
-    
-    yaml_string_ok($yaml, '... we got valid YAML out of it');
-    
+
+    yaml_string_ok( $yaml, '... we got valid YAML out of it' );
+
     is(
         $yaml,
         q{--- 
@@ -76,12 +76,14 @@ object:
   number: 2
 string: foo
 },
-    '... got the same YAML');
-    
+        '... got the same YAML'
+    );
+
 }
 
 {
-    my $foo = Foo->thaw(q{--- 
+    my $foo = Foo->thaw(
+        q{--- 
 __CLASS__: Foo
 array: 
   - 1
@@ -111,7 +113,8 @@ object:
   __CLASS__: Foo
   number: 2
 string: foo
-});
+}
+    );
     isa_ok( $foo, 'Foo' );
 
     is( $foo->number, 10,    '... got the right number' );

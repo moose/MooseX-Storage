@@ -38,22 +38,23 @@ BEGIN {
         object => Foo->new( number => 2 ),
     );
     isa_ok( $foo, 'Foo' );
-    
+
     my $json = $foo->freeze;
-    
+
     is_valid_json($json, '.. this is valid JSON');
-    
+
     is_json(
         $json,
-        '{"array":[1,2,3,4,5,6,7,8,9,10],"hash":{"6":null,"3":null,"7":null,"9":null,"2":null,"8":null,"1":null,"4":null,"10":null,"5":null},"float":10.5,"object":{"number":2,"__CLASS__":"Foo"},"number":10,"__CLASS__":"Foo","string":"foo"}',
+'{"array":[1,2,3,4,5,6,7,8,9,10],"hash":{"6":null,"3":null,"7":null,"9":null,"2":null,"8":null,"1":null,"4":null,"10":null,"5":null},"float":10.5,"object":{"number":2,"__CLASS__":"Foo"},"number":10,"__CLASS__":"Foo","string":"foo"}',
         '... got the right JSON'
     );
 }
 
 {
-    my $foo = Foo->thaw(
-        '{"array":[1,2,3,4,5,6,7,8,9,10],"hash":{"6":null,"3":null,"7":null,"9":null,"2":null,"8":null,"1":null,"4":null,"10":null,"5":null},"float":10.5,"object":{"number":2,"__CLASS__":"Foo"},"number":10,"__CLASS__":"Foo","string":"foo"}'
-    );
+    my $foo =
+      Foo->thaw(
+'{"array":[1,2,3,4,5,6,7,8,9,10],"hash":{"6":null,"3":null,"7":null,"9":null,"2":null,"8":null,"1":null,"4":null,"10":null,"5":null},"float":10.5,"object":{"number":2,"__CLASS__":"Foo"},"number":10,"__CLASS__":"Foo","string":"foo"}'
+      );
     isa_ok( $foo, 'Foo' );
 
     is( $foo->number, 10,    '... got the right number' );
