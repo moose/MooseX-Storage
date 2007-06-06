@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 25;
+use Test::More tests => 26;
 use Test::Exception;
 use Test::Deep;
 
@@ -114,6 +114,8 @@ SKIP: {
     eval { require Digest::HMAC_SHA1 };
     skip join( " ", "no Digest::HMAC", ( $@ =~ /\@INC/ ? () : do { chomp(my $e = $@); "($e)" } ) ), 14 if $@;
 
+    local $::DEBUG = 1;
+
     my $foo = Foo->new(
         number => 10,
         string => 'foo',
@@ -127,6 +129,8 @@ SKIP: {
     my $frozen1 = $foo->freeze( digest => [ "HMAC_SHA1", "secret" ] );
     ok( length($frozen1), "got frozen data" );
 
+    $::DEBUG = 0;
+
     my $d2 = Digest::HMAC_SHA1->new("s3cr3t");
 
     my $frozen2 = $foo->freeze( digest => $d2 );
@@ -134,12 +138,16 @@ SKIP: {
 
     cmp_ok( $frozen1, "ne", $frozen2, "versions are different" );
 
+    is( $frozen1, $foo->freeze( digest => [ HMAC_SHA1 => "secret" ] ), "refreeze" );
+
+$::DEBUG = 1;
+
     my $foo1 = eval { Foo->thaw( $frozen1, digest => [ "HMAC_SHA1", "secret" ] ) };
     my $e = $@;
 
     ok( $foo1, "thawed" );
     ok( !$e, "no error" ) || diag $e;
-    
+
     my $foo2 = eval { Foo->thaw( $frozen2, digest => $d2 ) };
     $e = $@;
 

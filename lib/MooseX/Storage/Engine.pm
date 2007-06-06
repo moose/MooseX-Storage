@@ -26,13 +26,13 @@ has 'class'  => (is => 'rw', isa => 'Str');
 ## this is the API used by other modules ...
 
 sub collapse_object {
-    my ( $self, @args ) = @_;
+    my ( $self, %options ) = @_;
 
 	# NOTE:
 	# mark the root object as seen ...
 	$self->seen->{$self->object} = undef;
 	
-    $self->map_attributes('collapse_attribute');
+    $self->map_attributes('collapse_attribute', \%options);
     $self->storage->{$CLASS_MARKER} = $self->object->meta->identifier;    
 	return $self->storage;
 }
@@ -54,8 +54,8 @@ sub expand_object {
 ## this is the internal API ...
 
 sub collapse_attribute {
-    my ($self, $attr)  = @_;
-    $self->storage->{$attr->name} = $self->collapse_attribute_value($attr) || return;
+    my ($self, $attr, @args)  = @_;
+    $self->storage->{$attr->name} = $self->collapse_attribute_value($attr, @args) || return;
 }
 
 sub expand_attribute {
@@ -64,21 +64,21 @@ sub expand_attribute {
 }
 
 sub collapse_attribute_value {
-    my ($self, $attr)  = @_;
+    my ($self, $attr, @args)  = @_;
 	my $value = $attr->get_value($self->object);
 	
 	# NOTE:
 	# this might not be enough, we might 
 	# need to make it possible for the 
 	# cycle checker to return the value
-    $self->check_for_cycle_in_collapse($attr, $value) 
+    $self->check_for_cycle_in_collapse($attr, $value)
         if ref $value;
 	
     if (defined $value && $attr->has_type_constraint) {
         my $type_converter = $self->find_type_handler($attr->type_constraint);
         (defined $type_converter)
             || confess "Cannot convert " . $attr->type_constraint->name;
-        $value = $type_converter->{collapse}->($value);
+        $value = $type_converter->{collapse}->($value, @args);
     }
 	return $value;
 }
@@ -185,13 +185,13 @@ my %OBJECT_HANDLERS = (
         }
             
         # all is well ...
-        $class->unpack($data);
+        $class->unpack($data, %$options);
     },
     collapse => sub {
-        my $obj = shift;
+        my ( $obj, $options ) = @_;
 #        ($obj->can('does') && $obj->does('MooseX::Storage::Basic'))
 #            || confess "Bad object ($obj) does not do MooseX::Storage::Basic role";
-        $obj->pack();
+        $obj->pack(%$options);
     },
 );
 
@@ -214,46 +214,46 @@ my %TYPES = (
     # and add a custom handler.    
     'ArrayRef' => { 
         expand => sub {
-            my $array = shift;
+            my ( $array, @args ) = @_;
             foreach my $i (0 .. $#{$array}) {
                 next unless ref($array->[$i]) eq 'HASH' 
                          && exists $array->[$i]->{$CLASS_MARKER};
-                $array->[$i] = $OBJECT_HANDLERS{expand}->($array->[$i])
+                $array->[$i] = $OBJECT_HANDLERS{expand}->($array->[$i], @args);
             }
             $array;
         }, 
-        collapse => sub { 
-            my $array = shift;   
+        collapse => sub {
+            my ( $array, @args ) = @_;
             # NOTE:         
             # we need to make a copy cause
             # otherwise it will affect the 
             # other real version.
             [ map {
                 blessed($_)
-                    ? $OBJECT_HANDLERS{collapse}->($_)
+                    ? $OBJECT_HANDLERS{collapse}->($_, @args)
                     : $_
             } @$array ] 
         } 
     },
     'HashRef'  => { 
         expand   => sub {
-            my $hash = shift;
+            my ( $hash, @args ) = @_;
             foreach my $k (keys %$hash) {
                 next unless ref($hash->{$k}) eq 'HASH' 
                          && exists $hash->{$k}->{$CLASS_MARKER};
-                $hash->{$k} = $OBJECT_HANDLERS{expand}->($hash->{$k})
+                $hash->{$k} = $OBJECT_HANDLERS{expand}->($hash->{$k}, @args);
             }
             $hash;            
         }, 
         collapse => sub {
-            my $hash = shift;   
+            my ( $hash, @args ) = @_;
             # NOTE:         
             # we need to make a copy cause
             # otherwise it will affect the 
             # other real version.
             +{ map {
                 blessed($hash->{$_})
-                    ? ($_ => $OBJECT_HANDLERS{collapse}->($hash->{$_}))
+                    ? ($_ => $OBJECT_HANDLERS{collapse}->($hash->{$_}), @args)
                     : ($_ => $hash->{$_})
             } keys %$hash }            
         } 

@@ -3,8 +3,10 @@ package MooseX::Storage::Base::WithChecksum;
 use Moose::Role;
 
 use Digest ();
-use Storable ();
+#use Storable ();
 use MooseX::Storage::Engine;
+
+use Data::Dumper ();
 
 our $VERSION = '0.01';
 
@@ -27,8 +29,7 @@ sub unpack {
 
     # check checksum on data
     
-    my $old_checksum = $data->{$DIGEST_MARKER};
-    delete $data->{$DIGEST_MARKER};
+    my $old_checksum = delete $data->{$DIGEST_MARKER};
     
     my $checksum = $class->_digest_packed($data, @args);
 
@@ -48,7 +49,11 @@ sub _digest_packed {
 
     {
         local $Storable::canonical = 1;
-        $d->add( Storable::nfreeze($collapsed) );
+        local $Data::Dumper::Indent = 0;
+        local $Data::Dumper::Sortkeys = 1;
+
+        #Storable::nfreeze($collapsed);
+        $d->add( Data::Dumper::Dumper($collapsed) );
     }
 
     return $d->hexdigest;
