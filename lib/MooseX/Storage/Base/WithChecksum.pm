@@ -15,7 +15,7 @@ sub pack {
 
     my $e = MooseX::Storage::Engine->new( object => $self );
 
-    my $collapsed = $e->collapse_object;
+    my $collapsed = $e->collapse_object(@args);
     
     $collapsed->{$DIGEST_MARKER} = $self->_digest_packed($collapsed, @args);
     
@@ -36,26 +36,15 @@ sub unpack {
         || confess "Bad Checksum got=($checksum) expected=($old_checksum)";    
 
     my $e = MooseX::Storage::Engine->new(class => $class);
-    $class->new($e->expand_object($data));
+    $class->new($e->expand_object($data, @args));
 }
 
 
 sub _digest_packed {
     my ( $self, $collapsed, @args ) = @_;
 
-    my $d = shift @args;
+    my $d = $self->_digest_object(@args);
 
-    if ( ref $d ) {
-        if ( $d->can("clone") ) {
-            $d = $d->clone;
-        } elsif ( $d->can("reset") ) {
-            $d->reset;
-        } else {
-            die "Can't clone or reset digest object: $d";
-        }
-    } else {
-        $d = Digest->new($d || "SHA1", @args);
-    }
 
     {
         local $Storable::canonical = 1;
@@ -65,6 +54,25 @@ sub _digest_packed {
     return $d->hexdigest;
 }
 
+sub _digest_object {
+    my ( $self, %options ) = @_;
+    my $digest_opts = $options{digest};
+    $digest_opts = [ $digest_opts ] if !ref($digest_opts) or ref($digest_opts) ne 'ARRAY';
+    my ( $d, @args ) = @$digest_opts;
+
+    if ( ref $d ) {
+        if ( $d->can("clone") ) {
+            return $d->clone;
+        } elsif ( $d->can("reset") ) {
+            $d->reset;
+            return $d;
+        } else {
+            die "Can't clone or reset digest object: $d";
+        }
+    } else {
+        return Digest->new($d || "SHA1", @args);
+    }
+}
 
 1;
 

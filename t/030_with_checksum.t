@@ -124,29 +124,29 @@ SKIP: {
     );
     isa_ok( $foo, 'Foo' );
 
-    my $frozen1 = $foo->freeze( "HMAC_SHA1", "secret" );
+    my $frozen1 = $foo->freeze( digest => [ "HMAC_SHA1", "secret" ] );
     ok( length($frozen1), "got frozen data" );
 
     my $d2 = Digest::HMAC_SHA1->new("s3cr3t");
 
-    my $frozen2 = $foo->freeze( $d2 );
+    my $frozen2 = $foo->freeze( digest => $d2 );
     ok( length($frozen2), "got frozen data" );
 
     cmp_ok( $frozen1, "ne", $frozen2, "versions are different" );
 
-    my $foo1 = eval { Foo->thaw( $frozen1, "HMAC_SHA1", "secret" ) };
+    my $foo1 = eval { Foo->thaw( $frozen1, digest => [ "HMAC_SHA1", "secret" ] ) };
     my $e = $@;
 
     ok( $foo1, "thawed" );
     ok( !$e, "no error" ) || diag $e;
     
-    my $foo2 = eval { Foo->thaw( $frozen2, $d2 ) };
+    my $foo2 = eval { Foo->thaw( $frozen2, digest => $d2 ) };
     $e = $@;
 
     ok( $foo2, "thawed" );
     ok( !$e, "no error" ) || diag $e;
 
-    $foo1 = eval { Foo->thaw( $frozen1, $d2 ) };
+    $foo1 = eval { Foo->thaw( $frozen1, digest => $d2 ) };
     $e = $@;
 
     ok( !$foo1, "not thawed" );
@@ -155,7 +155,7 @@ SKIP: {
 
     $frozen1 =~ s/foo/bar/;
 
-    $foo1 = eval { Foo->thaw( $frozen1, "HMAC_SHA1", "secret" ) };
+    $foo1 = eval { Foo->thaw( $frozen1, digest => [ "HMAC_SHA1", "secret" ] ) };
     $e = $@;
 
     ok( !$foo1, "not thawed" );

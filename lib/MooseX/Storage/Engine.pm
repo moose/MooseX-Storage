@@ -26,7 +26,7 @@ has 'class'  => (is => 'rw', isa => 'Str');
 ## this is the API used by other modules ...
 
 sub collapse_object {
-	my $self = shift;
+    my ( $self, @args ) = @_;
 
 	# NOTE:
 	# mark the root object as seen ...

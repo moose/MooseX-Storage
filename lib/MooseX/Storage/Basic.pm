@@ -7,15 +7,15 @@ use MooseX::Storage::Engine;
 our $VERSION = '0.01';
 
 sub pack {
-    my $self = shift;
+    my ( $self, @args ) = @_;
     my $e = MooseX::Storage::Engine->new( object => $self );
-    $e->collapse_object;
+    $e->collapse_object(@args);
 }
 
 sub unpack {
-    my ( $class, $data ) = @_;
+    my ( $class, $data, @args ) = @_;
     my $e = MooseX::Storage::Engine->new( class => $class );
-    $class->new( $e->expand_object($data) );
+    $class->new( $e->expand_object($data, @args) );
 }
 
 1;
