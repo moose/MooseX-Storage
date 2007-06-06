@@ -54,8 +54,8 @@ sub expand_object {
 ## this is the internal API ...
 
 sub collapse_attribute {
-    my ($self, $attr, @args)  = @_;
-    $self->storage->{$attr->name} = $self->collapse_attribute_value($attr, @args) || return;
+    my ($self, $attr, $options)  = @_;
+    $self->storage->{$attr->name} = $self->collapse_attribute_value($attr, $options) || return;
 }
 
 sub expand_attribute {
@@ -64,7 +64,7 @@ sub expand_attribute {
 }
 
 sub collapse_attribute_value {
-    my ($self, $attr, @args)  = @_;
+    my ($self, $attr, $options)  = @_;
 	my $value = $attr->get_value($self->object);
 	
 	# NOTE:
@@ -78,7 +78,7 @@ sub collapse_attribute_value {
         my $type_converter = $self->find_type_handler($attr->type_constraint);
         (defined $type_converter)
             || confess "Cannot convert " . $attr->type_constraint->name;
-        $value = $type_converter->{collapse}->($value, @args);
+        $value = $type_converter->{collapse}->($value, $options);
     }
 	return $value;
 }
@@ -253,7 +253,7 @@ my %TYPES = (
             # other real version.
             +{ map {
                 blessed($hash->{$_})
-                    ? ($_ => $OBJECT_HANDLERS{collapse}->($hash->{$_}), @args)
+                    ? ($_ => $OBJECT_HANDLERS{collapse}->($hash->{$_}, @args))
                     : ($_ => $hash->{$_})
             } keys %$hash }            
         } 
