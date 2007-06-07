@@ -14,13 +14,15 @@ has 'file' => (
 
 sub load { 
 	my ($self) = @_;
-	my $fh = IO::File->new($self->file, 'r');
+	my $fh = IO::File->new($self->file, 'r')
+	    || confess "Unable to open file (" . $self->file . ") for loading : $!";
 	return do { local $/; <$fh>; };
 }
 
 sub store {
 	my ($self, $data) = @_;
-	my $fh = IO::File->new($self->file, 'w');
+	my $fh = IO::File->new($self->file, 'w')
+		|| confess "Unable to open file (" . $self->file . ") for storing : $!";
 	print $fh $data;
 }
 

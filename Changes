@@ -14,6 +14,10 @@ Revision history for MooseX-Storage
         when they are expanded.
         - added docs and tests for this
 
+    * MooseX::Storage::Engine::IO::(AtomicFile, File)
+      - added checks to make sure the file gets opened correctly
+        and dies if it does not.
+
 0.01  Mon. April 30, 2007
     This was Chris's idea originally (blame him), and 
     we expanded on it to create what you see here :)

@@ -2,11 +2,10 @@
 package MooseX::Storage::Base::WithChecksum;
 use Moose::Role;
 
-use Digest ();
-#use Storable ();
-use MooseX::Storage::Engine;
-
+use Digest       ();
 use Data::Dumper ();
+
+use MooseX::Storage::Engine;
 
 our $VERSION = '0.01';
 
@@ -46,13 +45,9 @@ sub _digest_packed {
 
     my $d = $self->_digest_object(@args);
 
-
     {
-        local $Storable::canonical = 1;
-        local $Data::Dumper::Indent = 0;
+        local $Data::Dumper::Indent   = 0;
         local $Data::Dumper::Sortkeys = 1;
-
-        #Storable::nfreeze($collapsed);
         $d->add( Data::Dumper::Dumper($collapsed) );
     }
 
@@ -62,19 +57,25 @@ sub _digest_packed {
 sub _digest_object {
     my ( $self, %options ) = @_;
     my $digest_opts = $options{digest};
-    $digest_opts = [ $digest_opts ] if !ref($digest_opts) or ref($digest_opts) ne 'ARRAY';
+    
+    $digest_opts = [ $digest_opts ] 
+        if !ref($digest_opts) or ref($digest_opts) ne 'ARRAY';
+        
     my ( $d, @args ) = @$digest_opts;
 
     if ( ref $d ) {
         if ( $d->can("clone") ) {
             return $d->clone;
-        } elsif ( $d->can("reset") ) {
+        } 
+        elsif ( $d->can("reset") ) {
             $d->reset;
             return $d;
-        } else {
+        } 
+        else {
             die "Can't clone or reset digest object: $d";
         }
-    } else {
+    } 
+    else {
         return Digest->new($d || "SHA1", @args);
     }
 }
@@ -120,6 +121,8 @@ to cpan-RT.
 =head1 AUTHOR
 
 Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
+
+Yuval Kogman
 
 =head1 COPYRIGHT AND LICENSE
 
