@@ -2,34 +2,7 @@
 :NOTES:
 ---------------------------------------------------------------------
  
-purely functional means we don't have to reinstantiate Engine each time, 
-and IMHO there's no need even without big changes.
 
-We can do something like this:
-
-	sub collapse_object {
-		my $self = shift;
-		my %storage;
-		$self->map_attributes(sub { $self->collapse_attribute(\%storage, @_) });
-	}
-
-or we can make collapse_attribute return KVPs (I think that's nicer and more reusable):
-
-	sub collapse_object {
-		my $self = shift;
-        return {
-			$self->map_attributes('collapse_attribute'),
-			__class__ => $self->object->meta->name,
-		};
-    }
-
-I 100% agree, the instantiation of Engine was actually a leftover from an 
-early version, so I can make this more functional without too much trouble.
-
----------------------------------------------------------------------
-
-I am not going to do this quite yet, I think there might actually still be value to 
-keeping it the way it is. I want to attempt an engine extension first, before i do this.
 
 
 

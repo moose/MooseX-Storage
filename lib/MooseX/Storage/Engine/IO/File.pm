@@ -4,7 +4,7 @@ use Moose;
 
 use IO::File;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 has 'file' => (
 	is       => 'ro',

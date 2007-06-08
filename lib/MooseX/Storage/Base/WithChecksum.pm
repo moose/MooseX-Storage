@@ -88,11 +88,16 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Base::WithChecksum
-
-=head1 SYNOPSIS
+MooseX::Storage::Base::WithChecksum 
 
 =head1 DESCRIPTION
+
+This is an early implementation of a more secure Storage role, 
+which does integrity checks on the data. It is still being 
+developed so I recommend using it with caution. 
+
+Any thoughts, ideas or suggestions on improving our technique 
+are very welcome.
 
 =head1 METHODS
 

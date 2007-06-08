@@ -3,11 +3,14 @@
 use strict;
 use warnings;
 
-use Test::More tests => 26;
+use Test::More;
 use Test::Exception;
 use Test::Deep;
 
 BEGIN {
+    eval "use Digest";
+    plan skip_all => "Digest is required for this test" if $@;        
+    plan tests => 26;
     use_ok('MooseX::Storage');
 }
 
