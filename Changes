@@ -1,5 +1,7 @@
 Revision history for MooseX-Storage
 
+0.03
+
 0.02 Fri. June 8, 2007
     * MooseX::Storage::Base::WithChecksum
       - added a simple base role which makes a checksum of 
