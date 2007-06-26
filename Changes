@@ -8,6 +8,8 @@ Revision history for MooseX-Storage
 
     * t/
         - added test for a custom type handler
+        - fixed checksum test to skip if Digest::SHA1 
+          (our default) is not available
 
 0.02 Fri. June 8, 2007
     * MooseX::Storage::Base::WithChecksum
