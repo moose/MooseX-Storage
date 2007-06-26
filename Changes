@@ -1,6 +1,13 @@
 Revision history for MooseX-Storage
 
 0.03
+    * MooseX::Storage::Util
+        - this is a collection of useful tools 
+          for working with MooseX::Storage data
+            - added docs and test
+
+    * t/
+        - added test for a custom type handler
 
 0.02 Fri. June 8, 2007
     * MooseX::Storage::Base::WithChecksum

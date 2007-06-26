@@ -4,7 +4,8 @@ use Moose;
 
 use IO::File;
 
-our $VERSION = '0.02';
+our $VERSION   = '0.02';
+our $AUTHORITY = 'cpan:STEVAN';
 
 has 'file' => (
 	is       => 'ro',

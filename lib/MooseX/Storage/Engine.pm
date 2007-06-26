@@ -2,7 +2,8 @@
 package MooseX::Storage::Engine;
 use Moose;
 
-our $VERSION = '0.02';
+our $VERSION   = '0.02';
+our $AUTHORITY = 'cpan:STEVAN';
 
 # the class marker when 
 # serializing an object. 

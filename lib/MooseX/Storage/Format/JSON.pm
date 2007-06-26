@@ -6,7 +6,8 @@ no warnings 'once';
 
 use JSON::Any;
 
-our $VERSION = '0.02';
+our $VERSION   = '0.02';
+our $AUTHORITY = 'cpan:STEVAN';
 
 requires 'pack';
 requires 'unpack';

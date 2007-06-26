@@ -16,6 +16,7 @@ lib/MooseX/Storage/Format/YAML.pm
 lib/MooseX/Storage/IO/AtomicFile.pm
 lib/MooseX/Storage/IO/File.pm
 lib/MooseX/Storage/Meta/Attribute/DoNotSerialize.pm
+lib/MooseX/Storage/Util.pm
 t/000_load.t
 t/001_basic.t
 t/002_basic_w_subtypes.t
@@ -26,6 +27,7 @@ t/006_w_custom_type_handlers.t
 t/010_basic_json.t
 t/020_basic_yaml.t
 t/030_with_checksum.t
+t/040_basic_utils.t
 t/100_io.t
 t/101_io_atomic.t
 t/pod-coverage.t
