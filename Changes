@@ -1,6 +1,6 @@
 Revision history for MooseX-Storage
 
-0.03
+0.03 Wed. June 27, 2007
     * MooseX::Storage::Util
         - this is a collection of useful tools 
           for working with MooseX::Storage data
