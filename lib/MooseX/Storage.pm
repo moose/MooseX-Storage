@@ -4,7 +4,7 @@ use Moose qw(confess);
 
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;
 
-our $VERSION   = '0.03';
+our $VERSION   = '0.04';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub import {

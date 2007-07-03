@@ -3,7 +3,7 @@ use Moose qw(confess blessed);
 
 use MooseX::Storage::Engine ();
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.02';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub peek {
@@ -32,7 +32,8 @@ sub _inflate_json {
     my ($class, $json) = @_;
     
     require JSON::Any;
-    JSON::Any->import;
+    eval { JSON::Any->import };
+    confess "Could not load JSON module because : $@" if $@; 
     
     my $data = eval { JSON::Any->jsonToObj($json) };
     if ($@) {
@@ -46,7 +47,9 @@ sub _inflate_yaml {
     my ($class, $yaml) = @_;
     
     require Best; 
-    Best->import([[ qw[YAML::Syck YAML] ]]);    
+    eval { Best->import([[ qw[YAML::Syck YAML] ]]) };
+    confess "Could not load YAML module because : $@" if $@; 
+        
     
     my $inflater = Best->which('YAML::Syck')->can('Load');
     

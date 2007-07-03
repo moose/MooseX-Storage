@@ -56,19 +56,31 @@ object:
 string: foo
 };
 
-is(
-'Foo', 
-MooseX::Storage::Util->peek($packed), 
-'... got the right class name from the packed item');
+is('Foo', MooseX::Storage::Util->peek($packed), 
+   '... got the right class name from the packed item');
 
-is(
-'Foo', 
-MooseX::Storage::Util->peek($json => ('format' => 'JSON')), 
-'... got the right class name from the json item');
+SKIP: {
+    my $classname = eval { 
+        MooseX::Storage::Util->peek($json => ('format' => 'JSON')) 
+    };
+    if ($@ =~ /^Could not load JSON module because/) {
+        skip "No JSON module found", 1;
+    }
 
-is(
-'Foo', 
-MooseX::Storage::Util->peek($yaml => ('format' => 'YAML')), 
-'... got the right class name from the yaml item');
+    is('Foo', $classname, 
+       '... got the right class name from the json item');
+}
+
+SKIP: {
+    my $classname = eval { 
+        MooseX::Storage::Util->peek($yaml => ('format' => 'YAML'))
+    };
+    if ($@ =~ /^Could not load YAML module because/) {
+        skip "No YAML module found", 1;
+    }    
+    
+    is('Foo', $classname, 
+       '... got the right class name from the yaml item');
+}
 
 
