@@ -1,6 +1,6 @@
 Revision history for MooseX-Storage
 
-0.04
+0.04 Tues. July 3, 2007
     * MooseX::Storage::Util
         - made this more robust when it tries
           to use YAML and JSON loaders and fails
