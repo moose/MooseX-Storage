@@ -1,5 +1,16 @@
 Revision history for MooseX-Storage
 
+0.05 Sun. July 15. 2007
+    * MooseX::Storage::Base::WithChecksum
+      - Fixed minor issue where the WithChecksum would 
+        choke with a bad checksum due to odd Data::Dumper
+        output.
+    
+    * t/
+      - forced JSON::Any in the basic JSON tests to use 
+        JSON.pm since this is what Test::JSON uses and 
+        subtle (and annoying) issues can arise.
+
 0.04 Tues. July 3, 2007
     * MooseX::Storage::Util
         - made this more robust when it tries

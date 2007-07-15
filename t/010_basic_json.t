@@ -7,7 +7,13 @@ use Test::More;
 
 BEGIN {
     eval "use Test::JSON";
-    plan skip_all => "Test::JSON is required for this test" if $@;        
+    plan skip_all => "Test::JSON is required for this test" if $@; 
+    # NOTE: 
+    # this idiocy is cause Test::JSON 
+    # uses JSON.pm and that can be 
+    # very picky about the JSON output
+    # - SL 
+    BEGIN { $ENV{JSON_ANY_ORDER} = qw(JSON) }           
     plan tests => 12;
     use_ok('MooseX::Storage');
 }
