@@ -10,7 +10,7 @@ use Test::Deep;
 BEGIN {
     eval "use Digest; use Digest::SHA1";
     plan skip_all => "Digest and Digest::SHA1 is required for this test" if $@;           
-    plan tests => 26;
+    plan tests => 25;
     use_ok('MooseX::Storage');
 }
 
