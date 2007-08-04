@@ -24,6 +24,7 @@ t/003_basic_w_embedded_objects.t
 t/004_w_cycles.t
 t/005_w_versions_and_authority_check.t
 t/006_w_custom_type_handlers.t
+t/007_false.t
 t/010_basic_json.t
 t/020_basic_yaml.t
 t/030_with_checksum.t
