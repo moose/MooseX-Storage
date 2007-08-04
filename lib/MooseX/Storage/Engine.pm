@@ -204,6 +204,7 @@ my %TYPES = (
     'Int'      => { expand => sub { shift }, collapse => sub { shift } },
     'Num'      => { expand => sub { shift }, collapse => sub { shift } },
     'Str'      => { expand => sub { shift }, collapse => sub { shift } },
+    'Bool'     => { expand => sub { shift }, collapse => sub { shift } },
     # These are the trickier ones, (see notes)
     # NOTE:
     # Because we are nice guys, we will check 
