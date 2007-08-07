@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 7;
+use Test::More tests => 8;
 
 BEGIN {
     use_ok('MooseX::Storage');
@@ -29,6 +29,8 @@ BEGIN {
         boolean => 0,
     );
     isa_ok( $foo, 'Foo' );
+    
+    is($foo->boolean, 0, '... got the right boolean value');
     
     is_deeply(
         $foo->pack,

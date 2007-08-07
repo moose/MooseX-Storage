@@ -1,5 +1,15 @@
 Revision history for MooseX-Storage
 
+0.06 Tues. Aug. 7, 2007
+    * MooseX::Storage::Engine
+      - added the Bool type and fixed a few bugs
+        that it exposed (thanks to Sartak)
+        - added tests for this
+
+    * t/
+      - fixed tests in 030_with_checksum.t
+        (thanks to rlb3)
+
 0.05 Sun. July 15. 2007
     * MooseX::Storage::Base::WithChecksum
       - Fixed minor issue where the WithChecksum would 
