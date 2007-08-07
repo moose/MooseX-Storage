@@ -56,7 +56,9 @@ sub expand_object {
 
 sub collapse_attribute {
     my ($self, $attr, $options)  = @_;
-    $self->storage->{$attr->name} = $self->collapse_attribute_value($attr, $options) || return;
+    my $value = $self->collapse_attribute_value($attr, $options);
+    return if !defined($value);
+    $self->storage->{$attr->name} = $value;
 }
 
 sub expand_attribute {
