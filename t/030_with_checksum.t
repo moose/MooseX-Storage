@@ -115,7 +115,7 @@ BEGIN {
 
 SKIP: {
     eval { require Digest::HMAC_SHA1 };
-    skip join( " ", "no Digest::HMAC", ( $@ =~ /\@INC/ ? () : do { chomp(my $e = $@); "($e)" } ) ), 14 if $@;
+    skip join( " ", "no Digest::HMAC", ( $@ =~ /\@INC/ ? () : do { chomp(my $e = $@); "($e)" } ) ), 15 if $@;
 
     local $::DEBUG = 1;
 
