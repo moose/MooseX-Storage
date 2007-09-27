@@ -1,6 +1,13 @@
 Revision history for MooseX-Storage
 
-0.07
+0.07 Thurs. Sept. 27, 2007
+    + MooseX::Storage::Format::Storable
+      - this will use Storable to freeze/thaw objects
+        - added tests for this
+    
+    + MooseX::Storage::IO::StorableFile
+      - this will use Storable to load/store objects    
+        - added tests for this
 
     * t/
       - fixed tests in 030_with_checksum.t

@@ -13,6 +13,7 @@ my $build = Module::Build->new(
         # serialization format
         'JSON::Any'    => '0',
         'Best'         => '0', # << this if for loading YAML
+        'Storable'     => '0',
         # and the ability to save the 
         # file to disk        
         'IO::File'     => '0',    

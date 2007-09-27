@@ -37,12 +37,16 @@ sub import {
             if exists $params{'format'};
             
         # NOTE:
-        # if you do choose an IO role, then 
-        # you *must* have a format role chosen
-        # since load/store require freeze/thaw
+        # many IO roles don't make sense unless 
+        # you have also have a format role chosen
+        # too, the exception being StorableFile
         if (exists $params{'io'}) {
-            (exists $params{'format'})
-                || confess "You must specify a format role in order to use an IO role";
+            # NOTE:
+            # we dont need this code anymore, cause 
+            # the role composition will catch it for 
+            # us. This allows the StorableFile to work
+            #(exists $params{'format'})
+            #    || confess "You must specify a format role in order to use an IO role";
             push @roles => 'MooseX::Storage::IO::' . $params{'io'};
         }
         
@@ -153,8 +157,8 @@ have it. You can just use C<pack>/C<unpack> instead.
 The third (io) level is C<load> and C<store>. In this level we are reading 
 and writing data to file/network/database/etc. 
 
-This level is also optional, it does however require the C<format> level 
-to be present (at least the current state does).
+This level is also optional, in most cases it does require a C<format> role
+to also be used, the expection being the C<StorableFile> role.
 
 =back
 
