@@ -7,7 +7,7 @@ no warnings 'once';
 use JSON::Any;
 use utf8 ();
 
-our $VERSION   = '0.02';
+our $VERSION   = '0.03';
 our $AUTHORITY = 'cpan:STEVAN';
 
 requires 'pack';
@@ -92,6 +92,8 @@ to cpan-RT.
 Chris Prather E<lt>chris.prather@iinteractive.comE<gt>
 
 Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
+
+Yuval Kogman E<lt>yuval.kogman@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 

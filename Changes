@@ -1,5 +1,9 @@
 Revision history for MooseX-Storage
 
+0.08
+    * MooseX::Storage::Format::JSON
+      - added support to deal with utf8 strings correctly
+
 0.07 Thurs. Sept. 27, 2007
     + MooseX::Storage::Format::Storable
       - this will use Storable to freeze/thaw objects

@@ -4,7 +4,7 @@ use Moose qw(confess);
 
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;
 
-our $VERSION   = '0.07';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub import {
@@ -256,6 +256,8 @@ to cpan-RT.
 Chris Prather E<lt>chris.prather@iinteractive.comE<gt>
 
 Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
+
+Yuval Kogman E<lt>yuval.kogman@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
