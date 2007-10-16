@@ -2,8 +2,9 @@ package MooseX::Storage::Util;
 use Moose qw(confess blessed);
 
 use MooseX::Storage::Engine ();
+use utf8 ();
 
-our $VERSION   = '0.02';
+our $VERSION   = '0.03';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub peek {
@@ -35,6 +36,8 @@ sub _inflate_json {
     eval { JSON::Any->import };
     confess "Could not load JSON module because : $@" if $@; 
     
+    utf8::encode($json) if utf8::is_utf8($json);    
+    
     my $data = eval { JSON::Any->jsonToObj($json) };
     if ($@) {
         confess "There was an error when attempting to peek at JSON: $@";
@@ -49,7 +52,6 @@ sub _inflate_yaml {
     require Best; 
     eval { Best->import([[ qw[YAML::Syck YAML] ]]) };
     confess "Could not load YAML module because : $@" if $@; 
-        
     
     my $inflater = Best->which('YAML::Syck')->can('Load');
     
