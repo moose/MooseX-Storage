@@ -36,7 +36,7 @@ sub _inflate_json {
     eval { JSON::Any->import };
     confess "Could not load JSON module because : $@" if $@; 
     
-    utf8::encode($json) if utf8::is_utf8($json);    
+    utf8::encode($json) if utf8::is_utf8($json) or utf8::valid($json);    
     
     my $data = eval { JSON::Any->jsonToObj($json) };
     if ($@) {
