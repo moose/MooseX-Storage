@@ -3,6 +3,11 @@ Revision history for MooseX-Storage
 0.09
     * MooseX::Storage::Util
       - added support to deal with utf8 strings correctly
+      
+    * MooseX::Storage::Engine::File
+      MooseX::Storage::Engine::AtomicFile
+      - fixed utf8 handling when storing string
+        - added tests for this
      
     * t/
       - added a test for the utf8 handling

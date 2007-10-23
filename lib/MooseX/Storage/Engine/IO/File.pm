@@ -2,9 +2,10 @@
 package MooseX::Storage::Engine::IO::File;
 use Moose;
 
+use utf8 ();
 use IO::File;
 
-our $VERSION   = '0.02';
+our $VERSION   = '0.03';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has 'file' => (
@@ -24,6 +25,7 @@ sub store {
 	my ($self, $data) = @_;
 	my $fh = IO::File->new($self->file, 'w')
 		|| confess "Unable to open file (" . $self->file . ") for storing : $!";
+	$fh->binmode(':utf8') if utf8::is_utf8($data);
 	print $fh $data;
 }
 
