@@ -1,6 +1,6 @@
 Revision history for MooseX-Storage
 
-0.09
+0.09 Tue. Oct. 23, 2007
     * MooseX::Storage::Util
       - added support to deal with utf8 strings correctly
       
@@ -11,6 +11,8 @@ Revision history for MooseX-Storage
      
     * t/
       - added a test for the utf8 handling
+    
+    * Change build system to Module::Install
 
 0.08 Wed. Oct. 10, 2007
     * MooseX::Storage::Format::JSON
