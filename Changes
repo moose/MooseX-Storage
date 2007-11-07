@@ -10,7 +10,7 @@ Revision history for MooseX-Storage
         - added tests for this
      
     * t/
-      - added a test for the utf8 handling
+      - added an extra test for the utf8 handling
     
     * Change build system to Module::Install
 
