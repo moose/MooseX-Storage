@@ -1,6 +1,20 @@
 Revision history for MooseX-Storage
 
-0.10
+0.11 Thurs. Jan. 10, 2008
+
+    - upped the Test::JSON dependency 
+      so that we use the version that 
+      supports JSON::Any
+    - upped the JSON::Any requirement 
+    - minor test cleanups to handle
+      optional dependencies better
+
+    * MooseX::Storage::Engine
+      - the numbers now have to numify (+0) in the 
+        expand/collapse so that certain JSON engines
+        will not choke on them
+
+0.10 Thurs. Jan. 10, 2008
     ~~ updated copyright information ~~
 
     * MooseX::Storage::Deferred

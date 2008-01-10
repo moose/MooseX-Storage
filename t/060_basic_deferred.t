@@ -3,13 +3,13 @@ $|++;
 use strict;
 use warnings;
 
-use Test::More tests => 33;
+use Test::More;
 use Storable;
-use Test::JSON;
-use Test::YAML::Valid;
 
 BEGIN {
-    $ENV{JSON_ANY_ORDER} = qw(JSON);
+    eval "use Test::JSON; use Test::YAML::Valid;";
+    plan skip_all => "Test::JSON and Test::YAML::Valid are required for this test" if $@;        
+    plan tests => 33;    
     use_ok('MooseX::Storage');
 }
 

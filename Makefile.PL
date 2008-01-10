@@ -12,8 +12,8 @@ requires 'Moose' => '0.20';
 # serialization format
 feature 'JSON',
   -default     => 1,
-  'JSON::Any'  => '0.1',
-  'Test::JSON' => '0';
+  'JSON::Any'  => '1.15',
+  'Test::JSON' => '0.06';
 
 feature 'YAML',
   -default            => 1,
@@ -30,7 +30,8 @@ feature 'File',
   -default   => 1,
   'IO::File' => '0.1';
 
-build_requires 'Test::More' => '0.42';
+build_requires 'Test::More'      => '0.42';
+build_requires 'Test::Exception' => '0';
 
 no_index 'directory' => 'ex';
 

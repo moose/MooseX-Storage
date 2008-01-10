@@ -3,9 +3,12 @@
 use strict;
 use warnings;
 
-use Test::More tests => 21;
+use Test::More;
 
 BEGIN {
+    eval "use IO::AtomicFile";
+    plan skip_all => "IO::AtomicFile is required for this test" if $@;        
+    plan tests => 21;    
     use_ok('MooseX::Storage');
 }
 

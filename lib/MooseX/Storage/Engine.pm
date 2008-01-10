@@ -2,7 +2,7 @@
 package MooseX::Storage::Engine;
 use Moose;
 
-our $VERSION   = '0.03';
+our $VERSION   = '0.04';
 our $AUTHORITY = 'cpan:STEVAN';
 
 # the class marker when 
@@ -203,9 +203,13 @@ my %OBJECT_HANDLERS = (
 
 
 my %TYPES = (
-    # These are boring ones, so they use the identity function ...
-    'Int'      => { expand => sub { shift }, collapse => sub { shift } },
-    'Num'      => { expand => sub { shift }, collapse => sub { shift } },
+    # NOTE:
+    # we need to make sure that we properly numify the numbers 
+    # before and after them being futzed with, because some of 
+    # the JSON engines are stupid/annoying/frustrating
+    'Int'      => { expand => sub { $_[0] + 0 }, collapse => sub { $_[0] + 0 } },
+    'Num'      => { expand => sub { $_[0] + 0 }, collapse => sub { $_[0] + 0 } },
+    # These are boring ones, so they use the identity function ...    
     'Str'      => { expand => sub { shift }, collapse => sub { shift } },
     'Bool'     => { expand => sub { shift }, collapse => sub { shift } },
     # These are the trickier ones, (see notes)
