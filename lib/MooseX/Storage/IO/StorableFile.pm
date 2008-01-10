@@ -11,19 +11,19 @@ requires 'pack';
 requires 'unpack';
 
 sub load {
-    my ( $class, $filename ) = @_;
+    my ( $class, $filename, @args ) = @_;
     # try thawing
-    return $class->thaw( Storable::retrieve($filename) )
+    return $class->thaw( Storable::retrieve($filename), @args )
         if $class->can('thaw');        
     # otherwise just unpack
-    $class->unpack( Storable::retrieve($filename) );
+    $class->unpack( Storable::retrieve($filename), @args );
 }
 
 sub store {
-    my ( $self, $filename ) = @_;
+    my ( $self, $filename, @args ) = @_;
     Storable::nstore( 
         # try freezing, otherwise just pack
-        ($self->can('freeze') ? $self->freeze() : $self->pack()), 
+        ($self->can('freeze') ? $self->freeze(@args) : $self->pack(@args)), 
         $filename 
     );
 }

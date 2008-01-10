@@ -11,13 +11,13 @@ requires 'thaw';
 requires 'freeze';
 
 sub load {
-    my ( $class, $filename ) = @_;
-    $class->thaw( MooseX::Storage::Engine::IO::File->new( file => $filename )->load() );
+    my ( $class, $filename, @args ) = @_;
+    $class->thaw( MooseX::Storage::Engine::IO::File->new( file => $filename )->load(), @args );
 }
 
 sub store {
-    my ( $self, $filename ) = @_;
-    MooseX::Storage::Engine::IO::File->new( file => $filename )->store( $self->freeze() );
+    my ( $self, $filename, @args ) = @_;
+    MooseX::Storage::Engine::IO::File->new( file => $filename )->store( $self->freeze(@args) );
 }
 
 1;
