@@ -1,5 +1,14 @@
 Revision history for MooseX-Storage
 
+0.10
+    ~~ updated copyright information ~~
+
+    * MooseX::Storage::Deferred
+      - added this role, which allows you to wait until
+        you actually call a method to determine what 
+        formatter and/or IO engine you want to use
+        - added tests for this
+
 0.09 Tue. Oct. 23, 2007
     * MooseX::Storage::Util
       - added support to deal with utf8 strings correctly

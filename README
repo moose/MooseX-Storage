@@ -1,4 +1,4 @@
-MooseX-Storage version 0.09
+MooseX-Storage version 0.10
 
 INSTALLATION
 
@@ -34,7 +34,7 @@ OPTIONAL DEPENDENCIES
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2007, Infinity Interactive
+Copyright (C) 2007-2008 Infinity Interactive
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
