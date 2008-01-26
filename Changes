@@ -1,5 +1,9 @@
 Revision history for MooseX-Storage
 
+0.12 ???
+
+    - added build_requires for Test::Deep (awwaiid)
+
 0.11 Thurs. Jan. 10, 2008
 
     - upped the Test::JSON dependency 
