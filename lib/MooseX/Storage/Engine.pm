@@ -2,7 +2,7 @@
 package MooseX::Storage::Engine;
 use Moose;
 
-our $VERSION   = '0.04';
+our $VERSION   = '0.05';
 our $AUTHORITY = 'cpan:STEVAN';
 
 # the class marker when 
@@ -135,7 +135,7 @@ sub map_attributes {
         $self->$method_name($_, @args) 
     } grep {
         # Skip our special skip attribute :)
-        !$_->isa('MooseX::Storage::Meta::Attribute::DoNotSerialize')
+        !$_->does('MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize') 
     } ($self->object || $self->class)->meta->compute_all_applicable_attributes;
 }
 

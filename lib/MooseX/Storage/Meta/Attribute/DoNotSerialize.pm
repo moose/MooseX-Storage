@@ -11,7 +11,7 @@ extends 'Moose::Meta::Attribute';
 # register this alias ...
 package Moose::Meta::Attribute::Custom::DoNotSerialize;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.02';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub register_implementation { 'MooseX::Storage::Meta::Attribute::DoNotSerialize' }

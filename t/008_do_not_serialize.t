@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More no_plan => 1;
+use Test::More no_plan => 6;
 use Test::Exception;
 
 BEGIN {
@@ -39,5 +39,20 @@ BEGIN {
 
 my $foo = Foo->new;
 isa_ok($foo, 'Foo');
+
+is($foo->bar, 'BAR', '... got the value we expected');
+is($foo->baz, 'BAZ', '... got the value we expected');
+is($foo->gorch, 'GORCH', '... got the value we expected');
+
+is_deeply(
+    $foo->pack,
+    {
+        __CLASS__ => 'Foo',
+        gorch     => 'GORCH'
+    },
+    '... got the right packed class data'
+);
+
+
 
 

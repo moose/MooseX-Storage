@@ -12,7 +12,8 @@ Revision history for MooseX-Storage
         rid of all our CPANtester failures
         - tested against 5.10 as well
     
-    * MooseX::Storage::Meta::Attribute::DoNotSerialize
+    * MooseX::Storage::Engine
+      MooseX::Storage::Meta::Attribute::DoNotSerialize
       MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize
       - adding meta-attribute-trait support for 
         DoNotSerialize
