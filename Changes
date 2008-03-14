@@ -1,8 +1,22 @@
 Revision history for MooseX-Storage
 
-0.12 ???
+0.12 Fri. March 14, 2008
 
     - added build_requires for Test::Deep (awwaiid)
+    - upped the Moose dependency to support the custom
+      meta-attribute-traits
+    
+    * t/
+      - fixing all the tests to properly skip if optional 
+        features are not being used, this should help get
+        rid of all our CPANtester failures
+        - tested against 5.10 as well
+    
+    * MooseX::Storage::Meta::Attribute::DoNotSerialize
+      MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize
+      - adding meta-attribute-trait support for 
+        DoNotSerialize
+        - added tests for this
 
 0.11 Thurs. Jan. 10, 2008
 

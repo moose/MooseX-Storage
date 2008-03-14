@@ -100,7 +100,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Base::WithChecksum 
+MooseX::Storage::Base::WithChecksum - A more secure serialization role
 
 =head1 DESCRIPTION
 

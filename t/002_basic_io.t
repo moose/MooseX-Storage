@@ -3,7 +3,14 @@
 use strict;
 use warnings;
 
-use Test::More tests => 9;
+use Test::More;
+
+BEGIN {        
+    eval "use JSON::Any";
+    plan skip_all => "JSON::Any is required for this test" if $@;            
+    plan tests => 10;
+    use_ok('MooseX::Storage');
+}
 
 {
     package Foo;

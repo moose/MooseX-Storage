@@ -35,7 +35,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Format::YAML
+MooseX::Storage::Format::YAML - A YAML serialization role
 
 =head1 SYNOPSIS
 

@@ -22,7 +22,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::IO::AtomicFile
+MooseX::Storage::IO::AtomicFile - An Atomic File I/O role
 
 =head1 SYNOPSIS
 

@@ -36,7 +36,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::IO::StorableFile
+MooseX::Storage::IO::StorableFile - An Storable File I/O role
 
 =head1 SYNOPSIS
 

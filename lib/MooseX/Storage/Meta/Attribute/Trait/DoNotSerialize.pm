@@ -1,24 +1,17 @@
 
-package MooseX::Storage::IO::File;
+package MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize;
 use Moose::Role;
-
-use MooseX::Storage::Engine::IO::File;
 
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
-requires 'thaw';
-requires 'freeze';
+# register this alias ...
+package Moose::Meta::Attribute::Custom::Trait::DoNotSerialize;
 
-sub load {
-    my ( $class, $filename, @args ) = @_;
-    $class->thaw( MooseX::Storage::Engine::IO::File->new( file => $filename )->load(), @args );
-}
+our $VERSION   = '0.01';
+our $AUTHORITY = 'cpan:STEVAN';
 
-sub store {
-    my ( $self, $filename, @args ) = @_;
-    MooseX::Storage::Engine::IO::File->new( file => $filename )->store( $self->freeze(@args) );
-}
+sub register_implementation { 'MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize' }
 
 1;
 
@@ -28,7 +21,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::IO::File - A basic File I/O role
+MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize - A custom meta-attribute-trait to bypass serialization
 
 =head1 SYNOPSIS
 
@@ -41,26 +34,22 @@ MooseX::Storage::IO::File - A basic File I/O role
   has 'x' => (is => 'rw', isa => 'Int');
   has 'y' => (is => 'rw', isa => 'Int');
   
+  has 'foo' => (
+      traits => [ 'DoNotSerialize' ],
+      is     => 'rw',
+      isa    => 'CodeRef',
+  );
+  
   1;
-  
-  my $p = Point->new(x => 10, y => 10);
-  
-  ## methods to load/store a class 
-  ## on the file system
-  
-  $p->store('my_point.json');
-  
-  my $p2 = Point->load('my_point.json');
+
+=head1 DESCRIPTION
+
+Sometimes you don't want a particular attribute to be part of the 
+serialization, in this case, you want to make sure that attribute 
+uses this custom meta-attribute-trait. See the SYNOPSIS for a nice 
+example that can be easily cargo-culted.
 
 =head1 METHODS
-
-=over 4
-
-=item B<load ($filename)>
-
-=item B<store ($filename)>
-
-=back
 
 =head2 Introspection
 
@@ -78,8 +67,6 @@ to cpan-RT.
 
 =head1 AUTHOR
 
-Chris Prather E<lt>chris.prather@iinteractive.comE<gt>
-
 Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
@@ -92,5 +79,3 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
-
-

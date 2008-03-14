@@ -2,10 +2,11 @@
 package MooseX::Storage::Meta::Attribute::DoNotSerialize;
 use Moose;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.02';
 our $AUTHORITY = 'cpan:STEVAN';
 
 extends 'Moose::Meta::Attribute';
+   with 'MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize';
 
 # register this alias ...
 package Moose::Meta::Attribute::Custom::DoNotSerialize;
@@ -23,7 +24,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Meta::Attribute::DoNotSerialize
+MooseX::Storage::Meta::Attribute::DoNotSerialize - A custom meta-attribute to bypass serialization
 
 =head1 SYNOPSIS
 

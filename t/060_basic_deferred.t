@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+
 $|++;
 use strict;
 use warnings;
@@ -8,7 +9,9 @@ use Storable;
 
 BEGIN {
     eval "use Test::JSON; use Test::YAML::Valid;";
-    plan skip_all => "Test::JSON and Test::YAML::Valid are required for this test" if $@;        
+    plan skip_all => "Test::JSON and Test::YAML::Valid are required for this test" if $@;  
+    eval "use JSON::Any";
+    plan skip_all => "JSON::Any is required for this test" if $@;          
     plan tests => 33;    
     use_ok('MooseX::Storage');
 }

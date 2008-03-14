@@ -7,7 +7,9 @@ use Test::More;
 
 BEGIN {
     eval "use Encode";
-    plan skip_all => "Encode is required for this test" if $@;    
+    plan skip_all => "Encode is required for this test" if $@;   
+    eval "use JSON::Any";
+    plan skip_all => "JSON::Any is required for this test" if $@;     
     # NOTE: 
     # this is because JSON::XS is 
     # the only one which really gets

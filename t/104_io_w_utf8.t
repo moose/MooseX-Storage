@@ -6,6 +6,8 @@ use warnings;
 use Test::More;
 
 BEGIN {  
+    eval "use JSON::Any";
+    plan skip_all => "JSON::Any is required for this test" if $@;    
     # NOTE: 
     # this is because JSON::XS is 
     # the only one which really gets

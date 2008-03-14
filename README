@@ -1,4 +1,4 @@
-MooseX-Storage version 0.10
+MooseX-Storage version 0.12
 
 INSTALLATION
 
@@ -21,7 +21,7 @@ DEPENDENCIES
     Moose
     JSON::Any
     Best (in order to load a YAML file)
-    IO::Fole
+    IO::File
     
 OPTIONAL DEPENDENCIES
 

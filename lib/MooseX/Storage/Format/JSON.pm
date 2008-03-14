@@ -34,7 +34,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Format::JSON
+MooseX::Storage::Format::JSON - A JSON serialization role
 
 =head1 SYNOPSIS
 

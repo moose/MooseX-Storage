@@ -28,7 +28,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Format::Storable
+MooseX::Storage::Format::Storable - A Storable serialization role
 
 =head1 SYNOPSIS
 

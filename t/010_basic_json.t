@@ -8,6 +8,8 @@ use Test::More;
 BEGIN {        
     eval "use Test::JSON";
     plan skip_all => "Test::JSON is required for this test" if $@;            
+    eval "use JSON::Any";
+    plan skip_all => "JSON::Any is required for this test" if $@;    
     plan tests => 12;
     use_ok('MooseX::Storage');
 }
