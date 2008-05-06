@@ -1,5 +1,11 @@
 Revision history for MooseX-Storage
 
+0.13
+    * MooseX::Storage::Engine
+      - added find_type_handler_for($name) method 
+        to make finding type handlers easier
+      - improved error messages
+
 0.12 Fri. March 14, 2008
 
     - added build_requires for Test::Deep (awwaiid)

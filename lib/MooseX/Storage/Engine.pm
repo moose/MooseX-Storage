@@ -2,7 +2,7 @@
 package MooseX::Storage::Engine;
 use Moose;
 
-our $VERSION   = '0.05';
+our $VERSION   = '0.06';
 our $AUTHORITY = 'cpan:STEVAN';
 
 # the class marker when 
@@ -196,7 +196,7 @@ my %OBJECT_HANDLERS = (
 #        ($obj->can('does') && $obj->does('MooseX::Storage::Basic'))
 #            || confess "Bad object ($obj) does not do MooseX::Storage::Basic role";
         ($obj->can('pack'))
-            || confess "Object does not have a &pack method, cannot collapse";
+            || confess "Object ($obj) does not have a &pack method, cannot collapse";
         $obj->pack(%$options);
     },
 );
@@ -332,6 +332,11 @@ sub find_type_handler {
     confess "Cannot handle type constraint (" . $type_constraint->name . ")";    
 }
 
+sub find_type_handler_for {
+    my ($self, $type_handler_name) = @_;
+    $TYPES{$type_handler_name}
+}
+
 1;
 
 __END__
@@ -396,11 +401,13 @@ No user serviceable parts inside. If you really want to know, read the source :)
 
 =over 4
 
-=item B<find_type_handler>
+=item B<find_type_handler ($type)>
 
-=item B<add_custom_type_handler>
+=item B<find_type_handler_for ($name)>
 
-=item B<remove_custom_type_handler>
+=item B<add_custom_type_handler ($name, %handlers)>
+
+=item B<remove_custom_type_handler ($name)>
 
 =back
 
