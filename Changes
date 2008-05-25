@@ -1,10 +1,13 @@
 Revision history for MooseX-Storage
 
-0.13
+0.13 Sat. May 24, 2008
     * MooseX::Storage::Engine
       - added find_type_handler_for($name) method 
         to make finding type handlers easier
       - improved error messages
+
+    ~ removed Build.PL since Module::Install
+      no longer supports it
 
 0.12 Fri. March 14, 2008
 
