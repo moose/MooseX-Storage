@@ -1,5 +1,11 @@
 Revision history for MooseX-Storage
 
+0.14
+    * MooseX::Storage::Engine
+      - cycles are now tracked by refaddr instead 
+        of stringified object, which broke for any
+        overloaded objects (Thanks to Jonathan Rockway)
+
 0.13 Sat. May 24, 2008
     * MooseX::Storage::Engine
       - added find_type_handler_for($name) method 
