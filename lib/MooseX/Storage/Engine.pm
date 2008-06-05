@@ -1,6 +1,7 @@
 
 package MooseX::Storage::Engine;
 use Moose;
+use Scalar::Util qw(refaddr);
 
 our $VERSION   = '0.06';
 our $AUTHORITY = 'cpan:STEVAN';
@@ -17,7 +18,7 @@ has 'storage' => (
 
 has 'seen' => (
     is      => 'ro',
-    isa     => 'HashRef',
+    isa     => 'HashRef[Int]', # int is the refaddr
     default => sub {{}}
 );
 
@@ -31,7 +32,7 @@ sub collapse_object {
 
 	# NOTE:
 	# mark the root object as seen ...
-	$self->seen->{$self->object} = undef;
+	$self->seen->{refaddr $self->object} = undef;
 	
     $self->map_attributes('collapse_attribute', \%options);
     $self->storage->{$CLASS_MARKER} = $self->object->meta->identifier;    
@@ -46,7 +47,7 @@ sub expand_object {
     
 	# NOTE:
 	# mark the root object as seen ...
-	$self->seen->{$data} = undef;    
+	$self->seen->{refaddr $data} = undef;    
     
     $self->map_attributes('expand_attribute', $data, \%options);
 	return $self->storage;    
@@ -111,20 +112,20 @@ sub expand_attribute_value {
 
 sub check_for_cycle_in_collapse {
     my ($self, $attr, $value) = @_;
-    (!exists $self->seen->{$value})
+    (!exists $self->seen->{refaddr $value})
         || confess "Basic Engine does not support cycles in class(" 
                  . ($attr->associated_class->name) . ").attr("
                  . ($attr->name) . ") with $value";
-    $self->seen->{$value} = undef;
+    $self->seen->{refaddr $value} = undef;
 }
 
 sub check_for_cycle_in_expansion {
     my ($self, $attr, $value) = @_;
-    (!exists $self->seen->{$value})
+    (!exists $self->seen->{refaddr $value})
     || confess "Basic Engine does not support cycles in class(" 
              . ($attr->associated_class->name) . ").attr("
              . ($attr->name) . ") with $value";
-    $self->seen->{$value} = undef;
+    $self->seen->{refaddr $value} = undef;
 }
 
 # util methods ...
