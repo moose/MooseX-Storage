@@ -4,6 +4,9 @@ use strict;
 use warnings;
 
 use Test::More;
+use File::Temp qw(tempdir);
+use File::Spec::Functions;
+my $dir = tempdir( CLEANUP => 1 );
 
 BEGIN {  
     eval "use IO::AtomicFile";
@@ -39,7 +42,7 @@ use utf8;
     );
 }
 
-my $file = 'temp.json';
+my $file = catfile($dir, 'temp.json');
 
 {
     my $foo = Foo->new;
@@ -81,4 +84,3 @@ unlink $file;
       '... got the string we expected');
 }
 
-unlink $file;

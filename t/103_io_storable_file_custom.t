@@ -5,6 +5,9 @@ use warnings;
 
 use Test::More tests => 11;
 use Storable ();
+use File::Temp qw(tempdir);
+use File::Spec::Functions;
+my $dir = tempdir( CLEANUP => 1 );
 
 BEGIN {
     use_ok('MooseX::Storage');
@@ -42,7 +45,7 @@ BEGIN {
 
 }
 
-my $file = 'temp.storable';
+my $file = catfile($dir,'temp.storable');
 
 {
     my $foo = Foo->new(
@@ -94,4 +97,3 @@ my $file = 'temp.storable';
     is($foo->object->number, 2, '... got the right number (in the embedded object)');
 }
 
-unlink $file;

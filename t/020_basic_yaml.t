@@ -8,6 +8,8 @@ use Test::More;
 BEGIN {
     eval "use Test::YAML::Valid";
     plan skip_all => "Test::YAML::Valid is required for this test" if $@;            
+    eval "use Best [[qw(YAML::Syck YAML)]]";
+    plan skip_all => "YAML or YAML::syck and Best are required for this test" if $@;            
     plan tests => 12;
     use_ok('MooseX::Storage');
 }

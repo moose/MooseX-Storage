@@ -4,13 +4,16 @@ use strict;
 use warnings;
 
 use Test::More;
+use File::Temp qw(tempdir);
+use File::Spec::Functions;
+my $dir = tempdir( CLEANUP => 1 );
 
 BEGIN {
     eval "use IO::AtomicFile";
     plan skip_all => "IO::AtomicFile is required for this test" if $@;   
     eval "use JSON::Any";
     plan skip_all => "JSON::Any is required for this test" if $@;         
-    plan tests => 21;    
+    plan tests => 20;
     use_ok('MooseX::Storage');
 }
 
@@ -29,7 +32,7 @@ BEGIN {
 	has 'object' => (is => 'ro', isa => 'Object');    
 }
 
-my $file = 'temp.json';
+my $file = catfile($dir, 'temp.json');
 
 {
     my $foo = Foo->new(
@@ -90,6 +93,4 @@ ok(!(-e $file), '... the file has been deleted');
     is($foo->object->number, 2, '... got the right number (in the embedded object)');
 }
 
-unlink $file;
-ok(!(-e $file), '... the file has been deleted');
 
