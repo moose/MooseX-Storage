@@ -1,5 +1,5 @@
 # Load the Module::Install bundled in ./inc/
-use inc::Module::Install;
+use inc::Module::Install 0.75;
 
 # Define metadata
 name 'MooseX-Storage';
@@ -35,4 +35,5 @@ build_requires 'Test::Deep'      => '0';
 build_requires 'Test::Exception' => '0';
 build_requires 'Test::TempDir'   => '0.02';
 
+auto_install;
 WriteAll;
