@@ -35,5 +35,4 @@ build_requires 'Test::Deep'      => '0';
 build_requires 'Test::Exception' => '0';
 build_requires 'Test::TempDir'   => '0.02';
 
-auto_install;
 WriteAll;
