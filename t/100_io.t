@@ -4,8 +4,9 @@ use strict;
 use warnings;
 
 use Test::More;
-use File::Temp qw(tempdir);
+use Test::TempDir;
 use File::Spec::Functions;
+my $dir = tempdir;
 
 BEGIN {  
     eval "use JSON::Any";
@@ -29,7 +30,6 @@ BEGIN {
 	has 'object' => (is => 'ro', isa => 'Object');    
 }
 
-my $dir = tempdir( CLEANUP => 1 );
 my $file = catfile( $dir, 'temp.json' );
 
 {

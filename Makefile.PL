@@ -33,7 +33,7 @@ feature 'File',
 build_requires 'Test::More'      => '0.42';
 build_requires 'Test::Deep'      => '0';
 build_requires 'Test::Exception' => '0';
-build_requires 'File::Temp' => '0';
+build_requires 'Test::TempDir'   => '0.02';
 
 auto_install;
 WriteAll;

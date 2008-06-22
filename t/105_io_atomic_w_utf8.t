@@ -4,9 +4,9 @@ use strict;
 use warnings;
 
 use Test::More;
-use File::Temp qw(tempdir);
+use Test::TempDir;
 use File::Spec::Functions;
-my $dir = tempdir( CLEANUP => 1 );
+my $dir = tempdir;
 
 BEGIN {  
     eval "use IO::AtomicFile";
