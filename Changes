@@ -1,5 +1,11 @@
 Revision history for MooseX-Storage
 
+0.15
+    * MooseX::Storage
+      - Remove use of deprecated alias_method routine
+        which was causing issues when you used multiple
+        Roles which used MooseX::Storage (t0m).
+
 0.14
     * MooseX::Storage::Engine
       - cycles are now tracked by refaddr instead 

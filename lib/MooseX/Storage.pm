@@ -4,7 +4,7 @@ use Moose qw(confess);
 
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;
 
-our $VERSION   = '0.14';
+our $VERSION   = '0.15';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub import {
@@ -15,47 +15,49 @@ sub import {
     ($pkg->can('meta'))
         || confess "This package can only be used in Moose based classes";
     
-    $pkg->meta->alias_method('Storage' => sub {
-        my %params = @_;
+    $pkg->meta->add_method('Storage' => __PACKAGE__->meta->find_method_by_name('_injected_storage_role_generator')); 
+}
+
+sub _injected_storage_role_generator {
+    my %params = @_;
         
-        if (exists $params{'base'}) {
-            $params{'base'} = ('Base::' . $params{'base'});        
-        }
-        else {
-            $params{'base'} = 'Basic';        
-        }
+    if (exists $params{'base'}) {
+        $params{'base'} = ('Base::' . $params{'base'});        
+    }
+    else {
+        $params{'base'} = 'Basic';        
+    }
         
-        my @roles = (
-            ('MooseX::Storage::' . $params{'base'}),
-        );
+    my @roles = (
+        ('MooseX::Storage::' . $params{'base'}),
+    );
         
-        # NOTE:
-        # you don't have to have a format 
-        # role, this just means you dont 
-        # get anything other than pack/unpack
-        push @roles => 'MooseX::Storage::Format::' . $params{'format'}
-            if exists $params{'format'};
+    # NOTE:
+    # you don't have to have a format 
+    # role, this just means you dont 
+    # get anything other than pack/unpack
+    push @roles => 'MooseX::Storage::Format::' . $params{'format'}
+        if exists $params{'format'};
             
+    # NOTE:
+    # many IO roles don't make sense unless 
+    # you have also have a format role chosen
+    # too, the exception being StorableFile
+    if (exists $params{'io'}) {
         # NOTE:
-        # many IO roles don't make sense unless 
-        # you have also have a format role chosen
-        # too, the exception being StorableFile
-        if (exists $params{'io'}) {
-            # NOTE:
-            # we dont need this code anymore, cause 
-            # the role composition will catch it for 
-            # us. This allows the StorableFile to work
-            #(exists $params{'format'})
-            #    || confess "You must specify a format role in order to use an IO role";
-            push @roles => 'MooseX::Storage::IO::' . $params{'io'};
-        }
+        # we dont need this code anymore, cause 
+        # the role composition will catch it for 
+        # us. This allows the StorableFile to work
+        #(exists $params{'format'})
+        #    || confess "You must specify a format role in order to use an IO role";
+        push @roles => 'MooseX::Storage::IO::' . $params{'io'};
+    }
         
-        Class::MOP::load_class($_) 
-            || die "Could not load role (" . $_ . ") for package ($pkg)"
-                foreach @roles;        
+    Class::MOP::load_class($_) 
+        || die "Could not load role (" . $_ . ")"
+            foreach @roles;        
         
-        return @roles;
-    });
+    return @roles;
 }
 
 1;
