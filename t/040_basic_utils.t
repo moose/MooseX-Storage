@@ -75,7 +75,9 @@ SKIP: {
     my $classname = eval { 
         MooseX::Storage::Util->peek($yaml => ('format' => 'YAML'))
     };
-    if ($@ =~ /^Could not load YAML module because/) {
+    if ($@ =~ /^Could not load YAML module because/
+        or $@ =~ /^Can't locate Best/
+    ) {
         skip "No YAML module found", 1;
     }    
     

@@ -1,5 +1,8 @@
 Revision history for MooseX-Storage
 
+0.16
+   * Don't fail tests when Best is unavailable (t0m)
+
 0.15
     * MooseX::Storage
       - Remove use of deprecated alias_method routine
