@@ -1,3 +1,4 @@
+^svn-commit.*\.tmp$
 ^_build
 ^Build$
 ^blib
@@ -17,4 +18,4 @@ cover_db
 ^#.*#$
 ^\.#
 ^TODO$
-^.shipit$
+^\.shipit$

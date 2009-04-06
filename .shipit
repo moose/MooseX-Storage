@@ -1,0 +1,5 @@
+steps = FindVersion, ChangeVersion, CheckChangeLog, DistTest, Commit, Tag, MakeDist
+
+svn.tagpattern =  http://code2.0beta.co.uk/moose/svn/MooseX-Storage/tags/%v
+
+CheckChangeLog.files = Changes
