@@ -1,5 +1,9 @@
 Revision history for MooseX-Storage
 
+0.17
+   * Change MooseX::Storage::Engine to use get_all_attributes,
+     rather than the deprecated compute_all_applicable_attributes (t0m)
+
 0.16
    * Don't fail tests when Best is unavailable (t0m)
 

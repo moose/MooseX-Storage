@@ -11,7 +11,7 @@ use Best [
     [ qw[Load Dump] ]
 ];
 
-our $VERSION   = '0.02';
+our $VERSION   = '0.17';
 our $AUTHORITY = 'cpan:STEVAN';
 
 requires 'pack';

@@ -3,7 +3,7 @@ package MooseX::Storage::Engine;
 use Moose;
 use Scalar::Util qw(refaddr);
 
-our $VERSION   = '0.07';
+our $VERSION   = '0.17';
 our $AUTHORITY = 'cpan:STEVAN';
 
 # the class marker when 
@@ -70,15 +70,17 @@ sub expand_attribute {
 
 sub collapse_attribute_value {
     my ($self, $attr, $options)  = @_;
+    # Faster, but breaks attributes without readers, do we care?
+	#my $value = $attr->get_read_method_ref->($self->object);
 	my $value = $attr->get_value($self->object);
-	
+
 	# NOTE:
-	# this might not be enough, we might 
-	# need to make it possible for the 
+	# this might not be enough, we might
+	# need to make it possible for the
 	# cycle checker to return the value
     $self->check_for_cycle_in_collapse($attr, $value)
         if ref $value;
-	
+
     if (defined $value && $attr->has_type_constraint) {
         my $type_converter = $self->find_type_handler($attr->type_constraint);
         (defined $type_converter)
@@ -137,7 +139,7 @@ sub map_attributes {
     } grep {
         # Skip our special skip attribute :)
         !$_->does('MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize') 
-    } ($self->object || $self->class)->meta->compute_all_applicable_attributes;
+    } ($self->object || $self->class)->meta->get_all_attributes;
 }
 
 ## ------------------------------------------------------------------
