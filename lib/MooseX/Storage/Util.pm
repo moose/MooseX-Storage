@@ -31,9 +31,8 @@ sub peek {
 
 sub _inflate_json {
     my ($class, $json) = @_;
-    
-    require JSON::Any;
-    eval { JSON::Any->import };
+
+    eval { require JSON::Any; JSON::Any->import };
     confess "Could not load JSON module because : $@" if $@; 
     
     utf8::encode($json) if utf8::is_utf8($json);    

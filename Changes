@@ -1,7 +1,8 @@
 Revision history for MooseX-Storage
 
 0.18
-   * Added support for Maybe[...] constraints
+   * Fix test failures without JSON::Any. Patch from RT#46343 (Nicholas Clarke)
+   * Added support for Maybe[...] constraints fixing RT#43165 (plu)
 
 0.17
    * Change MooseX::Storage::Engine to use get_all_attributes,
