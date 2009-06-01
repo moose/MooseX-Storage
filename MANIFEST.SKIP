@@ -1,3 +1,4 @@
+^.git
 ^svn-commit.*\.tmp$
 ^_build
 ^Build$
