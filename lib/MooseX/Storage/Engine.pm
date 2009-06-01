@@ -298,6 +298,14 @@ sub remove_custom_type_handler {
 sub find_type_handler {
     my ($self, $type_constraint) = @_;
     
+    # check if the type is a Maybe and
+    # if its parent is not parameterized.
+    # If both is true recurse this method
+    # using ->type_parameter.
+    return $self->find_type_handler($type_constraint->type_parameter)
+        if $type_constraint->parent eq 'Maybe'
+          and not $type_constraint->parent->can('type_parameter');
+
     # this should handle most type usages
     # since they they are usually just 
     # the standard set of built-ins
