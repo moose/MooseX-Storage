@@ -68,7 +68,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage - An serialization framework for Moose classes
+MooseX::Storage - A serialization framework for Moose classes
 
 =head1 SYNOPSIS
 
