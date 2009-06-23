@@ -134,28 +134,39 @@ sub check_for_cycle_in_expansion {
 
 sub map_attributes {
     my ($self, $method_name, @args) = @_;
-    map { 
-        $self->$method_name($_, @args) 
-    } grep {
+ 
+    # The $self->object check is here to differentiate a ->pack from a 
+    # ->unpack; ->object is only defined for a ->pack
+ 
+    # no checks needed if this is class based (ie, restore)
+    unless( $self->object ) {
+        return map { $self->$method_name($_, @args) }
+            $self->class->meta->get_all_attributes;
+    }
+    
+    # if it's object based, it's a store -- in that case, 
+    # check thoroughly
+    my @rv;
+    my $o = $self->object;
+    for my $attr ( $o->meta->get_all_attributes ) {    
+        
         # Skip our special skip attribute :)
-        !$_->does('MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize') 
-        and     
+        next if $attr->does(
+            'MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize');
+
         # If we're invoked with the 'OnlyWhenBuilt' trait, we should
         # only serialize the attribute if it's already built. So, go ahead
-        # and check if the attribute has a predicate. If so, check if it's set 
-        # and then go ahead and look it up.
-        # The $self->object check is here to differentiate a ->pack from a 
-        # ->unpack; ->object is only defined for a ->pack
-        do { 
-            if( $self->object and my $pred = $_->predicate and
-                $self->object->does('MooseX::Storage::Traits::OnlyWhenBuilt') 
-            ) { 
-                $self->object->$pred ? 1 : 0; 
-            } else {
-                1 
-            } 
-        }  
-    } ($self->object || $self->class)->meta->get_all_attributes;
+        # and check if the attribute has a predicate. If so, check if it's 
+        # set  and then go ahead and look it up.
+        if( $o->does('MooseX::Storage::Traits::OnlyWhenBuilt') and 
+            my $pred = $attr->predicate 
+        ) { 
+            next unless $self->object->$pred; 
+        }         
+        push @rv, $self->$method_name($attr, @args);
+    } 
+
+    return @rv;
 }
 
 ## ------------------------------------------------------------------
