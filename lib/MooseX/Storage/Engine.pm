@@ -139,6 +139,22 @@ sub map_attributes {
     } grep {
         # Skip our special skip attribute :)
         !$_->does('MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize') 
+        and     
+        # If we're invoked with the 'OnlyWhenBuilt' trait, we should
+        # only serialize the attribute if it's already built. So, go ahead
+        # and check if the attribute has a predicate. If so, check if it's set 
+        # and then go ahead and look it up.
+        # The $self->object check is here to differentiate a ->pack from a 
+        # ->unpack; ->object is only defined for a ->pack
+        do { 
+            if( $self->object and my $pred = $_->predicate and
+                $self->object->does('MooseX::Storage::Traits::OnlyWhenBuilt') 
+            ) { 
+                $self->object->$pred ? 1 : 0; 
+            } else {
+                1 
+            } 
+        }  
     } ($self->object || $self->class)->meta->get_all_attributes;
 }
 
