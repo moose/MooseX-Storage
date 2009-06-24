@@ -1,4 +1,3 @@
-
 package MooseX::Storage::Basic;
 use Moose::Role;
 
@@ -9,15 +8,35 @@ our $AUTHORITY = 'cpan:STEVAN';
 
 sub pack {
     my ( $self, @args ) = @_;
-    my $e = MooseX::Storage::Engine->new( object => $self );
+    my $e = $self->_storage_get_engine( object => $self );
     $e->collapse_object(@args);
 }
 
 sub unpack {
-    my ( $class, $data, @args ) = @_;
-    my $e = MooseX::Storage::Engine->new( class => $class );
-    $class->new( $e->expand_object($data, @args) );
+    my ($class, $data, %args) = @_;
+    my $e = $class->_storage_get_engine(class => $class);
+    
+    $class->_storage_construct_instance( 
+        [ $e->expand_object($data, %args) ], 
+        \%args 
+    );
 }
+
+sub _storage_get_engine {
+    my $self = shift;
+    MooseX::Storage::Engine->new( @_ );
+}
+
+sub _storage_construct_instance {
+    my ($class, $args, $opts) = @_;
+    
+    my @i = defined $opts->{'inject'} ? @{ $opts->{'inject'} } : ();
+ 
+    $class->new( @$args, @i );
+}
+
+
+
 
 1;
 
