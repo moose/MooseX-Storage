@@ -4,6 +4,23 @@ use Moose::Role;
 our $VERSION   = '0.18';
 our $AUTHORITY = 'cpan:STEVAN';
 
+requires 'pack';
+requires 'unpack';
+
+around 'pack' => sub {
+    my ($orig, $self, %args) = @_;
+    $args{engine_traits} ||= [];
+    push(@{$args{engine_traits}}, 'OnlyWhenBuilt');
+    $self->$orig(%args);
+};
+
+around 'unpack' => sub {
+    my ($orig, $self, $data, %args) = @_;
+    $args{engine_traits} ||= [];
+    push(@{$args{engine_traits}}, 'OnlyWhenBuilt');
+    $self->$orig($data, %args);
+};
+
 1;
 
 __END__
