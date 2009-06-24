@@ -8,13 +8,13 @@ our $AUTHORITY = 'cpan:STEVAN';
 
 sub pack {
     my ( $self, @args ) = @_;
-    my $e = $self->_storage_get_engine( object => $self );
+    my $e = $self->_storage_get_engine_class->new( object => $self );
     $e->collapse_object(@args);
 }
 
 sub unpack {
     my ($class, $data, %args) = @_;
-    my $e = $class->_storage_get_engine(class => $class);
+    my $e = $class->_storage_get_engine_class->new(class => $class);
     
     $class->_storage_construct_instance( 
         $e->expand_object($data, %args), 
@@ -22,9 +22,8 @@ sub unpack {
     );
 }
 
-sub _storage_get_engine {
-    my $self = shift;
-    MooseX::Storage::Engine->new( @_ );
+sub _storage_get_engine_class {
+    'MooseX::Storage::Engine';
 }
 
 sub _storage_construct_instance {
