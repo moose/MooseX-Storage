@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 11;
+use Test::More tests => 13;
 use Test::Exception;
 
 BEGIN {
@@ -65,6 +65,7 @@ BEGIN {
         metaclass   => 'DoNotSerialize',
         required    => 1,
         is          => 'rw',
+        isa         => 'Str',        # type constraint is important
     );
     
     has zot => (
@@ -86,8 +87,12 @@ BEGIN {
             zot         => $$,
         },                      "   Packed correctly" );
         
+    eval { Bar->unpack( $bpack ) };
+    ok( $@,                     "   Unpack without required attribute fails" );
+    like( $@, qr/foo/,          "       Proper error recorded" );
+        
     my $bar2 = Bar->unpack({ %$bpack, foo => $$ });
-    ok( $bar2,                  "   Unpacked correctly by supplying foo => $$"); 
+    ok( $bar2,                  "   Unpacked correctly with foo => $$"); 
 }        
             
         
