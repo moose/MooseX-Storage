@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 16;
+use Test::More tests => 18;
 use Test::Exception;
 
 BEGIN {
@@ -145,12 +145,13 @@ This test demonstrates two things:
     my $double = Double->new( 'x' => $ref, 'y' => $ref );
 
     ### currently, the cycle checker's too naive to figure out this is not
-    ### a problem
+    ### a problem, pass an empty hashref to the 2nd test to make sure it
+    ### doesn't warn/die
     TODO: {
         local $TODO = "Cycle check is too naive";
         my $pack = eval { $double->pack; };
         ok( $pack,              "Object with 2 references packed" );
-        ok( Double->unpack( $pack ),
+        ok( Double->unpack( $pack || {} ),
                                 "   And unpacked again" );
     }
     
