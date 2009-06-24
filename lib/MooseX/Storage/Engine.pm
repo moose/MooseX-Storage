@@ -42,9 +42,9 @@ sub collapse_object {
 sub expand_object {
     my ($self, $data, %options) = @_;
     
-    $options{check_version}   = 1 unless exists $options{check_version};
-    $options{check_authority} = 1 unless exists $options{check_authority};   
-    
+    $options{check_version}       = 1 unless exists $options{check_version};
+    $options{check_authority}     = 1 unless exists $options{check_authority};   
+
 	# NOTE:
 	# mark the root object as seen ...
 	$self->seen->{refaddr $data} = undef;    
@@ -78,8 +78,13 @@ sub collapse_attribute_value {
 	# this might not be enough, we might
 	# need to make it possible for the
 	# cycle checker to return the value
-    $self->check_for_cycle_in_collapse($attr, $value)
-        if ref $value;
+	# Check cycles unless explicitly disabled
+    if( ref $value and not(
+        $options->{disable_cycle_check} or
+        $self->object->does('MooseX::Storage::Traits::DisableCycleDetection')
+    )) {        
+        $self->check_for_cycle_in_collapse($attr, $value)
+    }
 
     if (defined $value && $attr->has_type_constraint) {
         my $type_converter = $self->find_type_handler($attr->type_constraint);
@@ -95,8 +100,12 @@ sub expand_attribute_value {
 
 	# NOTE:
 	# (see comment in method above ^^)
-    $self->check_for_cycle_in_expansion($attr, $value) 
-        if ref $value;    
+    if( ref $value and not(
+        $options->{disable_cycle_check} or
+        $self->class->does('MooseX::Storage::Traits::DisableCycleDetection')
+    )) {        
+        $self->check_for_cycle_in_collapse($attr, $value)
+    }
     
     if (defined $value && $attr->has_type_constraint) {
         my $type_converter = $self->find_type_handler($attr->type_constraint);

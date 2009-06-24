@@ -82,7 +82,14 @@ but the exported C<Storage> function.
 
 =over 4
 
-=item B<pack>
+=item B<pack ([ disable_cycle_check => 1])>
+
+Providing the C<disable_cycle_check> argument disables checks for any cyclical
+references. The current implementation for this check is rather naive, so if
+you know what you are doing, you can bypass this check.
+
+This trait is applied on a perl-case basis. To set this flag for all objects
+that inherit from this role, see L<MooseX::Storage::Traits::DisableCycleDetection>.
 
 =item B<unpack ($data [, insert => { key => val, ... } ] )>
 
