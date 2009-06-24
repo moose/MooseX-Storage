@@ -7,14 +7,14 @@ our $VERSION   = '0.18';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub pack {
-    my ( $self, @args ) = @_;
-    my $e = $self->_storage_get_engine_class->new( object => $self );
-    $e->collapse_object(@args);
+    my ( $self, %args ) = @_;
+    my $e = $self->_storage_get_engine_class(%args)->new( object => $self );
+    $e->collapse_object(%args);
 }
 
 sub unpack {
     my ($class, $data, %args) = @_;
-    my $e = $class->_storage_get_engine_class->new(class => $class);
+    my $e = $class->_storage_get_engine_class(%args)->new(class => $class);
     
     $class->_storage_construct_instance( 
         $e->expand_object($data, %args), 
@@ -23,7 +23,25 @@ sub unpack {
 }
 
 sub _storage_get_engine_class {
-    'MooseX::Storage::Engine';
+    my ($self, %args) = @_;
+
+    my $default = 'MooseX::Storage::Engine';
+
+    return $default
+        unless (
+            exists $args{engine_traits} 
+         && ref($args{engine_traits}) eq 'ARRAY'
+         && scalar(@{$args{engine_traits}})
+    );
+    
+    my @roles = map { sprintf("%s::Trait::%s", $default, $_) }
+        @{$args{engine_traits}};
+    
+    Moose::Meta::Class->create_anon_class(
+        superclasses => [$default],
+        roles => [ @roles ],
+        cache => 1,
+    )->name;
 }
 
 sub _storage_construct_instance {
