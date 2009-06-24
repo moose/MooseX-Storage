@@ -59,10 +59,10 @@ sub _injected_storage_role_generator {
     for my $trait ( @{ $params{'traits'} ||= [] } ) {
         push @roles, 'MooseX::Storage::Traits::'.$trait;
     }
-        
-    Class::MOP::load_class($_) 
-        || die "Could not load role (" . $_ . ")"
-            foreach @roles;        
+
+    for my $role ( @roles ) {        
+        Class::MOP::load_class($role) or die "Could not load role ($role)";
+    }
         
     return @roles;
 }
