@@ -151,6 +151,9 @@ class name and each instance attribute is stored. Very simple.
 This level is not optional, it is the bare minumum that 
 MooseX::Storage provides and all other levels build on top of this.
 
+See L<Moosex::Storage::Basic> for the fundamental implementation and
+options to C<pack> and C<unpack>
+
 =item B<format>
 
 The second (format) level is C<freeze> and C<thaw>. In this level the 

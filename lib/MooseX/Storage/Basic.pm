@@ -17,7 +17,7 @@ sub unpack {
     my $e = $class->_storage_get_engine(class => $class);
     
     $class->_storage_construct_instance( 
-        [ $e->expand_object($data, %args) ], 
+        $e->expand_object($data, %args), 
         \%args 
     );
 }
@@ -29,14 +29,10 @@ sub _storage_get_engine {
 
 sub _storage_construct_instance {
     my ($class, $args, $opts) = @_;
-    
-    my @i = defined $opts->{'inject'} ? @{ $opts->{'inject'} } : ();
+    my %i = defined $opts->{'inject'} ? %{ $opts->{'inject'} } : ();
  
-    $class->new( @$args, @i );
+    $class->new( %$args, %i );
 }
-
-
-
 
 1;
 
@@ -73,6 +69,9 @@ MooseX::Storage::Basic - The simplest level of serialization
   
   # unpack the hash into a class
   my $p2 = Point->unpack({ __CLASS__ => 'Point-0.01', x => 10, y => 10 });
+  
+  # unpack the hash, with insertion of paramaters
+  my $p3 = Point->unpack( $p->pack, inject => { x => 11 } );
 
 =head1 DESCRIPTION
 
@@ -85,7 +84,10 @@ but the exported C<Storage> function.
 
 =item B<pack>
 
-=item B<unpack ($data)>
+=item B<unpack ($data [, insert => { key => val, ... } ] )>
+
+Providing the C<insert> argument let's you supply additional arguments to
+the class' C<new> function, or override ones from the serialized data.
 
 =back
 

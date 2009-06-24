@@ -65,7 +65,7 @@ BEGIN {
         metaclass   => 'DoNotSerialize',
         required    => 1,
         is          => 'rw',
-        isa         => 'Str',        # type constraint is important
+        isa         => 'Object',        # type constraint is important
     );
     
     has zot => (
@@ -74,10 +74,11 @@ BEGIN {
     );        
 }
 
-{   my $bar = Bar->new( foo => $$ );
+{   my $obj = bless {};
+    my $bar = Bar->new( foo => $obj );
     
     ok( $bar,                   "New object created" );
-    is( $bar->foo, $$,          "   ->foo => $$" );
+    is( $bar->foo, $obj,        "   ->foo => $obj" );
     is( $bar->zot, $$,          "   ->zot => $$" );
     
     my $bpack = $bar->pack;
@@ -91,8 +92,8 @@ BEGIN {
     ok( $@,                     "   Unpack without required attribute fails" );
     like( $@, qr/foo/,          "       Proper error recorded" );
         
-    my $bar2 = Bar->unpack({ %$bpack, foo => $$ });
-    ok( $bar2,                  "   Unpacked correctly with foo => $$"); 
+    my $bar2 = Bar->unpack( $bpack, inject => { foo => bless {} } );
+    ok( $bar2,                  "   Unpacked correctly with foo => Object"); 
 }        
             
         
