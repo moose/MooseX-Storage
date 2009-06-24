@@ -78,13 +78,8 @@ sub collapse_attribute_value {
 	# this might not be enough, we might
 	# need to make it possible for the
 	# cycle checker to return the value
-	# Check cycles unless explicitly disabled
-    if( ref $value and not(
-        $options->{disable_cycle_check} or
-        $self->object->does('MooseX::Storage::Traits::DisableCycleDetection')
-    )) {        
-        $self->check_for_cycle_in_collapse($attr, $value)
-    }
+    $self->check_for_cycle_in_collapse($attr, $value)
+        if ref $value;
 
     if (defined $value && $attr->has_type_constraint) {
         my $type_converter = $self->find_type_handler($attr->type_constraint);

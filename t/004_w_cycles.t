@@ -155,7 +155,7 @@ This test demonstrates two things:
                                 "   And unpacked again" );
     }
     
-    my $pack = $double->pack( disable_cycle_check => 1 );
+    my $pack = $double->pack( engine_traits => [qw/DisableCycleDetection/] );
     ok( $pack,                  "   Object packs when cycle check is disabled");
     ok( Double->unpack( $pack ),
                                 "   And unpacked again" );
