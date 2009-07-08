@@ -52,10 +52,17 @@ sub _injected_storage_role_generator {
         #    || confess "You must specify a format role in order to use an IO role";
         push @roles => 'MooseX::Storage::IO::' . $params{'io'};
     }
-        
-    Class::MOP::load_class($_) 
-        || die "Could not load role (" . $_ . ")"
-            foreach @roles;        
+    
+    # Note:
+    # These traits alter the behaviour of the engine, the user can
+    # specify these per role-usage
+    for my $trait ( @{ $params{'traits'} ||= [] } ) {
+        push @roles, 'MooseX::Storage::Traits::'.$trait;
+    }
+
+    for my $role ( @roles ) {        
+        Class::MOP::load_class($role) or die "Could not load role ($role)";
+    }
         
     return @roles;
 }
@@ -68,7 +75,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage - An serialization framework for Moose classes
+MooseX::Storage - A serialization framework for Moose classes
 
 =head1 SYNOPSIS
 
@@ -144,6 +151,9 @@ class name and each instance attribute is stored. Very simple.
 This level is not optional, it is the bare minumum that 
 MooseX::Storage provides and all other levels build on top of this.
 
+See L<Moosex::Storage::Basic> for the fundamental implementation and
+options to C<pack> and C<unpack>
+
 =item B<format>
 
 The second (format) level is C<freeze> and C<thaw>. In this level the 
@@ -161,6 +171,27 @@ and writing data to file/network/database/etc.
 
 This level is also optional, in most cases it does require a C<format> role
 to also be used, the expection being the C<StorableFile> role.
+
+=back
+
+=head2 Behaviour modifiers
+
+The serialization behaviour can be changed by supplying C<traits>.
+This can be done as follows:
+
+  use MooseX::Storage;
+  with Storage( traits => [Trait1, Trait2,...] );
+  
+The following traits are currently bundled with C<MooseX::Storage>:
+
+=over 4
+
+=item OnlyWhenBuilt
+
+Only attributes that have been built (ie, where the predicate returns 
+'true') will be serialized. This avoids any potentially expensive computations.
+
+See L<MooseX::Storage::Traits::OnlyWhenBuilt> for details.
 
 =back
 

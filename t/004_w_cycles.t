@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 12;
+use Test::More tests => 18;
 use Test::Exception;
 
 BEGIN {
@@ -130,4 +130,54 @@ This test demonstrates two things:
     '... got the right packed version (with parent attribute skipped)');
 }
 
+### this fails with cycle detection on
+{   package Double;
+    use Moose;
+    use MooseX::Storage;
+    with Storage;
+    
+    has 'x' => ( is => 'rw', isa => 'HashRef' );
+    has 'y' => ( is => 'rw', isa => 'HashRef' );
+}
 
+{   my $ref = {};
+
+    my $double = Double->new( 'x' => $ref, 'y' => $ref );
+
+    ### currently, the cycle checker's too naive to figure out this is not
+    ### a problem, pass an empty hashref to the 2nd test to make sure it
+    ### doesn't warn/die
+    TODO: {
+        local $TODO = "Cycle check is too naive";
+        my $pack = eval { $double->pack; };
+        ok( $pack,              "Object with 2 references packed" );
+        ok( Double->unpack( $pack || {} ),
+                                "   And unpacked again" );
+    }
+    
+    my $pack = $double->pack( disable_cycle_check => 1 );
+    ok( $pack,                  "   Object packs when cycle check is disabled");
+    ok( Double->unpack( $pack ),
+                                "   And unpacked again" );
+
+}    
+
+### the same as above, but now done with a trait
+### this fails with cycle detection on
+{   package DoubleNoCycle;
+    use Moose;
+    use MooseX::Storage;
+    with Storage( traits => ['DisableCycleDetection'] );
+    
+    has 'x' => ( is => 'rw', isa => 'HashRef' );
+    has 'y' => ( is => 'rw', isa => 'HashRef' );
+}
+
+{   my $ref = {};
+
+    my $double = DoubleNoCycle->new( 'x' => $ref, 'y' => $ref );
+    my $pack = $double->pack;
+    ok( $pack,              "Object packs with DisableCycleDetection trait");
+    ok( DoubleNoCycle->unpack( $pack ),
+                            "   Unpacked again" );
+}    

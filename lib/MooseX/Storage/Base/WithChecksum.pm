@@ -1,34 +1,32 @@
-
 package MooseX::Storage::Base::WithChecksum;
 use Moose::Role;
 
+with 'MooseX::Storage::Basic';
+
 use Digest       ();
 use Data::Dumper ();
-
-use MooseX::Storage::Engine;
 
 our $VERSION   = '0.18';
 our $AUTHORITY = 'cpan:STEVAN';
 
 our $DIGEST_MARKER = '__DIGEST__';
 
-sub pack {
-    my ($self, @args ) = @_;
+around pack => sub {
+    my $orig = shift;
+    my $self = shift;
+    my @args = @_;
 
-    my $e = MooseX::Storage::Engine->new( object => $self );
+    my $collapsed = $self->$orig( @args );
 
-    my $collapsed = $e->collapse_object(@args);
-    
     $collapsed->{$DIGEST_MARKER} = $self->_digest_packed($collapsed, @args);
     
     return $collapsed;
-}
+};
 
-sub unpack {
-    my ($class, $data, @args) = @_;
+around unpack  => sub {
+    my ($orig, $class, $data, @args) = @_;
 
     # check checksum on data
-    
     my $old_checksum = delete $data->{$DIGEST_MARKER};
     
     my $checksum = $class->_digest_packed($data, @args);
@@ -36,9 +34,8 @@ sub unpack {
     ($checksum eq $old_checksum)
         || confess "Bad Checksum got=($checksum) expected=($old_checksum)";    
 
-    my $e = MooseX::Storage::Engine->new(class => $class);
-    $class->new($e->expand_object($data, @args));
-}
+    $class->$orig( $data, @args );
+};
 
 
 sub _digest_packed {
