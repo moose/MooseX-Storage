@@ -9,22 +9,22 @@ our $AUTHORITY = 'cpan:STEVAN';
 
 sub peek {
     my ($class, $data, %options) = @_;
-    
+
     if (exists $options{'format'}) {
-        
+
         my $inflater = $class->can('_inflate_' . lc($options{'format'}));
-        
+
         (defined $inflater)
             || confess "No inflater found for " . $options{'format'};
-            
+
         $data = $class->$inflater($data);
     }
 
     (ref($data) && ref($data) eq 'HASH' && !blessed($data))
         || confess "The data has to be a HASH reference, but not blessed";
-    
+
     $options{'key'} ||= $MooseX::Storage::Engine::CLASS_MARKER;
-    
+
     return $data->{$options{'key'}};
 
 }
@@ -33,30 +33,30 @@ sub _inflate_json {
     my ($class, $json) = @_;
 
     eval { require JSON::Any; JSON::Any->import };
-    confess "Could not load JSON module because : $@" if $@; 
-    
-    utf8::encode($json) if utf8::is_utf8($json);    
-    
+    confess "Could not load JSON module because : $@" if $@;
+
+    utf8::encode($json) if utf8::is_utf8($json);
+
     my $data = eval { JSON::Any->jsonToObj($json) };
     if ($@) {
         confess "There was an error when attempting to peek at JSON: $@";
     }
-    
+
     return $data;
 }
 
 sub _inflate_yaml {
     my ($class, $yaml) = @_;
-    
-    require Best; 
+
+    require Best;
     eval { Best->import([[ qw[YAML::Syck YAML] ]]) };
-    confess "Could not load YAML module because : $@" if $@; 
-    
+    confess "Could not load YAML module because : $@" if $@;
+
     my $inflater = Best->which('YAML::Syck')->can('Load');
-    
+
     (defined $inflater)
         || confess "Could not load the YAML inflator";
-    
+
     my $data = eval { $inflater->($yaml) };
     if ($@) {
         confess "There was an error when attempting to peek at YAML : $@";
@@ -76,21 +76,21 @@ MooseX::Storage::Util - A MooseX::Storage swiss-army chainsaw
 
 =head1 DESCRIPTION
 
-This module provides a set of tools, some sharp and focused, 
+This module provides a set of tools, some sharp and focused,
 others more blunt and crude. But no matter what, they are useful
-bits to have around when dealing with MooseX::Storage code. 
+bits to have around when dealing with MooseX::Storage code.
 
 =head1 METHODS
 
-All the methods in this package are class methods and should 
-be called appropriately. 
+All the methods in this package are class methods and should
+be called appropriately.
 
 =over 4
 
 =item B<peek ($data, %options)>
 
-This method will help you to verify that the serialized class you 
-have gotten is what you expect it to be before you actually 
+This method will help you to verify that the serialized class you
+have gotten is what you expect it to be before you actually
 unfreeze/unpack it.
 
 The C<$data> can be either a perl HASH ref or some kind of serialized
@@ -109,7 +109,7 @@ Currently only JSON and YAML are supported here.
 
 =item I<key>
 
-The default is to try and extract the class name, but if you want to check 
+The default is to try and extract the class name, but if you want to check
 another key in the data, you can set this option. It will return the value
 found in the key for you.
 
@@ -131,7 +131,7 @@ Add more stuff to this module :)
 
 =head1 BUGS
 
-All complex software has bugs lurking in it, and this module is no 
+All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 

@@ -35,36 +35,36 @@ MooseX::Storage::Format::Storable - A Storable serialization role
   package Point;
   use Moose;
   use MooseX::Storage;
-  
+
   with Storage('format' => 'Storable');
-  
+
   has 'x' => (is => 'rw', isa => 'Int');
   has 'y' => (is => 'rw', isa => 'Int');
-  
+
   1;
-  
+
   my $p = Point->new(x => 10, y => 10);
-  
-  ## methods to freeze/thaw into 
+
+  ## methods to freeze/thaw into
   ## a specified serialization format
-  
+
   # pack the class with Storable
-  my $storable_data = $p->freeze(); 
-  
+  my $storable_data = $p->freeze();
+
   # unpack the storable data into the class
-  my $p2 = Point->thaw($storable_data);  
+  my $p2 = Point->thaw($storable_data);
 
 =head1 DESCRIPTION
 
-This module will C<thaw> and C<freeze> Moose classes using Storable. It 
-uses C<Storable::nfreeze> by default so that it can be easily used 
-in IPC scenarios across machines or just locally. 
+This module will C<thaw> and C<freeze> Moose classes using Storable. It
+uses C<Storable::nfreeze> by default so that it can be easily used
+in IPC scenarios across machines or just locally.
 
-One important thing to note is that this module does not mix well 
-with the IO modules. The structures that C<freeze> and C<thaw> deal with 
-are Storable's memory representation, and (as far as I know) that 
-is not easily just written onto a file. If you want file based 
-serialization with Storable, the please look at the 
+One important thing to note is that this module does not mix well
+with the IO modules. The structures that C<freeze> and C<thaw> deal with
+are Storable's memory representation, and (as far as I know) that
+is not easily just written onto a file. If you want file based
+serialization with Storable, the please look at the
 L<MooseX::Storage::IO::StorableFile> role instead.
 
 =head1 METHODS
@@ -87,7 +87,7 @@ L<MooseX::Storage::IO::StorableFile> role instead.
 
 =head1 BUGS
 
-All complex software has bugs lurking in it, and this module is no 
+All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 

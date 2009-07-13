@@ -19,7 +19,7 @@ around pack => sub {
     my $collapsed = $self->$orig( @args );
 
     $collapsed->{$DIGEST_MARKER} = $self->_digest_packed($collapsed, @args);
-    
+
     return $collapsed;
 };
 
@@ -28,11 +28,11 @@ around unpack  => sub {
 
     # check checksum on data
     my $old_checksum = delete $data->{$DIGEST_MARKER};
-    
+
     my $checksum = $class->_digest_packed($data, @args);
 
     ($checksum eq $old_checksum)
-        || confess "Bad Checksum got=($checksum) expected=($old_checksum)";    
+        || confess "Bad Checksum got=($checksum) expected=($old_checksum)";
 
     $class->$orig( $data, @args );
 };
@@ -51,12 +51,12 @@ sub _digest_packed {
         local $Data::Dumper::Deparse  = 0; # FIXME?
         my $str = Data::Dumper::Dumper($collapsed);
         # NOTE:
-        # Canonicalize numbers to strings even if it 
-        # mangles numbers inside strings. It really 
+        # Canonicalize numbers to strings even if it
+        # mangles numbers inside strings. It really
         # does not matter since its just the checksum
         # anyway.
         # - YK/SL
-        $str =~ s/(?<! ['"] ) \b (\d+) \b (?! ['"] )/'$1'/gx; 
+        $str =~ s/(?<! ['"] ) \b (\d+) \b (?! ['"] )/'$1'/gx;
         $d->add( $str );
     }
 
@@ -66,24 +66,24 @@ sub _digest_packed {
 sub _digest_object {
     my ( $self, %options ) = @_;
     my $digest_opts = $options{digest};
-    
-    $digest_opts = [ $digest_opts ] 
+
+    $digest_opts = [ $digest_opts ]
         if !ref($digest_opts) or ref($digest_opts) ne 'ARRAY';
-        
+
     my ( $d, @args ) = @$digest_opts;
 
     if ( ref $d ) {
         if ( $d->can("clone") ) {
             return $d->clone;
-        } 
+        }
         elsif ( $d->can("reset") ) {
             $d->reset;
             return $d;
-        } 
+        }
         else {
             die "Can't clone or reset digest object: $d";
         }
-    } 
+    }
     else {
         return Digest->new($d || "SHA1", @args);
     }
@@ -101,11 +101,11 @@ MooseX::Storage::Base::WithChecksum - A more secure serialization role
 
 =head1 DESCRIPTION
 
-This is an early implementation of a more secure Storage role, 
-which does integrity checks on the data. It is still being 
-developed so I recommend using it with caution. 
+This is an early implementation of a more secure Storage role,
+which does integrity checks on the data. It is still being
+developed so I recommend using it with caution.
 
-Any thoughts, ideas or suggestions on improving our technique 
+Any thoughts, ideas or suggestions on improving our technique
 are very welcome.
 
 =head1 METHODS
@@ -128,7 +128,7 @@ are very welcome.
 
 =head1 BUGS
 
-All complex software has bugs lurking in it, and this module is no 
+All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 

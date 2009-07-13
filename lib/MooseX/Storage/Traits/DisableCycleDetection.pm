@@ -38,17 +38,16 @@ MooseX::Storage::Traits::DisableCycleDetection - A custom trait to bypass cycle 
     use Moose;
     use MooseX::Storage;
     with Storage( traits => ['DisableCycleDetection'] );
-    
+
     has 'x' => ( is => 'rw', isa => 'HashRef' );
     has 'y' => ( is => 'rw', isa => 'HashRef' );
 
     my $ref = {};
 
     my $double = Double->new( 'x' => $ref, 'y' => $ref );
-    
+
     $double->pack;
- 
- 
+
 =head1 DESCRIPTION
 
 C<MooseX::Storage> implements a primitive check for circular references.
@@ -73,7 +72,7 @@ See the SYNOPSIS for a nice example that can be easily cargo-culted.
 
 =head1 BUGS
 
-All complex software has bugs lurking in it, and this module is no 
+All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 
@@ -91,3 +90,4 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
+

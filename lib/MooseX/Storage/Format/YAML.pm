@@ -7,7 +7,7 @@ use Moose::Role;
 # -dcp
 
 use Best [
-    [ qw[YAML::Syck YAML] ], 
+    [ qw[YAML::Syck YAML] ],
     [ qw[Load Dump] ]
 ];
 
@@ -42,32 +42,32 @@ MooseX::Storage::Format::YAML - A YAML serialization role
   package Point;
   use Moose;
   use MooseX::Storage;
-  
+
   with Storage('format' => 'YAML');
-  
+
   has 'x' => (is => 'rw', isa => 'Int');
   has 'y' => (is => 'rw', isa => 'Int');
-  
+
   1;
-  
+
   my $p = Point->new(x => 10, y => 10);
-  
-  ## methods to freeze/thaw into 
+
+  ## methods to freeze/thaw into
   ## a specified serialization format
   ## (in this case YAML)
-  
+
   # pack the class into a YAML string
-  $p->freeze(); 
+  $p->freeze();
 
   # ----
-  # __CLASS__: "Point" 
+  # __CLASS__: "Point"
   # x: 10
-  # y: 10  
-  
+  # y: 10
+
   # unpack the JSON string into a class
-  my $p2 = Point->thaw(<<YAML);  
+  my $p2 = Point->thaw(<<YAML);
   ----
-  __CLASS__: "Point" 
+  __CLASS__: "Point"
   x: 10
   y: 10
   YAML
@@ -92,7 +92,7 @@ MooseX::Storage::Format::YAML - A YAML serialization role
 
 =head1 BUGS
 
-All complex software has bugs lurking in it, and this module is no 
+All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 

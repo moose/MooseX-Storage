@@ -15,10 +15,10 @@ sub pack {
 sub unpack {
     my ($class, $data, %args) = @_;
     my $e = $class->_storage_get_engine_class(%args)->new(class => $class);
-    
-    $class->_storage_construct_instance( 
-        $e->expand_object($data, %args), 
-        \%args 
+
+    $class->_storage_construct_instance(
+        $e->expand_object($data, %args),
+        \%args
     );
 }
 
@@ -29,14 +29,14 @@ sub _storage_get_engine_class {
 
     return $default
         unless (
-            exists $args{engine_traits} 
+            exists $args{engine_traits}
          && ref($args{engine_traits}) eq 'ARRAY'
          && scalar(@{$args{engine_traits}})
     );
-    
+
     my @roles = map { sprintf("%s::Trait::%s", $default, $_) }
         @{$args{engine_traits}};
-    
+
     Moose::Meta::Class->create_anon_class(
         superclasses => [$default],
         roles => [ @roles ],
@@ -47,7 +47,7 @@ sub _storage_get_engine_class {
 sub _storage_construct_instance {
     my ($class, $args, $opts) = @_;
     my %i = defined $opts->{'inject'} ? %{ $opts->{'inject'} } : ();
- 
+
     $class->new( %$args, %i );
 }
 
@@ -66,33 +66,33 @@ MooseX::Storage::Basic - The simplest level of serialization
   package Point;
   use Moose;
   use MooseX::Storage;
-  
+
   our $VERSION = '0.01';
-  
+
   with Storage;
-  
+
   has 'x' => (is => 'rw', isa => 'Int');
   has 'y' => (is => 'rw', isa => 'Int');
-  
+
   1;
-  
+
   my $p = Point->new(x => 10, y => 10);
-  
-  ## methods to pack/unpack an 
+
+  ## methods to pack/unpack an
   ## object in perl data structures
-  
+
   # pack the class into a hash
   $p->pack(); # { __CLASS__ => 'Point-0.01', x => 10, y => 10 }
-  
+
   # unpack the hash into a class
   my $p2 = Point->unpack({ __CLASS__ => 'Point-0.01', x => 10, y => 10 });
-  
+
   # unpack the hash, with insertion of paramaters
   my $p3 = Point->unpack( $p->pack, inject => { x => 11 } );
 
 =head1 DESCRIPTION
 
-This is the most basic form of serialization. This is used by default 
+This is the most basic form of serialization. This is used by default
 but the exported C<Storage> function.
 
 =head1 METHODS
@@ -125,7 +125,7 @@ the class' C<new> function, or override ones from the serialized data.
 
 =head1 BUGS
 
-All complex software has bugs lurking in it, and this module is no 
+All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 

@@ -6,8 +6,8 @@ use Scalar::Util qw(refaddr);
 our $VERSION   = '0.18';
 our $AUTHORITY = 'cpan:STEVAN';
 
-# the class marker when 
-# serializing an object. 
+# the class marker when
+# serializing an object.
 our $CLASS_MARKER = '__CLASS__';
 
 has 'storage' => (
@@ -35,22 +35,22 @@ sub collapse_object {
 	$self->seen->{refaddr $self->object} = undef;
 	
     $self->map_attributes('collapse_attribute', \%options);
-    $self->storage->{$CLASS_MARKER} = $self->object->meta->identifier;    
+    $self->storage->{$CLASS_MARKER} = $self->object->meta->identifier;   
 	return $self->storage;
 }
 
 sub expand_object {
     my ($self, $data, %options) = @_;
-    
+   
     $options{check_version}       = 1 unless exists $options{check_version};
-    $options{check_authority}     = 1 unless exists $options{check_authority};   
+    $options{check_authority}     = 1 unless exists $options{check_authority};  
 
 	# NOTE:
 	# mark the root object as seen ...
-	$self->seen->{refaddr $data} = undef;    
-    
+	$self->seen->{refaddr $data} = undef;   
+   
     $self->map_attributes('expand_attribute', $data, \%options);
-	return $self->storage;    
+	return $self->storage;   
 }
 
 ## this is the internal API ...
@@ -98,10 +98,10 @@ sub expand_attribute_value {
     if( ref $value and not(
         $options->{disable_cycle_check} or
         $self->class->does('MooseX::Storage::Traits::DisableCycleDetection')
-    )) {        
+    )) {       
         $self->check_for_cycle_in_collapse($attr, $value)
     }
-    
+   
     if (defined $value && $attr->has_type_constraint) {
         my $type_converter = $self->find_type_handler($attr->type_constraint);
         $value = $type_converter->{expand}->($value, $options);
@@ -110,16 +110,16 @@ sub expand_attribute_value {
 }
 
 # NOTE:
-# possibly these two methods will 
-# be used by a cycle supporting 
-# engine. However, I am not sure 
-# if I can make a cycle one work 
+# possibly these two methods will
+# be used by a cycle supporting
+# engine. However, I am not sure
+# if I can make a cycle one work
 # anyway.
 
 sub check_for_cycle_in_collapse {
     my ($self, $attr, $value) = @_;
     (!exists $self->seen->{refaddr $value})
-        || confess "Basic Engine does not support cycles in class(" 
+        || confess "Basic Engine does not support cycles in class("
                  . ($attr->associated_class->name) . ").attr("
                  . ($attr->name) . ") with $value";
     $self->seen->{refaddr $value} = undef;
@@ -128,7 +128,7 @@ sub check_for_cycle_in_collapse {
 sub check_for_cycle_in_expansion {
     my ($self, $attr, $value) = @_;
     (!exists $self->seen->{refaddr $value})
-    || confess "Basic Engine does not support cycles in class(" 
+    || confess "Basic Engine does not support cycles in class("
              . ($attr->associated_class->name) . ").attr("
              . ($attr->name) . ") with $value";
     $self->seen->{refaddr $value} = undef;
@@ -138,63 +138,63 @@ sub check_for_cycle_in_expansion {
 
 sub map_attributes {
     my ($self, $method_name, @args) = @_;
-    map { 
-        $self->$method_name($_, @args) 
+    map {
+        $self->$method_name($_, @args)
     } grep {
         # Skip our special skip attribute :)
-        !$_->does('MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize') 
+        !$_->does('MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize')
     } ($self->object || $self->class)->meta->get_all_attributes;
 }
 
 ## ------------------------------------------------------------------
 ## This is all the type handler stuff, it is in a state of flux
-## right now, so this may change, or it may just continue to be 
+## right now, so this may change, or it may just continue to be
 ## improved upon. Comments and suggestions are welcomed.
 ## ------------------------------------------------------------------
 
 # NOTE:
-# these are needed by the 
+# these are needed by the
 # ArrayRef and HashRef handlers
-# below, so I need easy access 
+# below, so I need easy access
 my %OBJECT_HANDLERS = (
     expand => sub {
-        my ($data, $options) = @_;   
+        my ($data, $options) = @_;  
         (exists $data->{$CLASS_MARKER})
             || confess "Serialized item has no class marker";
         # check the class more thoroughly here ...
         my ($class, $version, $authority) = (split '-' => $data->{$CLASS_MARKER});
         my $meta = eval { $class->meta };
-        confess "Class ($class) is not loaded, cannot unpack" if $@;     
-        
+        confess "Class ($class) is not loaded, cannot unpack" if $@;    
+       
         if ($options->{check_version}) {
             my $meta_version = $meta->version;
-            if (defined $meta_version && $version) {            
+            if (defined $meta_version && $version) {           
                 if ($options->{check_version} eq 'allow_less_than') {
                     ($meta_version <= $version)
-                        || confess "Class ($class) versions is not less than currently available." 
-                                 . " got=($version) available=($meta_version)";                
+                        || confess "Class ($class) versions is not less than currently available."
+                                 . " got=($version) available=($meta_version)";               
                 }
                 elsif ($options->{check_version} eq 'allow_greater_than') {
                     ($meta->version >= $version)
-                        || confess "Class ($class) versions is not greater than currently available." 
-                                 . " got=($version) available=($meta_version)";                
-                }            
+                        || confess "Class ($class) versions is not greater than currently available."
+                                 . " got=($version) available=($meta_version)";               
+                }           
                 else {
                     ($meta->version == $version)
-                        || confess "Class ($class) versions don't match." 
+                        || confess "Class ($class) versions don't match."
                                  . " got=($version) available=($meta_version)";
                 }
             }
         }
-        
+       
         if ($options->{check_authority}) {
             my $meta_authority = $meta->authority;
             ($meta->authority eq $authority)
-                || confess "Class ($class) authorities don't match." 
+                || confess "Class ($class) authorities don't match."
                          . " got=($authority) available=($meta_authority)"
-                if defined $meta_authority && defined $authority;            
+                if defined $meta_authority && defined $authority;           
         }
-            
+           
         # all is well ...
         $class->unpack($data, %$options);
     },
@@ -211,80 +211,80 @@ my %OBJECT_HANDLERS = (
 
 my %TYPES = (
     # NOTE:
-    # we need to make sure that we properly numify the numbers 
-    # before and after them being futzed with, because some of 
+    # we need to make sure that we properly numify the numbers
+    # before and after them being futzed with, because some of
     # the JSON engines are stupid/annoying/frustrating
     'Int'      => { expand => sub { $_[0] + 0 }, collapse => sub { $_[0] + 0 } },
     'Num'      => { expand => sub { $_[0] + 0 }, collapse => sub { $_[0] + 0 } },
-    # These are boring ones, so they use the identity function ...    
+    # These are boring ones, so they use the identity function ...   
     'Str'      => { expand => sub { shift }, collapse => sub { shift } },
     'Bool'     => { expand => sub { shift }, collapse => sub { shift } },
     # These are the trickier ones, (see notes)
     # NOTE:
-    # Because we are nice guys, we will check 
-    # your ArrayRef and/or HashRef one level 
-    # down and inflate any objects we find. 
+    # Because we are nice guys, we will check
+    # your ArrayRef and/or HashRef one level
+    # down and inflate any objects we find.
     # But this is where it ends, it is too
-    # expensive to try and do this any more  
-    # recursively, when it is probably not 
+    # expensive to try and do this any more 
+    # recursively, when it is probably not
     # nessecary in most of the use cases.
-    # However, if you need more then this, subtype 
-    # and add a custom handler.    
-    'ArrayRef' => { 
+    # However, if you need more then this, subtype
+    # and add a custom handler.   
+    'ArrayRef' => {
         expand => sub {
             my ( $array, @args ) = @_;
             foreach my $i (0 .. $#{$array}) {
-                next unless ref($array->[$i]) eq 'HASH' 
+                next unless ref($array->[$i]) eq 'HASH'
                          && exists $array->[$i]->{$CLASS_MARKER};
                 $array->[$i] = $OBJECT_HANDLERS{expand}->($array->[$i], @args);
             }
             $array;
-        }, 
+        },
         collapse => sub {
             my ( $array, @args ) = @_;
-            # NOTE:         
+            # NOTE:        
             # we need to make a copy cause
-            # otherwise it will affect the 
+            # otherwise it will affect the
             # other real version.
             [ map {
                 blessed($_)
                     ? $OBJECT_HANDLERS{collapse}->($_, @args)
                     : $_
-            } @$array ] 
-        } 
+            } @$array ]
+        }
     },
-    'HashRef'  => { 
+    'HashRef'  => {
         expand   => sub {
             my ( $hash, @args ) = @_;
             foreach my $k (keys %$hash) {
-                next unless ref($hash->{$k}) eq 'HASH' 
+                next unless ref($hash->{$k}) eq 'HASH'
                          && exists $hash->{$k}->{$CLASS_MARKER};
                 $hash->{$k} = $OBJECT_HANDLERS{expand}->($hash->{$k}, @args);
             }
-            $hash;            
-        }, 
+            $hash;           
+        },
         collapse => sub {
             my ( $hash, @args ) = @_;
-            # NOTE:         
+            # NOTE:        
             # we need to make a copy cause
-            # otherwise it will affect the 
+            # otherwise it will affect the
             # other real version.
             +{ map {
                 blessed($hash->{$_})
                     ? ($_ => $OBJECT_HANDLERS{collapse}->($hash->{$_}, @args))
                     : ($_ => $hash->{$_})
-            } keys %$hash }            
-        } 
+            } keys %$hash }           
+        }
     },
     'Object'   => \%OBJECT_HANDLERS,
     # NOTE:
-    # The sanity of enabling this feature by 
+    # The sanity of enabling this feature by
     # default is very questionable.
     # - SL
     #'CodeRef' => {
     #    expand   => sub {}, # use eval ...
-    #    collapse => sub {}, # use B::Deparse ...        
-    #} 
+    #    collapse => sub {}, # use B::Deparse ...       
+    #}
 );
 
 sub add_custom_type_handler {
@@ -301,7 +301,7 @@ sub remove_custom_type_handler {
 
 sub find_type_handler {
     my ($self, $type_constraint) = @_;
-    
+   
     # check if the type is a Maybe and
     # if its parent is not parameterized.
     # If both is true recurse this method
@@ -311,40 +311,40 @@ sub find_type_handler {
           and not $type_constraint->parent->can('type_parameter');
 
     # this should handle most type usages
-    # since they they are usually just 
+    # since they they are usually just
     # the standard set of built-ins
-    return $TYPES{$type_constraint->name} 
+    return $TYPES{$type_constraint->name}
         if exists $TYPES{$type_constraint->name};
-      
-    # the next possibility is they are 
-    # a subtype of the built-in types, 
-    # in which case this will DWIM in 
-    # most cases. It is probably not 
-    # 100% ideal though, but until I 
-    # come up with a decent test case 
+     
+    # the next possibility is they are
+    # a subtype of the built-in types,
+    # in which case this will DWIM in
+    # most cases. It is probably not
+    # 100% ideal though, but until I
+    # come up with a decent test case
     # it will do for now.
     foreach my $type (keys %TYPES) {
-        return $TYPES{$type} 
+        return $TYPES{$type}
             if $type_constraint->is_subtype_of($type);
     }
-    
+   
     # NOTE:
-    # the reason the above will work has to 
+    # the reason the above will work has to
     # do with the fact that custom subtypes
-    # are mostly used for validation of 
+    # are mostly used for validation of
     # the guts of a type, and not for some
-    # weird structural thing which would 
+    # weird structural thing which would
     # need to be accomidated by the serializer.
-    # Of course, mst or phaylon will probably  
-    # do something to throw this assumption 
+    # Of course, mst or phaylon will probably 
+    # do something to throw this assumption
     # totally out the door ;)
     # - SL
-    
+   
     # NOTE:
     # if this method hasnt returned by now
-    # then we have no been able to find a 
-    # type constraint handler to match 
-    confess "Cannot handle type constraint (" . $type_constraint->name . ")";    
+    # then we have no been able to find a
+    # type constraint handler to match
+    confess "Cannot handle type constraint (" . $type_constraint->name . ")";   
 }
 
 sub find_type_handler_for {
@@ -436,7 +436,7 @@ No user serviceable parts inside. If you really want to know, read the source :)
 
 =head1 BUGS
 
-All complex software has bugs lurking in it, and this module is no 
+All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 
