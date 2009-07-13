@@ -1,4 +1,3 @@
-
 package MooseX::Storage::IO::File;
 use Moose::Role;
 
@@ -19,6 +18,8 @@ sub store {
     my ( $self, $filename, @args ) = @_;
     MooseX::Storage::Engine::IO::File->new( file => $filename )->store( $self->freeze(@args) );
 }
+
+no Moose::Role;
 
 1;
 

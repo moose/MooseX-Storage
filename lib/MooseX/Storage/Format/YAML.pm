@@ -1,4 +1,3 @@
-
 package MooseX::Storage::Format::YAML;
 use Moose::Role;
 
@@ -26,6 +25,8 @@ sub freeze {
     my ( $self, @args ) = @_;
     Dump( $self->pack(@args) );
 }
+
+no Moose::Role;
 
 1;
 

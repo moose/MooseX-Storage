@@ -21,6 +21,8 @@ around 'unpack' => sub {
     $self->$orig($data, %args);
 };
 
+no Moose::Role;
+
 1;
 
 __END__

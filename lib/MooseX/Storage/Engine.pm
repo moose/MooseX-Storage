@@ -352,6 +352,8 @@ sub find_type_handler_for {
     $TYPES{$type_handler_name}
 }
 
+no Moose::Role;
+
 1;
 
 __END__

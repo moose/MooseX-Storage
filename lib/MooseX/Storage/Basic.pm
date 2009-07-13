@@ -51,6 +51,8 @@ sub _storage_construct_instance {
     $class->new( %$args, %i );
 }
 
+no Moose::Role;
+
 1;
 
 __END__

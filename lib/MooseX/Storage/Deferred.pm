@@ -62,6 +62,8 @@ sub store {
     $self->$method_to_call($filename, $type, @args);
 }
 
+no Moose::Role;
+
 1;
 
 __END__

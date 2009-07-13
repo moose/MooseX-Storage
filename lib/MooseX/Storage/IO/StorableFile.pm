@@ -1,4 +1,3 @@
-
 package MooseX::Storage::IO::StorableFile;
 use Moose::Role;
 
@@ -27,6 +26,8 @@ sub store {
         $filename
     );
 }
+
+no Moose::Role;
 
 1;
 

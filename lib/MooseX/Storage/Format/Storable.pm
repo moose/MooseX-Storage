@@ -20,6 +20,8 @@ sub freeze {
     Storable::nfreeze( $self->pack(@args) );
 }
 
+no Moose::Role;
+
 1;
 
 __END__

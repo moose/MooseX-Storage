@@ -64,6 +64,8 @@ sub _inflate_yaml {
     return $data;
 }
 
+no Moose::Role;
+
 1;
 
 __END__
