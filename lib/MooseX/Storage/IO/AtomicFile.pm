@@ -4,7 +4,7 @@ use Moose::Role;
 
 use MooseX::Storage::Engine::IO::AtomicFile;
 
-our $VERSION   = '0.18';
+our $VERSION   = '0.19';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'MooseX::Storage::IO::File';

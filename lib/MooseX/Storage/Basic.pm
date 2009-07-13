@@ -4,7 +4,7 @@ use Moose::Role;
 
 use MooseX::Storage::Engine;
 
-our $VERSION   = '0.18';
+our $VERSION   = '0.19';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub pack {
