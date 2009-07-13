@@ -1,5 +1,22 @@
 Revision history for MooseX-Storage
 
+0.20
+  * Add support for Storage( traits => [...] ) with a MooseX::Storage::Traits::XX
+    namespace to alter the behaviour of the storage engine.
+    (Suggestions for how to make this less fugly appreciated)
+  * Add feature to disable cycle checking, either via engine trait or option
+    * add docs & tests (including 1 TODO test)
+  * Add feature to only serialize attributes whose predicate returns 'true'
+  * Implement the unpack( $data, inject => {...} ) feature.
+    * add docs & tests
+  * Move Base::WithChecksum to build upon Basic.pm, avoid code duplication
+  * Add extra test to ensure restoring fails if required argument isn't provided
+  * Fix a bug where if a required constructor argument was not serialized, it was
+    impossible to ->unpack again.
+
+0.19
+  * Skip pod tests when not in author mode
+
 0.18
    * Fix test failures without JSON::Any. Patch from RT#46343 (Nicholas Clarke)
    * Added support for Maybe[...] constraints fixing RT#43165 (plu)
