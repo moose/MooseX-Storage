@@ -1,5 +1,8 @@
 Revision history for MooseX-Storage
 
+0.21
+  * Fix inconsistent dist versions with Perl::Version
+
 0.20
   * Add support for Storage( traits => [...] ) with a MooseX::Storage::Traits::XX
     namespace to alter the behaviour of the storage engine.

@@ -5,7 +5,7 @@ use Moose;
 use utf8 ();
 use IO::File;
 
-our $VERSION   = '0.18';
+our $VERSION   = '0.21';
 our $AUTHORITY = 'cpan:STEVAN';
 
 has 'file' => (
