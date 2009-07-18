@@ -6,7 +6,7 @@ name 'MooseX-Storage';
 all_from 'lib/MooseX/Storage.pm';
 
 # Specific dependencies
-requires 'Moose' => '0.39';
+requires 'Moose' => '0.87';
 
 # you should have at least one
 # serialization format
