@@ -1,5 +1,7 @@
 Revision history for MooseX-Storage
 
+  * Fix warnings when types do not have a parent type.
+
 0.21
   * Fix inconsistent dist versions with Perl::Version
 

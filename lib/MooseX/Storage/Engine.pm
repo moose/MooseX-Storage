@@ -307,8 +307,8 @@ sub find_type_handler {
     # If both is true recurse this method
     # using ->type_parameter.
     return $self->find_type_handler($type_constraint->type_parameter)
-        if $type_constraint->parent eq 'Maybe'
-          and not $type_constraint->parent->can('type_parameter');
+        if ($type_constraint->parent && $type_constraint->parent eq 'Maybe'
+          and not $type_constraint->parent->can('type_parameter'));
 
     # this should handle most type usages
     # since they they are usually just
