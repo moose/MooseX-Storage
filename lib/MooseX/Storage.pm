@@ -19,21 +19,35 @@ sub import {
     $pkg->meta->add_method('Storage' => __PACKAGE__->meta->find_method_by_name('_injected_storage_role_generator'));
 }
 
+my %HORRIBLE_GC_AVOIDANCE_HACK;
+
 sub __expand_role {
     my ($base, $value) = @_;
 
     return unless defined $value;
 
     if (ref $value) {
-        confess "references for roles are not yet handled";
+        my ($class, $param, $no) = @$value;
+        confess "too many args in arrayref role declaration" if defined $no;
+
+        $class = __expand_role($base => $class);
+        Class::MOP::load_class($class);
+
+        my $role = $class->meta->generate_role(parameters => $param);
+
+        $HORRIBLE_GC_AVOIDANCE_HACK{ $role->name } = $role;
+        return $role->name;
     } else {
-        return scalar String::RewritePrefix->rewrite(
+        my $role = scalar String::RewritePrefix->rewrite(
             {
                 ''  => "MooseX::Storage::$base\::",
                 '=' => '',
             },
             $value,
         );
+
+        Class::MOP::load_class($role);
+        return $role;
     }
 }
 
@@ -68,10 +82,6 @@ sub _injected_storage_role_generator {
     # specify these per role-usage
     for my $trait ( @{ $params{'traits'} ||= [] } ) {
         push @roles, __expand_role(Traits => $trait);
-    }
-
-    for my $role ( @roles ) {
-        Class::MOP::load_class($role) or die "Could not load role ($role)";
     }
 
     return @roles;
