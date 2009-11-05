@@ -38,6 +38,5 @@ build_requires 'Test::TempDir'   => '0.02';
 
 resources repository => 'git://git.moose.perl.org/gitmo/MooseX-Storage.git';
 
-auto_install;
 WriteAll;
 
