@@ -16,15 +16,15 @@ BEGIN {
     package Foo;
     use Moose;
     use MooseX::Storage;
-    
+
     with Storage(io => 'StorableFile');
-    
+
     has 'number' => (is => 'ro', isa => 'Int');
     has 'string' => (is => 'ro', isa => 'Str');
-    has 'float'  => (is => 'ro', isa => 'Num');        
+    has 'float'  => (is => 'ro', isa => 'Num');
     has 'array'  => (is => 'ro', isa => 'ArrayRef');
-    has 'hash'   => (is => 'ro', isa => 'HashRef');    
-	has 'object' => (is => 'ro', isa => 'Object');    
+    has 'hash'   => (is => 'ro', isa => 'HashRef');
+	has 'object' => (is => 'ro', isa => 'Object');
 }
 
 my $file = catfile($dir,'temp.storable');

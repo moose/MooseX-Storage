@@ -36,7 +36,7 @@ BEGIN {
         object => Foo->new( number => 2 ),
     );
     isa_ok( $foo, 'Foo' );
-    
+
     my $stored = $foo->freeze;
 
     my $struct = Storable::thaw($stored);
@@ -46,9 +46,9 @@ BEGIN {
             '__CLASS__' => 'Foo',
             'float'     => 10.5,
             'number'    => 10,
-            'string'    => 'foo',           
+            'string'    => 'foo',
             'array'     => [ 1 .. 10],
-            'hash'      => { map { $_ => undef } 1 .. 10 },            
+            'hash'      => { map { $_ => undef } 1 .. 10 },
             'object'    => {
                 '__CLASS__' => 'Foo',
                 'number' => 2
@@ -63,15 +63,15 @@ BEGIN {
         '__CLASS__' => 'Foo',
         'float'     => 10.5,
         'number'    => 10,
-        'string'    => 'foo',           
+        'string'    => 'foo',
         'array'     => [ 1 .. 10],
-        'hash'      => { map { $_ => undef } 1 .. 10 },            
+        'hash'      => { map { $_ => undef } 1 .. 10 },
         'object'    => {
             '__CLASS__' => 'Foo',
             'number' => 2
         },
     });
-    
+
     my $foo = Foo->thaw($stored);
     isa_ok( $foo, 'Foo' );
 
