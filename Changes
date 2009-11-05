@@ -1,5 +1,6 @@
 Revision history for MooseX-Storage
 
+0.22
   * Fix warnings when types do not have a parent type.
   * allow the use of roles outside MooseX::Storage:: (rjbs)
   * allow the use of parameterized roles (rjbs)
