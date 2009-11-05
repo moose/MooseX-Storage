@@ -1,7 +1,7 @@
 package MooseX::Storage::Deferred;
 use Moose::Role;
 
-our $VERSION   = '0.21';
+our $VERSION   = '0.22';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'MooseX::Storage::Basic';
