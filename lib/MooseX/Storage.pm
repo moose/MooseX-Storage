@@ -3,6 +3,7 @@ package MooseX::Storage;
 use Moose qw(confess);
 
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;
+use String::RewritePrefix ();
 
 our $VERSION   = '0.21';
 our $AUTHORITY = 'cpan:STEVAN';
@@ -18,46 +19,55 @@ sub import {
     $pkg->meta->add_method('Storage' => __PACKAGE__->meta->find_method_by_name('_injected_storage_role_generator'));
 }
 
+sub __expand_role {
+  my ($base, $value) = @_;
+
+  return unless defined $value;
+
+  if (ref $value) {
+    confess "references for roles are not yet handled";
+  } else {
+    return scalar String::RewritePrefix->rewrite(
+      {
+        ''  => "MooseX::Storage::$base\::",
+        '=' => '',
+      },
+      $value,
+    );
+  }
+}
+
 sub _injected_storage_role_generator {
     my %params = @_;
 
-    if (exists $params{'base'}) {
-        $params{'base'} = ('Base::' . $params{'base'});
-    }
-    else {
-        $params{'base'} = 'Basic';
-    }
+    $params{base} = '=MooseX::Storage::Basic' unless defined $params{base};
 
-    my @roles = (
-        ('MooseX::Storage::' . $params{'base'}),
-    );
+    my @roles = __expand_role(Base => $params{base});
 
     # NOTE:
     # you don't have to have a format
     # role, this just means you dont
     # get anything other than pack/unpack
-    push @roles => 'MooseX::Storage::Format::' . $params{'format'}
-        if exists $params{'format'};
+    push @roles, __expand_role(Format => $params{format});
 
     # NOTE:
     # many IO roles don't make sense unless
     # you have also have a format role chosen
     # too, the exception being StorableFile
-    if (exists $params{'io'}) {
-        # NOTE:
-        # we dont need this code anymore, cause
-        # the role composition will catch it for
-        # us. This allows the StorableFile to work
-        #(exists $params{'format'})
-        #    || confess "You must specify a format role in order to use an IO role";
-        push @roles => 'MooseX::Storage::IO::' . $params{'io'};
-    }
+    #
+    # NOTE:
+    # we dont need this code anymore, cause
+    # the role composition will catch it for
+    # us. This allows the StorableFile to work
+    #(exists $params{'format'})
+    #    || confess "You must specify a format role in order to use an IO role";
+    push @roles, __expand_role(IO => $params{io});
 
     # Note:
     # These traits alter the behaviour of the engine, the user can
     # specify these per role-usage
     for my $trait ( @{ $params{'traits'} ||= [] } ) {
-        push @roles, 'MooseX::Storage::Traits::'.$trait;
+        push @roles, __expand_role(Traits => $trait);
     }
 
     for my $role ( @roles ) {
