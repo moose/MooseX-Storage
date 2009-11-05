@@ -7,6 +7,7 @@ all_from 'lib/MooseX/Storage.pm';
 
 # Specific dependencies
 requires 'Moose' => '0.87';
+requires 'String::RewritePrefix';
 
 # you should have at least one
 # serialization format

@@ -271,6 +271,21 @@ combination of features. It is meant to make things easier, but it
 is by no means the only way. You can still compose your roles by
 hand if you like.
 
+By default, options are assumed to be short forms.  For example, this:
+
+  Storage(format => 'JSON');
+
+...will result in looking for MooseX::Storage::Format::JSON.  To use a role
+that is not under the default namespace prefix, start with an equal sign:
+
+  Storage(format => '=My::Private::JSONFormat');
+
+To use a parameterized role (for which, see L<MooseX::Role::Parameterized>) you
+can pass an arrayref of the role name (in short or long form, as above) and its
+parameters:
+
+  Storage(format => [ JSONpm => { json_opts => { pretty => 1 } } ]);
+
 =back
 
 =head1 METHODS
