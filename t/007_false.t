@@ -29,9 +29,9 @@ BEGIN {
         boolean => 0,
     );
     isa_ok( $foo, 'Foo' );
-    
+
     is($foo->boolean, 0, '... got the right boolean value');
-    
+
     is_deeply(
         $foo->pack,
         {
@@ -51,7 +51,7 @@ BEGIN {
             number    => 0,
             string    => '',
             boolean   => 0,
-        }        
+        }
     );
     isa_ok( $foo, 'Foo' );
 

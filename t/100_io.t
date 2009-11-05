@@ -8,10 +8,10 @@ use Test::TempDir;
 use File::Spec::Functions;
 my $dir = tempdir;
 
-BEGIN {  
+BEGIN {
     eval "use JSON::Any";
-    plan skip_all => "JSON::Any is required for this test" if $@;         
-    plan tests => 10;    
+    plan skip_all => "JSON::Any is required for this test" if $@;
+    plan tests => 10;
     use_ok('MooseX::Storage');
 }
 
@@ -19,15 +19,15 @@ BEGIN {
     package Foo;
     use Moose;
     use MooseX::Storage;
-    
+
     with Storage(format => 'JSON', io => 'File');
-    
+
     has 'number' => (is => 'ro', isa => 'Int');
     has 'string' => (is => 'ro', isa => 'Str');
-    has 'float'  => (is => 'ro', isa => 'Num');        
+    has 'float'  => (is => 'ro', isa => 'Num');
     has 'array'  => (is => 'ro', isa => 'ArrayRef');
-    has 'hash'   => (is => 'ro', isa => 'HashRef');    
-	has 'object' => (is => 'ro', isa => 'Object');    
+    has 'hash'   => (is => 'ro', isa => 'HashRef');
+	has 'object' => (is => 'ro', isa => 'Object');
 }
 
 my $file = catfile( $dir, 'temp.json' );
