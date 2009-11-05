@@ -20,21 +20,21 @@ sub import {
 }
 
 sub __expand_role {
-  my ($base, $value) = @_;
+    my ($base, $value) = @_;
 
-  return unless defined $value;
+    return unless defined $value;
 
-  if (ref $value) {
-    confess "references for roles are not yet handled";
-  } else {
-    return scalar String::RewritePrefix->rewrite(
-      {
-        ''  => "MooseX::Storage::$base\::",
-        '=' => '',
-      },
-      $value,
-    );
-  }
+    if (ref $value) {
+        confess "references for roles are not yet handled";
+    } else {
+        return scalar String::RewritePrefix->rewrite(
+            {
+                ''  => "MooseX::Storage::$base\::",
+                '=' => '',
+            },
+            $value,
+        );
+    }
 }
 
 sub _injected_storage_role_generator {
