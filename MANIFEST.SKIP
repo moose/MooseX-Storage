@@ -1,3 +1,4 @@
+^MooseX-Storage-
 ^.git
 ^svn-commit.*\.tmp$
 ^_build
