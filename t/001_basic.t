@@ -37,7 +37,7 @@ BEGIN {
         object  => Foo->new( number => 2 ),
     );
     isa_ok( $foo, 'Foo' );
-
+    
     is_deeply(
         $foo->pack,
         {
@@ -48,10 +48,10 @@ BEGIN {
             float     => 10.5,
             array     => [ 1 .. 10 ],
             hash      => { map { $_ => undef } ( 1 .. 10 ) },
-            object    => {
-                            __CLASS__ => 'Foo',
-                            number    => 2
-                         },
+            object    => { 
+                            __CLASS__ => 'Foo',                
+                            number    => 2 
+                         },            
         },
         '... got the right frozen class'
     );
@@ -67,11 +67,11 @@ BEGIN {
             float     => 10.5,
             array     => [ 1 .. 10 ],
             hash      => { map { $_ => undef } ( 1 .. 10 ) },
-            object    => {
-                            __CLASS__ => 'Foo',
-                            number    => 2
-                         },
-        }
+            object    => { 
+                            __CLASS__ => 'Foo',                
+                            number    => 2 
+                         },            
+        }        
     );
     isa_ok( $foo, 'Foo' );
 

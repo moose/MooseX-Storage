@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-BEGIN {
+BEGIN {        
     local $@;
     plan skip_all => "MooseX::Storage::Format::JSONpm required for this test"
         unless eval "require MooseX::Storage::Format::JSONpm; 1";

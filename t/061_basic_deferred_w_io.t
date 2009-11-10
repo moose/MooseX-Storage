@@ -11,9 +11,9 @@ my $dir = tempdir;
 
 BEGIN {
     eval "use IO::AtomicFile";
-    plan skip_all => "IO::AtomicFile is required for this test" if $@;
+    plan skip_all => "IO::AtomicFile is required for this test" if $@;   
     eval "use JSON::Any";
-    plan skip_all => "JSON::Any is required for this test" if $@;
+    plan skip_all => "JSON::Any is required for this test" if $@;         
     plan tests => 20;
     use_ok('MooseX::Storage');
 }
@@ -22,15 +22,15 @@ BEGIN {
     package Foo;
     use Moose;
     use MooseX::Storage;
-
+    
     with 'MooseX::Storage::Deferred';
-
+    
     has 'number' => (is => 'ro', isa => 'Int');
     has 'string' => (is => 'ro', isa => 'Str');
-    has 'float'  => (is => 'ro', isa => 'Num');
+    has 'float'  => (is => 'ro', isa => 'Num');        
     has 'array'  => (is => 'ro', isa => 'ArrayRef');
-    has 'hash'   => (is => 'ro', isa => 'HashRef');
-	has 'object' => (is => 'ro', isa => 'Object');
+    has 'hash'   => (is => 'ro', isa => 'HashRef');    
+	has 'object' => (is => 'ro', isa => 'Object');    
 }
 
 my $file = catfile($dir, 'temp.json');

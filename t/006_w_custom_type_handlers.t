@@ -8,29 +8,29 @@ use Test::Exception;
 
 BEGIN {
     use_ok('MooseX::Storage');
-    use_ok('MooseX::Storage::Engine');
+    use_ok('MooseX::Storage::Engine');    
 }
 
 =pod
 
-This is just a simple example of defining
+This is just a simple example of defining 
 a custom type handler to take care of custom
-inflate and deflate needs.
+inflate and deflate needs. 
 
 =cut
 
 {
     package Bar;
     use Moose;
-
+    
     has 'baz' => (is => 'rw', isa => 'Str');
-    has 'boo' => (is => 'rw', isa => 'Str');
-
+    has 'boo' => (is => 'rw', isa => 'Str');    
+    
     sub encode {
         my $self = shift;
         $self->baz . '|' . $self->boo;
     }
-
+    
     sub decode {
         my ($class, $packed) = @_;
         my ($baz, $boo) = split /\|/ => $packed;
@@ -39,20 +39,20 @@ inflate and deflate needs.
             boo => $boo,
         );
     }
-
+    
     MooseX::Storage::Engine->add_custom_type_handler(
         'Bar' => (
             expand   => sub { Bar->decode(shift) },
             collapse => sub { (shift)->encode    },
         )
     );
-
+    
     package Foo;
     use Moose;
     use MooseX::Storage;
-
+    
     with Storage;
-
+    
     has 'bar' => (
         is      => 'ro',
         isa     => 'Bar',
@@ -81,9 +81,9 @@ $foo->pack,
         bar       => "BAZ|BOO",
     });
     isa_ok($foo, 'Foo');
-
-    isa_ok($foo->bar, 'Bar');
-
+    
+    isa_ok($foo->bar, 'Bar'); 
+    
     is($foo->bar->baz, 'BAZ', '... got the right stuff');
     is($foo->bar->boo, 'BOO', '... got the right stuff');
 }

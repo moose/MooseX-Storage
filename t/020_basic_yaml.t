@@ -7,9 +7,9 @@ use Test::More;
 
 BEGIN {
     eval "use Test::YAML::Valid";
-    plan skip_all => "Test::YAML::Valid is required for this test" if $@;
+    plan skip_all => "Test::YAML::Valid is required for this test" if $@;            
     eval "use Best [[qw(YAML::Syck YAML)]]";
-    plan skip_all => "YAML or YAML::syck and Best are required for this test" if $@;
+    plan skip_all => "YAML or YAML::syck and Best are required for this test" if $@;            
     plan tests => 12;
     use_ok('MooseX::Storage');
 }
@@ -47,9 +47,9 @@ BEGIN {
 
     is(
         $yaml,
-        q{---
+        q{--- 
 __CLASS__: Foo
-array:
+array: 
   - 1
   - 2
   - 3
@@ -61,7 +61,7 @@ array:
   - 9
   - 10
 float: 10.5
-hash:
+hash: 
   1: ~
   10: ~
   2: ~
@@ -73,7 +73,7 @@ hash:
   8: ~
   9: ~
 number: 10
-object:
+object: 
   __CLASS__: Foo
   number: 2
 string: foo
@@ -85,9 +85,9 @@ string: foo
 
 {
     my $foo = Foo->thaw(
-        q{---
+        q{--- 
 __CLASS__: Foo
-array:
+array: 
   - 1
   - 2
   - 3
@@ -99,7 +99,7 @@ array:
   - 9
   - 10
 float: 10.5
-hash:
+hash: 
   1: ~
   10: ~
   2: ~
@@ -111,7 +111,7 @@ hash:
   8: ~
   9: ~
 number: 10
-object:
+object: 
   __CLASS__: Foo
   number: 2
 string: foo

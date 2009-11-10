@@ -9,10 +9,10 @@ use Storable;
 
 BEGIN {
     eval "use Test::JSON; use Test::YAML::Valid;";
-    plan skip_all => "Test::JSON and Test::YAML::Valid are required for this test" if $@; 
+    plan skip_all => "Test::JSON and Test::YAML::Valid are required for this test" if $@;  
     eval "use JSON::Any";
-    plan skip_all => "JSON::Any is required for this test" if $@;
-    plan tests => 33;
+    plan skip_all => "JSON::Any is required for this test" if $@;          
+    plan tests => 33;    
     use_ok('MooseX::Storage');
 }
 
@@ -57,7 +57,7 @@ BEGIN {
 {
     my $foo = Foo->thaw(
         '{"array":[1,2,3,4,5,6,7,8,9,10],"hash":{"6":null,"3":null,"7":null,"9":null,"2":null,"8":null,"1":null,"4":null,"10":null,"5":null},"float":10.5,"object":{"number":2,"__CLASS__":"Foo"},"number":10,"__CLASS__":"Foo","string":"foo"}',
-        { 'format' => 'JSON' }
+        { 'format' => 'JSON' } 
     );
     isa_ok( $foo, 'Foo' );
 
@@ -86,7 +86,7 @@ BEGIN {
         object => Foo->new( number => 2 ),
     );
     isa_ok( $foo, 'Foo' );
-
+    
     my $stored = $foo->freeze({ 'format' => 'Storable' });
 
     my $struct = Storable::thaw($stored);
@@ -96,9 +96,9 @@ BEGIN {
             '__CLASS__' => 'Foo',
             'float'     => 10.5,
             'number'    => 10,
-            'string'    => 'foo', 
+            'string'    => 'foo',           
             'array'     => [ 1 .. 10],
-            'hash'      => { map { $_ => undef } 1 .. 10 },
+            'hash'      => { map { $_ => undef } 1 .. 10 },            
             'object'    => {
                 '__CLASS__' => 'Foo',
                 'number' => 2
@@ -113,15 +113,15 @@ BEGIN {
         '__CLASS__' => 'Foo',
         'float'     => 10.5,
         'number'    => 10,
-        'string'    => 'foo', 
+        'string'    => 'foo',           
         'array'     => [ 1 .. 10],
-        'hash'      => { map { $_ => undef } 1 .. 10 },
+        'hash'      => { map { $_ => undef } 1 .. 10 },            
         'object'    => {
             '__CLASS__' => 'Foo',
             'number' => 2
         },
     });
-
+    
     my $foo = Foo->thaw($stored, { 'format' => 'Storable' });
     isa_ok( $foo, 'Foo' );
 
@@ -157,9 +157,9 @@ BEGIN {
 
     is(
         $yaml,
-        q{---
+        q{--- 
 __CLASS__: Foo
-array:
+array: 
   - 1
   - 2
   - 3
@@ -171,7 +171,7 @@ array:
   - 9
   - 10
 float: 10.5
-hash:
+hash: 
   1: ~
   10: ~
   2: ~
@@ -183,7 +183,7 @@ hash:
   8: ~
   9: ~
 number: 10
-object:
+object: 
   __CLASS__: Foo
   number: 2
 string: foo
@@ -195,9 +195,9 @@ string: foo
 
 {
     my $foo = Foo->thaw(
-        q{---
+        q{--- 
 __CLASS__: Foo
-array:
+array: 
   - 1
   - 2
   - 3
@@ -209,7 +209,7 @@ array:
   - 9
   - 10
 float: 10.5
-hash:
+hash: 
   1: ~
   10: ~
   2: ~
@@ -221,7 +221,7 @@ hash:
   8: ~
   9: ~
 number: 10
-object:
+object: 
   __CLASS__: Foo
   number: 2
 string: foo

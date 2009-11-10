@@ -19,8 +19,8 @@ BEGIN {
     has 'x' => (is => 'rw', lazy_build => 1 );
     has 'y' => (is => 'rw', lazy_build => 1 );
     has 'z' => (is => 'rw', builder => '_build_z' );
-
-
+    
+    
     sub _build_x { 'x' }
     sub _build_y { 'y' }
     sub _build_z { 'z' }
@@ -37,8 +37,8 @@ is( $href->{'x'}, $$,           "       x => $$" );
 is( $href->{'z'}, 'z',          "       z => z" );
 ok( not(exists($href->{'y'})),  "       y does not exist" );
 
-is_deeply(
-    $href,
+is_deeply( 
+    $href, 
     { '__CLASS__' => 'Point',
       'x' => $$,
       'z' => 'z'

@@ -7,18 +7,18 @@ use Test::More;
 
 BEGIN {
     eval "use Encode";
-    plan skip_all => "Encode is required for this test" if $@;
+    plan skip_all => "Encode is required for this test" if $@;   
     eval "use JSON::Any";
-    plan skip_all => "JSON::Any is required for this test" if $@; 
-    # NOTE:
-    # this is because JSON::XS is
+    plan skip_all => "JSON::Any is required for this test" if $@;     
+    # NOTE: 
+    # this is because JSON::XS is 
     # the only one which really gets
     # utf8 correct
-    # - SL
-    BEGIN {
+    # - SL 
+    BEGIN { 
         $ENV{JSON_ANY_ORDER}  = qw(XS);
-        $ENV{JSON_ANY_CONFIG} = "utf8=1"; 
-    } 
+        $ENV{JSON_ANY_CONFIG} = "utf8=1";        
+    }           
     plan tests => 16;
     use_ok('MooseX::Storage');
 }
@@ -29,7 +29,7 @@ BEGIN {
     use MooseX::Storage;
 
     with Storage( 'format' => 'JSON' );
-
+    
     has 'utf8_string' => (
         is      => 'rw',
         isa     => 'Str',
@@ -49,14 +49,14 @@ BEGIN {
 
     my $foo2 = Foo->thaw($json);
     isa_ok( $foo, 'Foo' );
-
-    is($foo2->utf8_string,
-      "ネットスーパー (Internet Shopping)",
+    
+    is($foo2->utf8_string, 
+      "ネットスーパー (Internet Shopping)", 
       '... got the string we expected');
-
+      
     is($foo2->freeze,
        '{"__CLASS__":"Foo","utf8_string":"ネットスーパー (Internet Shopping)"}',
-       '... got the right JSON');
+       '... got the right JSON');          
 }
 
 {
@@ -66,15 +66,15 @@ BEGIN {
         $test_string = "ネットスーパー (Internet Shopping)";
         no utf8;
     }
-
+    
     ok(utf8::is_utf8($test_string), '... got a utf8 string');
-    ok(utf8::valid($test_string), '... got a valid utf8 string');
-
+    ok(utf8::valid($test_string), '... got a valid utf8 string');    
+    
     Encode::_utf8_off($test_string);
-
+    
     ok(!utf8::is_utf8($test_string), '... no longer is utf8 string');
-    ok(utf8::valid($test_string), '... got a valid utf8 string');
-
+    ok(utf8::valid($test_string), '... got a valid utf8 string');    
+    
     my $foo = Foo->new(
         utf8_string => $test_string
     );
@@ -84,11 +84,11 @@ BEGIN {
     ok(utf8::valid($foo->utf8_string), '... but is a valid utf8 string');
 
     my $json = $foo->freeze;
-
+    
     ok(utf8::is_utf8($json), '... is a utf8 string now');
-    ok(utf8::valid($json), '... got a valid utf8 string');
+    ok(utf8::valid($json), '... got a valid utf8 string');    
 
     is($json,
        '{"__CLASS__":"Foo","utf8_string":"ネットスーパー (Internet Shopping)"}',
-       '... got the right JSON');
+       '... got the right JSON');    
 }
