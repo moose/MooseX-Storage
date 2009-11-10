@@ -1,5 +1,9 @@
 Revision history for MooseX-Storage
 
+0.23
+  * Revert whitespace change in tests which breaks the tests if you
+    have Test::YAML::Valid installed.
+
 0.22
   * Fix warnings when types do not have a parent type.
   * allow the use of roles outside MooseX::Storage:: (rjbs)
