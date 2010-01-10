@@ -5,7 +5,7 @@ use Moose::Role;
 # Tests break because tye YAML is invalid...?
 # -dcp
 
-use YAML qw(Load Dump);
+use YAML::Any qw(Load Dump);
 
 our $VERSION   = '0.23';
 our $AUTHORITY = 'cpan:STEVAN';
