@@ -12,7 +12,7 @@ BEGIN {
     plan skip_all => "Test::JSON and Test::YAML::Valid are required for this test" if $@;  
     eval "use JSON::Any";
     plan skip_all => "JSON::Any is required for this test" if $@;          
-    plan tests => 33;    
+    plan tests => 32;
     use_ok('MooseX::Storage');
 }
 
@@ -154,42 +154,6 @@ BEGIN {
     my $yaml = $foo->freeze({ 'format' => 'YAML' });
 
     yaml_string_ok( $yaml, '... we got valid YAML out of it' );
-
-    is(
-        $yaml,
-        q{--- 
-__CLASS__: Foo
-array: 
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  - 6
-  - 7
-  - 8
-  - 9
-  - 10
-float: 10.5
-hash: 
-  1: ~
-  10: ~
-  2: ~
-  3: ~
-  4: ~
-  5: ~
-  6: ~
-  7: ~
-  8: ~
-  9: ~
-number: 10
-object: 
-  __CLASS__: Foo
-  number: 2
-string: foo
-},
-        '... got the same YAML'
-    );
 
 }
 

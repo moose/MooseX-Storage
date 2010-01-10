@@ -20,7 +20,7 @@ feature 'JSON',
 
 feature 'YAML',
   -default            => 1,
-  'Best'              => '0.1',
+  'YAML'              => '0',
   'Test::YAML::Valid' => '0';
 
 feature 'Storable',

@@ -6,11 +6,11 @@ use warnings;
 use Test::More;
 
 BEGIN {
+    eval "use YAML";
+    plan skip_all => "YAML is required for this test" if $@;
     eval "use Test::YAML::Valid";
     plan skip_all => "Test::YAML::Valid is required for this test" if $@;            
-    eval "use Best [[qw(YAML::Syck YAML)]]";
-    plan skip_all => "YAML or YAML::syck and Best are required for this test" if $@;            
-    plan tests => 12;
+    plan tests => 11;
     use_ok('MooseX::Storage');
 }
 
@@ -44,42 +44,6 @@ BEGIN {
     my $yaml = $foo->freeze;
 
     yaml_string_ok( $yaml, '... we got valid YAML out of it' );
-
-    is(
-        $yaml,
-        q{--- 
-__CLASS__: Foo
-array: 
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  - 6
-  - 7
-  - 8
-  - 9
-  - 10
-float: 10.5
-hash: 
-  1: ~
-  10: ~
-  2: ~
-  3: ~
-  4: ~
-  5: ~
-  6: ~
-  7: ~
-  8: ~
-  9: ~
-number: 10
-object: 
-  __CLASS__: Foo
-  number: 2
-string: foo
-},
-        '... got the same YAML'
-    );
 
 }
 
