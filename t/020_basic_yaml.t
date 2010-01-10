@@ -8,7 +8,7 @@ use Test::More;
 BEGIN {
     eval "use YAML::Any";
     plan skip_all => "YAML::Any is required for this test" if $@;
-    eval "use YAML";
+    eval "require YAML";
     plan skip_all => "YAML is required for this test" if $@;
     eval "require Test::Without::Module";
     plan skip_all => "Test::Without::Module is required for this test" if $@;
