@@ -8,11 +8,13 @@ use Test::More;
 use Storable;
 
 BEGIN {
-    eval "use Test::JSON; use Test::YAML::Valid;";
-    plan skip_all => "Test::JSON and Test::YAML::Valid are required for this test" if $@;  
+    eval "use Test::JSON";
+    plan skip_all => "Test::JSON is required for this test" if $@;
     eval "use JSON::Any";
-    plan skip_all => "JSON::Any is required for this test" if $@;          
-    plan tests => 32;
+    plan skip_all => "JSON::Any is required for this test" if $@;
+    eval "use YAML::Any";
+    plan skip_all => "YAML::Any is required for this test" if $@;
+    plan tests => 31;
     use_ok('MooseX::Storage');
 }
 
@@ -153,58 +155,21 @@ BEGIN {
 
     my $yaml = $foo->freeze({ 'format' => 'YAML' });
 
-    yaml_string_ok( $yaml, '... we got valid YAML out of it' );
+    my $bar = Foo->thaw( $yaml, { 'format' => 'YAML' } );
+    isa_ok( $bar, 'Foo' );
 
-}
-
-{
-    my $foo = Foo->thaw(
-        q{--- 
-__CLASS__: Foo
-array: 
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  - 6
-  - 7
-  - 8
-  - 9
-  - 10
-float: 10.5
-hash: 
-  1: ~
-  10: ~
-  2: ~
-  3: ~
-  4: ~
-  5: ~
-  6: ~
-  7: ~
-  8: ~
-  9: ~
-number: 10
-object: 
-  __CLASS__: Foo
-  number: 2
-string: foo
-}, { 'format' => 'YAML' }
-    );
-    isa_ok( $foo, 'Foo' );
-
-    is( $foo->number, 10,    '... got the right number' );
-    is( $foo->string, 'foo', '... got the right string' );
-    is( $foo->float,  10.5,  '... got the right float' );
-    is_deeply( $foo->array, [ 1 .. 10 ], '... got the right array' );
+    is( $bar->number, 10,    '... got the right number' );
+    is( $bar->string, 'foo', '... got the right string' );
+    is( $bar->float,  10.5,  '... got the right float' );
+    is_deeply( $bar->array, [ 1 .. 10 ], '... got the right array' );
     is_deeply(
-        $foo->hash,
+        $bar->hash,
         { map { $_ => undef } ( 1 .. 10 ) },
         '... got the right hash'
     );
 
-    isa_ok( $foo->object, 'Foo' );
-    is( $foo->object->number, 2,
+    isa_ok( $bar->object, 'Foo' );
+    is( $bar->object->number, 2,
         '... got the right number (in the embedded object)' );
 }
 

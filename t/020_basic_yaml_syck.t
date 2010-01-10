@@ -8,12 +8,12 @@ use Test::More;
 BEGIN {
     eval "use YAML::Any";
     plan skip_all => "YAML::Any is required for this test" if $@;
-    eval "use YAML";
-    plan skip_all => "YAML is required for this test" if $@;
+    eval "use YAML::Syck";
+    plan skip_all => "YAML::Syck is required for this test" if $@;
     eval "require Test::Without::Module";
     plan skip_all => "Test::Without::Module is required for this test" if $@;
     Test::Without::Module->import(YAML::Any->order);
-    Test::Without::Module->unimport('YAML');
+    Test::Without::Module->unimport('YAML::Syck');
     plan tests => 10;
     use_ok('MooseX::Storage');
 }
