@@ -18,6 +18,8 @@ BEGIN {
     use_ok('MooseX::Storage');
 }
 
+diag('Using implementation: ', YAML::Any->implementation);
+
 {
 
     package Foo;
