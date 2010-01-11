@@ -7,7 +7,7 @@ no warnings 'once';
 use JSON::Any;
 use utf8 ();
 
-our $VERSION   = '0.23';
+our $VERSION   = '0.24';
 our $AUTHORITY = 'cpan:STEVAN';
 
 requires 'pack';

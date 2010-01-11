@@ -6,7 +6,7 @@ with 'MooseX::Storage::Basic';
 use Digest       ();
 use Data::Dumper ();
 
-our $VERSION   = '0.23';
+our $VERSION   = '0.24';
 our $AUTHORITY = 'cpan:STEVAN';
 
 our $DIGEST_MARKER = '__DIGEST__';

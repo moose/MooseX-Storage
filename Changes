@@ -1,5 +1,10 @@
 Revision history for MooseX-Storage
 
+0.24
+  * Add additional YAML implementation tests.
+  * Switch from using Best to YAML::Any.
+  * Remove Test::YAML::Valid.
+
 0.23
   * Revert whitespace change in tests which breaks the tests if you
     have Test::YAML::Valid installed.
