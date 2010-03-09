@@ -8,7 +8,7 @@ name 'MooseX-Storage';
 all_from 'lib/MooseX/Storage.pm';
 
 # Specific dependencies
-requires 'Moose' => '0.87';
+requires 'Moose' => '0.99';
 requires 'String::RewritePrefix';
 
 author_requires 'Test::Without::Module';

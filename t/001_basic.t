@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 12;
+use Test::More tests => 14;
 
 BEGIN {
     use_ok('MooseX::Storage');
@@ -24,6 +24,8 @@ BEGIN {
     has 'array'   => ( is => 'ro', isa => 'ArrayRef' );
     has 'hash'    => ( is => 'ro', isa => 'HashRef' );
     has 'object'  => ( is => 'ro', isa => 'Foo' );
+    has 'union'   => ( is => 'ro', isa => 'ArrayRef|Str' );
+    has 'union2'   => ( is => 'ro', isa => 'ArrayRef|Str' );
 }
 
 {
@@ -35,9 +37,11 @@ BEGIN {
         array   => [ 1 .. 10 ],
         hash    => { map { $_ => undef } ( 1 .. 10 ) },
         object  => Foo->new( number => 2 ),
+        union   => [ 1, 2, 3 ],
+        union2  => 'A String'
     );
     isa_ok( $foo, 'Foo' );
-    
+
     is_deeply(
         $foo->pack,
         {
@@ -48,10 +52,12 @@ BEGIN {
             float     => 10.5,
             array     => [ 1 .. 10 ],
             hash      => { map { $_ => undef } ( 1 .. 10 ) },
-            object    => { 
-                            __CLASS__ => 'Foo',                
-                            number    => 2 
-                         },            
+            object    => {
+                            __CLASS__ => 'Foo',
+                            number    => 2
+                         },
+            union     => [ 1, 2, 3 ],
+            union2    => 'A String'
         },
         '... got the right frozen class'
     );
@@ -67,11 +73,13 @@ BEGIN {
             float     => 10.5,
             array     => [ 1 .. 10 ],
             hash      => { map { $_ => undef } ( 1 .. 10 ) },
-            object    => { 
-                            __CLASS__ => 'Foo',                
-                            number    => 2 
-                         },            
-        }        
+            object    => {
+                            __CLASS__ => 'Foo',
+                            number    => 2
+                         },
+            union     => [ 1, 2, 3 ],
+            union2    => 'A String'
+        }
     );
     isa_ok( $foo, 'Foo' );
 
@@ -89,4 +97,6 @@ BEGIN {
     isa_ok( $foo->object, 'Foo' );
     is( $foo->object->number, 2,
         '... got the right number (in the embedded object)' );
+    is_deeply( $foo->union, [ 1 .. 3 ], '... got the right array (in the union)' );
+    is( $foo->union2,  'A String',  '... got the right string (in the union)' );
 }

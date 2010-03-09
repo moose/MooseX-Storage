@@ -82,7 +82,7 @@ sub collapse_attribute_value {
         if ref $value;
 
     if (defined $value && $attr->has_type_constraint) {
-        my $type_converter = $self->find_type_handler($attr->type_constraint);
+        my $type_converter = $self->find_type_handler($attr->type_constraint, $value);
         (defined $type_converter)
             || confess "Cannot convert " . $attr->type_constraint->name;
         $value = $type_converter->{collapse}->($value, $options);
@@ -103,7 +103,7 @@ sub expand_attribute_value {
     }
    
     if (defined $value && $attr->has_type_constraint) {
-        my $type_converter = $self->find_type_handler($attr->type_constraint);
+        my $type_converter = $self->find_type_handler($attr->type_constraint, $value);
         $value = $type_converter->{expand}->($value, $options);
     }
 	return $value;
@@ -300,15 +300,23 @@ sub remove_custom_type_handler {
 }
 
 sub find_type_handler {
-    my ($self, $type_constraint) = @_;
-   
+    my ($self, $type_constraint, $value) = @_;
+
     # check if the type is a Maybe and
     # if its parent is not parameterized.
     # If both is true recurse this method
     # using ->type_parameter.
-    return $self->find_type_handler($type_constraint->type_parameter)
+    return $self->find_type_handler($type_constraint->type_parameter, $value)
         if ($type_constraint->parent && $type_constraint->parent eq 'Maybe'
           and not $type_constraint->parent->can('type_parameter'));
+
+    # find_type_for is a method of a union type.  If we can call that method
+    # then we are dealign with a union and we need to ascertain which of
+    # the union's types we need to use for the value we are serializing.
+    if($type_constraint->can('find_type_for')) {
+        my $tc = $type_constraint->find_type_for($value);
+        return $self->find_type_handler($tc, $value) if defined($tc);
+    }
 
     # this should handle most type usages
     # since they they are usually just
