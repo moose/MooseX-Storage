@@ -7,7 +7,7 @@ use Moose::Role;
 
 use YAML::Any qw(Load Dump);
 
-our $VERSION   = '0.24';
+our $VERSION   = '0.25';
 our $AUTHORITY = 'cpan:STEVAN';
 
 requires 'pack';
