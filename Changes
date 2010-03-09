@@ -1,5 +1,8 @@
 Revision history for MooseX-Storage
 
+0.25
+  * Add support for Union types (bumps Moose dep to 0.99)
+
 0.24
   * Add additional YAML implementation tests.
   * Switch from using Best to YAML::Any.
