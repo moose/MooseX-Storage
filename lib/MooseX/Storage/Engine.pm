@@ -22,7 +22,7 @@ has 'seen' => (
     default => sub {{}}
 );
 
-has 'object' => (is => 'rw', isa => 'Object');
+has 'object' => (is => 'rw', isa => 'Object', predicate => '_has_object');
 has 'class'  => (is => 'rw', isa => 'Str');
 
 ## this is the API used by other modules ...
@@ -143,7 +143,7 @@ sub map_attributes {
     } grep {
         # Skip our special skip attribute :)
         !$_->does('MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize')
-    } ($self->object || $self->class)->meta->get_all_attributes;
+    } ($self->_has_object ? $self->object : $self->class)->meta->get_all_attributes;
 }
 
 ## ------------------------------------------------------------------

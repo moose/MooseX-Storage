@@ -1,6 +1,8 @@
 Revision history for MooseX-Storage
 
   * Fix URI for repository in metadata.
+  * Fix infinite recursion when collapsing objects which overload stringify
+    to freeze themselves.
 
 0.25
   * Add support for Union types (bumps Moose dep to 0.99)

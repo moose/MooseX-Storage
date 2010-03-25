@@ -41,7 +41,7 @@ author_requires 'IO::File' => '0.1';
 
 author_tests 't/author';
 
-build_requires 'Test::More'      => '0.42';
+build_requires 'Test::More'      => '0.88';
 build_requires 'Test::Deep'      => '0';
 build_requires 'Test::Exception' => '0';
 build_requires 'Test::TempDir'   => '0.02';
