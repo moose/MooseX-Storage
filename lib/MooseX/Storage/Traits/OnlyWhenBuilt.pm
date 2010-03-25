@@ -1,7 +1,7 @@
 package MooseX::Storage::Traits::OnlyWhenBuilt;
 use Moose::Role;
 
-our $VERSION   = '0.25';
+our $VERSION   = '0.26';
 our $AUTHORITY = 'cpan:STEVAN';
 
 requires 'pack';

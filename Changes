@@ -1,5 +1,6 @@
 Revision history for MooseX-Storage
 
+0.26
   * Fix URI for repository in metadata.
   * Fix infinite recursion when collapsing objects which overload stringify
     to freeze themselves.
