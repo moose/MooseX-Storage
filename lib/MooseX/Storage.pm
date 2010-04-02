@@ -21,16 +21,28 @@ sub import {
 
 my %HORRIBLE_GC_AVOIDANCE_HACK;
 
-sub __expand_role {
-    my ($base, $value) = @_;
+sub _rewrite_role_name {
+    my ($self, $base, $string) = @_;
+
+    my $role_name = scalar String::RewritePrefix->rewrite(
+        {
+            ''  => "MooseX::Storage::$base\::",
+            '=' => '',
+        },
+        $string,
+    );
+}
+
+sub _expand_role {
+    my ($self, $base, $value) = @_;
 
     return unless defined $value;
 
     if (ref $value) {
-        my ($class, $param, $no) = @$value;
-        confess "too many args in arrayref role declaration" if defined $no;
+        confess "too many args in arrayref role declaration" if @$value > 2;
+        my ($class, $param) = @$value;
 
-        $class = __expand_role($base => $class);
+        $class = $self->_rewrite_role_name($base => $class);
         Class::MOP::load_class($class);
 
         my $role = $class->meta->generate_role(parameters => $param);
@@ -38,16 +50,20 @@ sub __expand_role {
         $HORRIBLE_GC_AVOIDANCE_HACK{ $role->name } = $role;
         return $role->name;
     } else {
-        my $role = scalar String::RewritePrefix->rewrite(
-            {
-                ''  => "MooseX::Storage::$base\::",
-                '=' => '',
-            },
-            $value,
-        );
+        my $class = $self->_rewrite_role_name($base, $value);
+        Class::MOP::load_class($class);
 
-        Class::MOP::load_class($role);
-        return $role;
+        my $role = $class;
+
+        if ($class->meta->isa(
+            'MooseX::Role::Parameterized::Meta::Role::Parameterizable'
+        )) {
+            $role = $class->meta->generate_role(parameters => undef);
+            $HORRIBLE_GC_AVOIDANCE_HACK{ $role->name } = $role;
+            return $role->name;
+        }
+
+        return $class;
     }
 }
 
@@ -56,13 +72,13 @@ sub _injected_storage_role_generator {
 
     $params{base} = '=MooseX::Storage::Basic' unless defined $params{base};
 
-    my @roles = __expand_role(Base => $params{base});
+    my @roles = __PACKAGE__->_expand_role(Base => $params{base});
 
     # NOTE:
     # you don't have to have a format
     # role, this just means you dont
     # get anything other than pack/unpack
-    push @roles, __expand_role(Format => $params{format});
+    push @roles, __PACKAGE__->_expand_role(Format => $params{format});
 
     # NOTE:
     # many IO roles don't make sense unless
@@ -75,13 +91,13 @@ sub _injected_storage_role_generator {
     # us. This allows the StorableFile to work
     #(exists $params{'format'})
     #    || confess "You must specify a format role in order to use an IO role";
-    push @roles, __expand_role(IO => $params{io});
+    push @roles, __PACKAGE__->_expand_role(IO => $params{io});
 
     # Note:
     # These traits alter the behaviour of the engine, the user can
     # specify these per role-usage
     for my $trait ( @{ $params{'traits'} ||= [] } ) {
-        push @roles, __expand_role(Traits => $trait);
+        push @roles, __PACKAGE__->_expand_role(Traits => $trait);
     }
 
     return @roles;

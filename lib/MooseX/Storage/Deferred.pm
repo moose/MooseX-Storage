@@ -6,18 +6,22 @@ our $AUTHORITY = 'cpan:STEVAN';
 
 with 'MooseX::Storage::Basic';
 
+sub __get_method {
+    my ( $self, $basename, $value, $method_name ) = @_;
+
+    my $role   = MooseX::Storage->_expand_role($basename => $value)->meta;
+    my $method = $role->get_method($method_name)->body;
+}
+
 sub thaw {
     my ( $class, $packed, $type, @args ) = @_;
 
     (exists $type->{format})
         || confess "You must specify a format type to thaw from";
 
-    my $class_to_load = 'MooseX::Storage::Format::' . $type->{format};
-    Class::MOP::load_class($class_to_load);
+    my $code = $class->__get_method(Format => $type->{format} => 'thaw');
 
-    my $method_to_call = $class_to_load . '::thaw';
-
-    $class->$method_to_call($packed, @args);
+    $class->$code($packed, @args);
 }
 
 sub freeze {
@@ -26,12 +30,9 @@ sub freeze {
     (exists $type->{format})
         || confess "You must specify a format type to freeze into";
 
-    my $class_to_load = 'MooseX::Storage::Format::' . $type->{format};
-    Class::MOP::load_class($class_to_load);
+    my $code = $self->__get_method(Format => $type->{format} => 'freeze');
 
-    my $method_to_call = $class_to_load . '::freeze';
-
-    $self->$method_to_call(@args);
+    $self->$code(@args);
 }
 
 sub load {
@@ -40,12 +41,9 @@ sub load {
     (exists $type->{io})
         || confess "You must specify an I/O type to load with";
 
-    my $class_to_load = 'MooseX::Storage::IO::' . $type->{io};
-    Class::MOP::load_class($class_to_load);
+    my $code = $class->__get_method(IO => $type->{io} => 'load');
 
-    my $method_to_call = $class_to_load . '::load';
-
-    $class->$method_to_call($filename, $type, @args);
+    $class->$code($filename, $type, @args);
 }
 
 sub store {
@@ -54,12 +52,9 @@ sub store {
     (exists $type->{io})
         || confess "You must specify an I/O type to store with";
 
-    my $class_to_load = 'MooseX::Storage::IO::' . $type->{io};
-    Class::MOP::load_class($class_to_load);
+    my $code = $self->__get_method(IO => $type->{io} => 'store');
 
-    my $method_to_call = $class_to_load . '::store';
-
-    $self->$method_to_call($filename, $type, @args);
+    $self->$code($filename, $type, @args);
 }
 
 no Moose::Role;
