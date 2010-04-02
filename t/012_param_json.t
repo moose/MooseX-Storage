@@ -11,17 +11,15 @@ BEGIN {
         unless eval "require MooseX::Storage::Format::JSONpm; 1";
 }
 
-plan tests => 3;
+plan tests => 6;
 use_ok('MooseX::Storage');
 
 {
-
     package Foo;
     use Moose;
     use MooseX::Storage;
 
     with Storage(format => [ JSONpm => { json_opts => { pretty => 1 } } ] );
-    # with Storage(format => 'JSONpm');
 
     has 'string' => ( is => 'ro', isa => 'Str' );
     has 'float'  => ( is => 'ro', isa => 'Num' );
@@ -44,3 +42,35 @@ use_ok('MooseX::Storage');
 
 }
 
+{
+    package Bar;
+    use Moose;
+    use MooseX::Storage;
+
+    our $VERSION = '0.01';
+
+    with 'MooseX::Storage::Deferred';
+
+    has 'x' => (is => 'rw', isa => 'Int');
+    has 'y' => (is => 'rw', isa => 'Int');
+}
+
+for my $jsonpm (
+  [ string => 'JSONpm' ],
+  [ aref0p => [ JSONpm => ] ],
+  [ aref1p => [ JSONpm => { json_opts => { pretty => 1 } } ] ],
+) {
+    my ($name, $p) = @$jsonpm;
+
+    my $json = eval { Bar->new(x => 10, y => 20)->freeze({ format => $p }) };
+
+    is_deeply(
+        JSON->new->decode($json),
+        {
+            '__CLASS__' => 'Bar-0.01',
+            x => 10,
+            y => 20,
+        },
+        "correct deferred freeze from $name",
+    );
+}
