@@ -4,7 +4,7 @@ use Moose::Role;
 
 use Storable ();
 
-our $VERSION   = '0.26';
+our $VERSION   = '0.27';
 our $AUTHORITY = 'cpan:STEVAN';
 
 requires 'pack';
