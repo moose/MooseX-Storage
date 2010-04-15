@@ -1,5 +1,9 @@
 Revision history for MooseX-Storage
 
+0.27
+  * use of parameterized roles (first added in 0.22) now works in Deferred
+    Example: $object->freeze({ format => [ $role_name => \%args ] })
+
 0.26
   * Fix URI for repository in metadata.
   * Fix infinite recursion when collapsing objects which overload stringify

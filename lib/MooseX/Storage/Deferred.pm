@@ -93,6 +93,9 @@ MooseX::Storage::Deferred - A role for undecisive programmers
   # pack the class into a JSON string
   $p->freeze({ format => 'JSON' }); # { "__CLASS__" : "Point", "x" : 10, "y" : 10 }
 
+  # pack the class into a JSON string using parameterized JSONpm role
+  $p->freeze({ format => [ JSONpm => { json_opts => { pretty => 1 } } ] });
+
   # unpack the JSON string into a class
   my $p2 = Point->thaw(
       '{ "__CLASS__" : "Point", "x" : 10, "y" : 10 }',
@@ -113,6 +116,8 @@ SYNOPSIS for more info)
 =over 4
 
 =item I<JSON>
+
+=item I<JSONpm>
 
 =item I<YAML>
 
