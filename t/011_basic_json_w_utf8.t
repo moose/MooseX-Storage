@@ -5,20 +5,22 @@ use warnings;
 
 use Test::More;
 
+use Test::Requires {
+    'Encode' => 0.01, # skip all if not installed
+    'JSON::Any' => 0.01,
+};
+
 BEGIN {
-    eval "use Encode";
-    plan skip_all => "Encode is required for this test" if $@;   
-    eval "use JSON::Any";
-    plan skip_all => "JSON::Any is required for this test" if $@;     
     # NOTE: 
     # this is because JSON::XS is 
     # the only one which really gets
     # utf8 correct
     # - SL 
-    BEGIN { 
+    BEGIN {
         $ENV{JSON_ANY_ORDER}  = qw(XS);
         $ENV{JSON_ANY_CONFIG} = "utf8=1";        
-    }           
+    }
+
     plan tests => 16;
     use_ok('MooseX::Storage');
 }

@@ -7,17 +7,18 @@ use Test::More;
 use Test::Exception;
 use Test::Deep;
 
+use Test::Requires {
+    'Digest' => 0.01, # skip all if not installed
+    'Digest::SHA1' => 0.01,
+    'JSON::Any' => 0.01,
+};
+
 BEGIN {
-    eval "use Digest; use Digest::SHA1";
-    plan skip_all => "Digest and Digest::SHA1 is required for this test" if $@; 
-    eval "use JSON::Any";
-    plan skip_all => "JSON::Any is required for this test" if $@;              
     plan tests => 26;
     use_ok('MooseX::Storage');
 }
 
 {
-
     package Foo;
     use Moose;
     use MooseX::Storage;

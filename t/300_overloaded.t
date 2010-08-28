@@ -3,12 +3,9 @@ use warnings;
 use Test::More;
 use Test::Exception;
 
-BEGIN {
-    eval { require JSON::Any } or do {
-        plan skip_all => "JSON::Any is required for this test";
-        exit 0;
-    }
-}
+use Test::Requires {
+    'JSON::Any' => 0.01, # skip all if not installed
+};
 
 {
     package Thing;

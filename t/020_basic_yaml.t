@@ -5,13 +5,13 @@ use warnings;
 
 use Test::More;
 
+use Test::Requires {
+    'YAML::Any' => 0.01, # skip all if not installed
+    'YAML'      => 0.01,
+    'Test::Without::Module' => 0.01,
+};
+
 BEGIN {
-    eval "use YAML::Any";
-    plan skip_all => "YAML::Any is required for this test" if $@;
-    eval "require YAML";
-    plan skip_all => "YAML is required for this test" if $@;
-    eval "require Test::Without::Module";
-    plan skip_all => "Test::Without::Module is required for this test" if $@;
     Test::Without::Module->import(YAML::Any->order);
     Test::Without::Module->unimport('YAML');
     plan tests => 10;

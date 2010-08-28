@@ -5,14 +5,14 @@ use warnings;
 
 use Test::More;
 
-BEGIN {        
-    local $@;
-    plan skip_all => "MooseX::Storage::Format::JSONpm required for this test"
-        unless eval "require MooseX::Storage::Format::JSONpm; 1";
-}
+use Test::Requires {
+    'MooseX::Storage::Format::JSONpm' => 0.01, # skip all if not installed
+};
 
-plan tests => 6;
-use_ok('MooseX::Storage');
+BEGIN {
+    plan tests => 6;
+    use_ok('MooseX::Storage');
+}
 
 {
     package Foo;

@@ -7,13 +7,13 @@ use warnings;
 use Test::More;
 use Storable;
 
+use Test::Requires {
+    'Test::JSON' => 0.01, # skip all if not installed
+    'JSON::Any' => 0.01,
+    'YAML::Any' => 0.01,
+};
+
 BEGIN {
-    eval "use Test::JSON";
-    plan skip_all => "Test::JSON is required for this test" if $@;
-    eval "use JSON::Any";
-    plan skip_all => "JSON::Any is required for this test" if $@;
-    eval "use YAML::Any";
-    plan skip_all => "YAML::Any is required for this test" if $@;
     plan tests => 31;
     use_ok('MooseX::Storage');
 }
@@ -21,7 +21,6 @@ BEGIN {
 diag('Using implementation: ', YAML::Any->implementation);
 
 {
-
     package Foo;
     use Moose;
     use MooseX::Storage;

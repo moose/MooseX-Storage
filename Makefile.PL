@@ -45,6 +45,7 @@ build_requires 'Test::More'      => '0.88';
 build_requires 'Test::Deep'      => '0';
 build_requires 'Test::Exception' => '0';
 build_requires 'Test::TempDir'   => '0.02';
+build_requires 'Test::Requires'  => '0.05';
 
 author_requires 'Test::Pod' => '1.14';
 author_requires 'Test::Pod::Coverage' => '1.08';

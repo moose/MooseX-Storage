@@ -9,11 +9,12 @@ use File::Spec::Functions;
 
 my $dir = tempdir;
 
+use Test::Requires {
+    'IO::AtomicFile' => 0.01, # skip all if not installed
+    'JSON::Any' => 0.01,
+};
+
 BEGIN {
-    eval "use IO::AtomicFile";
-    plan skip_all => "IO::AtomicFile is required for this test" if $@;   
-    eval "use JSON::Any";
-    plan skip_all => "JSON::Any is required for this test" if $@;         
     plan tests => 20;
     use_ok('MooseX::Storage');
 }
