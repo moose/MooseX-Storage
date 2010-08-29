@@ -187,7 +187,7 @@ class name and each instance attribute is stored. Very simple.
 This level is not optional, it is the bare minumum that
 MooseX::Storage provides and all other levels build on top of this.
 
-See L<Moosex::Storage::Basic> for the fundamental implementation and
+See L<MooseX::Storage::Basic> for the fundamental implementation and
 options to C<pack> and C<unpack>
 
 =item B<format>
@@ -206,7 +206,7 @@ The third (io) level is C<load> and C<store>. In this level we are reading
 and writing data to file/network/database/etc.
 
 This level is also optional, in most cases it does require a C<format> role
-to also be used, the expection being the C<StorableFile> role.
+to also be used, the exception being the C<StorableFile> role.
 
 =back
 
@@ -272,7 +272,7 @@ over anyway.
 
 =head1 CAVEAT
 
-This is B<not> a persistence framework, changes to your object after
+This is B<not> a persistence framework; changes to your object after
 you load or store it will not be reflected in the stored class.
 
 =head1 EXPORTS
@@ -281,7 +281,7 @@ you load or store it will not be reflected in the stored class.
 
 =item B<Storage (%options)>
 
-This module will export the C<Storage> method will can be used to
+This module will export the C<Storage> method and can be used to
 load a specific set of MooseX::Storage roles to implement a specific
 combination of features. It is meant to make things easier, but it
 is by no means the only way. You can still compose your roles by
