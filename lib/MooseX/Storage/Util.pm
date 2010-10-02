@@ -4,7 +4,7 @@ use Moose qw(confess blessed);
 use MooseX::Storage::Engine ();
 use utf8 ();
 
-our $VERSION   = '0.27';
+our $VERSION   = '0.28';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub peek {

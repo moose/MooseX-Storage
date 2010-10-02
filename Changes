@@ -1,5 +1,11 @@
 Revision history for MooseX-Storage
 
+0.28
+  * Make the engine_traits parameter be able to use a '+My::Trait::Name'
+    prefix to specify a trait name which isn't in the
+    MooseX::Storeage::Engine::Trait namespace
+  * Misc POD and test cleanups.
+
 0.27
   * use of parameterized roles (first added in 0.22) now works in Deferred
     Example: $object->freeze({ format => [ $role_name => \%args ] })
