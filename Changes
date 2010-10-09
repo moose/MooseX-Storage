@@ -3,7 +3,7 @@ Revision history for MooseX-Storage
 0.28
   * Make the engine_traits parameter be able to use a '+My::Trait::Name'
     prefix to specify a trait name which isn't in the
-    MooseX::Storeage::Engine::Trait namespace
+    MooseX::Storage::Engine::Trait namespace
   * Misc POD and test cleanups.
 
 0.27
