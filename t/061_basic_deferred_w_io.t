@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
-use Test::TempDir;
+use File::Temp qw(tempdir);
 use File::Spec::Functions;
 
 my $dir = tempdir;

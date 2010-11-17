@@ -1,5 +1,8 @@
 Revision history for MooseX-Storage
 
+0.29
+  * Remove use of Test::TempDir in favor of File::Temp (gphat)
+
 0.28
   * Make the engine_traits parameter be able to use a '+My::Trait::Name'
     prefix to specify a trait name which isn't in the

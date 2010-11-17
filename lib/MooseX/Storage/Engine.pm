@@ -3,7 +3,7 @@ package MooseX::Storage::Engine;
 use Moose;
 use Scalar::Util qw(refaddr);
 
-our $VERSION   = '0.28';
+our $VERSION   = '0.29';
 our $AUTHORITY = 'cpan:STEVAN';
 
 # the class marker when
