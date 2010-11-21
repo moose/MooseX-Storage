@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Test::More 'no_plan';#tests => 6;
-use Test::Exception;
+use Test::Fatal;
 
 BEGIN {
     use_ok('MooseX::Storage');

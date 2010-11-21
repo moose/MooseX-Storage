@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 8;
-use Test::Exception;
+use Test::Fatal;
 
 BEGIN {
     use_ok('MooseX::Storage');
@@ -84,7 +84,7 @@ Moose::Meta::Class->create('Bar',
     authority => 'cpan:JRANDOM',
 );
 
-dies_ok {
+ok(exception {
     Foo->unpack(
         {
             __CLASS__ => 'Foo-0.01-cpan:JRANDOM',
@@ -94,14 +94,14 @@ dies_ok {
             }         
         }     
     );
-} '... could not unpack, versions are different ' . $@;
+}, '... could not unpack, versions are different ' . $@);
 
 Moose::Meta::Class->create('Bar', 
     version   => '0.01',
     authority => 'cpan:DSTATIC',
 );
 
-dies_ok {
+ok(exception {
     Foo->unpack(
         {
             __CLASS__ => 'Foo-0.01-cpan:JRANDOM',
@@ -111,4 +111,4 @@ dies_ok {
             }         
         }     
     );
-} '... could not unpack, authorities are different';
+}, '... could not unpack, authorities are different');

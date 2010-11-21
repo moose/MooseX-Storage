@@ -1,5 +1,9 @@
 Revision history for MooseX-Storage
 
+{{NEXT}}
+  * The test suite now uses Test::Fatal instead of Test::Exception (Karen
+    Etheridge).
+
 0.29
   * Remove use of Test::TempDir in favor of File::Temp (gphat)
 

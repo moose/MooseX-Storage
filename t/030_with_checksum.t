@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
-use Test::Exception;
+use Test::Fatal;
 use Test::Deep;
 
 use Test::Requires {
@@ -66,9 +66,9 @@ BEGIN {
     );
 
     my $foo2;
-    lives_ok {
+    is( exception {
         $foo2 = Foo->unpack($packed);
-    } '... unpacked okay';
+    }, undef, '... unpacked okay');
     isa_ok($foo2, 'Foo');
     
     cmp_deeply(
