@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use Test::More;
-use Test::Exception;
+use Test::Fatal;
 
 use Test::Requires {
     'JSON::Any' => 0.01, # skip all if not installed
@@ -27,9 +27,9 @@ use Test::Requires {
 
 my $i = Thing->new(foo => "bar");
 
-lives_ok {
+is( exception {
     $i . "";
-} 'Can stringify without deep recursion';
+}, undef, 'Can stringify without deep recursion');
 
 done_testing;
 

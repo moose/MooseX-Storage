@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 18;
-use Test::Exception;
+use Test::Fatal;
 
 BEGIN {
     use_ok('MooseX::Storage');
@@ -37,20 +37,20 @@ This test demonstrates two things:
     
     $circular->cycle($circular);
     
-    throws_ok {
+    like(exception {
         $circular->pack;
-    } qr/^Basic Engine does not support cycles/, 
-    '... cannot collapse a cycle with the basic engine';
+    }, qr/^Basic Engine does not support cycles/,
+    '... cannot collapse a cycle with the basic engine');
 }
 
 {
     my $packed_circular = { __CLASS__ => 'Circular' };
     $packed_circular->{cycle} = $packed_circular;
 
-    throws_ok {
+    like( exception {
         Circular->unpack($packed_circular);
-    } qr/^Basic Engine does not support cycles/, 
-    '... cannot expand a cycle with the basic engine';
+    }, qr/^Basic Engine does not support cycles/,
+    '... cannot expand a cycle with the basic engine');
 }
 
 {

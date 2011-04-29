@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Test::More tests => 1;
-use Test::Exception;
+use Test::Fatal;
 
 {
     package ClassOne;
@@ -15,9 +15,9 @@ use Test::Exception;
     use MooseX::Storage;
 }
 
-lives_ok {
+is( exception {
     package CombineClasses;
     use Moose;
     with qw/ClassOne ClassTwo/;
-} 'Can include two roles which both use MooseX::Storage';
+}, undef, 'Can include two roles which both use MooseX::Storage');
 

@@ -1,5 +1,9 @@
 Revision history for MooseX-Storage
 
+{{NEXT}}
+  * The test suite now uses Test::Fatal instead of Test::Exception (Karen
+    Etheridge).
+
 0.30
   * Make Makefile.PL features work again. RT#67170
 
