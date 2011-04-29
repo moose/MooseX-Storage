@@ -1,5 +1,8 @@
 Revision history for MooseX-Storage
 
+0.30
+  * Make Makefile.PL features work again. RT#67170
+
 0.29
   * Remove use of Test::TempDir in favor of File::Temp (gphat)
 

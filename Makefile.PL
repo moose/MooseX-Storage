@@ -15,10 +15,12 @@ author_requires 'Test::Without::Module';
 
 # you should have at least one
 # serialization format
+auto_install; # Needed for features to work. RT#67170
 feature 'JSON',
   -default     => 1,
   'JSON::Any'  => '1.15',
   'Test::JSON' => '0.06';
+
 author_requires 'JSON::Any'  => '1.15';
 author_requires 'Test::JSON' => '0.06';
 
