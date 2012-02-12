@@ -1,6 +1,8 @@
 Revision history for MooseX-Storage
 
 {{NEXT}}
+  * Incorrect documentation for ->unpack method's inject parameter fixed.
+
   * The test suite now uses Test::Fatal instead of Test::Exception (Karen
     Etheridge).
 
