@@ -1,6 +1,6 @@
 Revision history for MooseX-Storage
 
-{{NEXT}}
+0.31
   * Add example for add_custom_type_handler to the MooseX::Storage::Engine docs. (perigrin)
 
   * Incorrect documentation for ->unpack method's inject parameter fixed.
