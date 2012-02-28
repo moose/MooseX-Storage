@@ -374,7 +374,17 @@ MooseX::Storage::Engine - The meta-engine to handle collapsing and expanding obj
 
 =head1 DESCRIPTION
 
-No user serviceable parts inside. If you really want to know, read the source :)
+There really aren't any major user serviceable parts here. However the typical
+use case is adding new non-Moose classes to the type registry for
+serialization. Here is an example of this for DateTime objects. This
+assumes a C<DateTime> type has been registered.
+
+    MooseX::Storage::Engine->add_custom_type_handler(
+        'DateTime' => (
+            expand   => sub { DateTime->new(shift) },
+            collapse => sub { (shift)->iso8601 },
+        )
+    );
 
 =head1 METHODS
 
