@@ -48,6 +48,8 @@ build_requires 'Test::Deep'      => '0';
 build_requires 'Test::Fatal'     => '0';
 build_requires 'Test::Requires'  => '0.05';
 
+author_requires 'Digest::HMAC';
+author_requires 'Digest::SHA';
 author_requires 'Test::Pod' => '1.14';
 author_requires 'Test::Pod::Coverage' => '1.08';
 
