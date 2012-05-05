@@ -1,5 +1,8 @@
 Revision history for MooseX-Storage
 
+ * Change to use core Digest and Digest::SHA dists, rather than Digest::SHA1.
+   RT##69811
+
 0.31
   * Add example for add_custom_type_handler to the MooseX::Storage::Engine docs. (perigrin)
 

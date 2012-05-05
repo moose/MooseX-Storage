@@ -9,7 +9,7 @@ use Test::Deep;
 
 use Test::Requires {
     'Digest' => 0.01, # skip all if not installed
-    'Digest::SHA1' => 0.01,
+    'Digest::SHA' => 0.00,
     'JSON::Any' => 0.01,
 };
 

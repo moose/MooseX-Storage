@@ -85,7 +85,7 @@ sub _digest_object {
         }
     }
     else {
-        return Digest->new($d || "SHA1", @args);
+        return Digest->new($d || "SHA-1", @args);
     }
 }
 
