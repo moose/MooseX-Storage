@@ -1,9 +1,11 @@
 Revision history for MooseX-Storage
 
+0.32
  * Change to use core Digest and Digest::SHA dists, rather than Digest::SHA1.
-   RT##69811
+   RT#69811
  * Create a JSON::Any object, so setting $ENV{JSON_ANY_CONFIG} works.
-   Adjust tests that were setting the wrong values and the default happened to work.
+   Adjust tests that were setting the wrong values and the default
+   happened to work.
  * Don't rely on hash key order in tests (RT#81695)
 
 0.31
