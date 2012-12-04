@@ -16,12 +16,12 @@ requires 'unpack';
 sub thaw {
     my ( $class, $json, @args ) = @_;
     utf8::encode($json) if utf8::is_utf8($json);
-    $class->unpack( JSON::Any->jsonToObj($json), @args );
+    $class->unpack( JSON::Any->new->jsonToObj($json), @args );
 }
 
 sub freeze {
     my ( $self, @args ) = @_;
-    my $json = JSON::Any->objToJson( $self->pack(@args) );
+    my $json = JSON::Any->new->objToJson( $self->pack(@args) );
     utf8::decode($json) if !utf8::is_utf8($json) and utf8::valid($json); # if it's valid utf8 mark it as such
     return $json;
 }

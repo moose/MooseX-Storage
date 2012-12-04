@@ -21,7 +21,7 @@ BEGIN {
     # - SL 
     BEGIN {
         $ENV{JSON_ANY_ORDER}  = qw(XS);
-        $ENV{JSON_ANY_CONFIG} = "utf8=1";        
+        $ENV{JSON_ANY_CONFIG} = "utf8=0";
     }
     plan tests => 8;
     use_ok('MooseX::Storage');
