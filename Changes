@@ -4,6 +4,7 @@ Revision history for MooseX-Storage
    RT##69811
  * Create a JSON::Any object, so setting $ENV{JSON_ANY_CONFIG} works.
    Adjust tests that were setting the wrong values and the default happened to work.
+ * Don't rely on hash key order in tests (RT#81695)
 
 0.31
   * Add example for add_custom_type_handler to the MooseX::Storage::Engine docs. (perigrin)
