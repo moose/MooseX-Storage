@@ -3,7 +3,7 @@ use Moose::Role;
 
 use MooseX::Storage::Engine::IO::File;
 
-our $VERSION   = '0.32';
+our $VERSION   = '0.33';
 our $AUTHORITY = 'cpan:STEVAN';
 
 requires 'thaw';

@@ -1,5 +1,6 @@
 Revision history for MooseX-Storage
 
+0.33
  * always JSONify data with sorted keys, to handle hash order randomization
    introduced in 5.17.* (RT#84287, Karen Etheridge)
 

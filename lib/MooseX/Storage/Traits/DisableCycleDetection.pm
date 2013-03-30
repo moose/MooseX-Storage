@@ -1,7 +1,7 @@
 package MooseX::Storage::Traits::DisableCycleDetection;
 use Moose::Role;
 
-our $VERSION   = '0.32';
+our $VERSION   = '0.33';
 our $AUTHORITY = 'cpan:STEVAN';
 
 requires 'pack';

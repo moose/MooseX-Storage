@@ -5,7 +5,7 @@ use Moose;
 use utf8 ();
 use IO::AtomicFile;
 
-our $VERSION   = '0.32';
+our $VERSION   = '0.33';
 our $AUTHORITY = 'cpan:STEVAN';
 
 extends 'MooseX::Storage::Engine::IO::File';
