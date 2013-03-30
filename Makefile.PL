@@ -53,6 +53,7 @@ author_requires 'Digest::SHA';
 author_requires 'Test::Pod' => '1.14';
 author_requires 'Test::Pod::Coverage' => '1.08';
 
+# r/w: gitmo@git.moose.perl.org:MooseX-Storage.git
 resources repository => 'git://git.moose.perl.org/MooseX-Storage.git';
 
 WriteAll;
