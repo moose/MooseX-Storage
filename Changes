@@ -1,5 +1,8 @@
 Revision history for MooseX-Storage
 
+ * always JSONify data with sorted keys, to handle hash order randomization
+   introduced in 5.17.* (RT#84287, Karen Etheridge)
+
 0.32
  * Change to use core Digest and Digest::SHA dists, rather than Digest::SHA1.
    RT#69811

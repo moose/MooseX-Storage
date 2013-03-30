@@ -21,7 +21,7 @@ sub thaw {
 
 sub freeze {
     my ( $self, @args ) = @_;
-    my $json = JSON::Any->new->objToJson( $self->pack(@args) );
+    my $json = JSON::Any->new(canonical => 1)->objToJson( $self->pack(@args) );
     utf8::decode($json) if !utf8::is_utf8($json) and utf8::valid($json); # if it's valid utf8 mark it as such
     return $json;
 }
