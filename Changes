@@ -1,10 +1,10 @@
 Revision history for MooseX-Storage
 
-0.33
+0.33    2013-03-29
  * always JSONify data with sorted keys, to handle hash order randomization
    introduced in 5.17.* (RT#84287, Karen Etheridge)
 
-0.32
+0.32    2012-12-04
  * Change to use core Digest and Digest::SHA dists, rather than Digest::SHA1.
    RT#69811
  * Create a JSON::Any object, so setting $ENV{JSON_ANY_CONFIG} works.
@@ -12,7 +12,7 @@ Revision history for MooseX-Storage
    happened to work.
  * Don't rely on hash key order in tests (RT#81695)
 
-0.31
+0.31    2012-02-28
   * Add example for add_custom_type_handler to the MooseX::Storage::Engine docs. (perigrin)
 
   * Incorrect documentation for ->unpack method's inject parameter fixed.
@@ -20,48 +20,48 @@ Revision history for MooseX-Storage
   * The test suite now uses Test::Fatal instead of Test::Exception (Karen
     Etheridge).
 
-0.30
+0.30    2011-04-29
   * Make Makefile.PL features work again. RT#67170
 
-0.29
+0.29    2010-11-17
   * Remove use of Test::TempDir in favor of File::Temp (gphat)
 
-0.28
+0.28    2010-10-03
   * Make the engine_traits parameter be able to use a '+My::Trait::Name'
     prefix to specify a trait name which isn't in the
     MooseX::Storage::Engine::Trait namespace
   * Misc POD and test cleanups.
 
-0.27
+0.27    2010-04-15
   * use of parameterized roles (first added in 0.22) now works in Deferred
     Example: $object->freeze({ format => [ $role_name => \%args ] })
 
-0.26
+0.26    2010-03-25
   * Fix URI for repository in metadata.
   * Fix infinite recursion when collapsing objects which overload stringify
     to freeze themselves.
 
-0.25
+0.25    2010-03-09
   * Add support for Union types (bumps Moose dep to 0.99)
 
-0.24
+0.24    2010-01-11
   * Add additional YAML implementation tests.
   * Switch from using Best to YAML::Any.
   * Remove Test::YAML::Valid.
 
-0.23
+0.23    2009-11-10
   * Revert whitespace change in tests which breaks the tests if you
     have Test::YAML::Valid installed.
 
-0.22
+0.22    2009-11-05
   * Fix warnings when types do not have a parent type.
   * allow the use of roles outside MooseX::Storage:: (rjbs)
   * allow the use of parameterized roles (rjbs)
 
-0.21
+0.21    2009-07-14
   * Fix inconsistent dist versions with Perl::Version
 
-0.20
+0.20    2009-07-14
   * Add support for Storage( traits => [...] ) with a MooseX::Storage::Traits::XX
     namespace to alter the behaviour of the storage engine.
     (Suggestions for how to make this less fugly appreciated)
@@ -75,27 +75,27 @@ Revision history for MooseX-Storage
   * Fix a bug where if a required constructor argument was not serialized, it was
     impossible to ->unpack again.
 
-0.19
+0.19    2009-07-14
   * Skip pod tests when not in author mode
 
-0.18
+0.18    2009-06-02
    * Fix test failures without JSON::Any. Patch from RT#46343 (Nicholas Clarke)
    * Added support for Maybe[...] constraints fixing RT#43165 (plu)
 
-0.17
+0.17    2009-04-06
    * Change MooseX::Storage::Engine to use get_all_attributes,
      rather than the deprecated compute_all_applicable_attributes (t0m)
 
-0.16
+0.16    (not actually released)
    * Don't fail tests when Best is unavailable (t0m)
 
-0.15
+0.15    2008-09-29
     * MooseX::Storage
       - Remove use of deprecated alias_method routine
         which was causing issues when you used multiple
         Roles which used MooseX::Storage (t0m).
 
-0.14
+0.14    2008-06-22
     * MooseX::Storage::Engine
       - cycles are now tracked by refaddr instead 
         of stringified object, which broke for any
@@ -105,7 +105,7 @@ Revision history for MooseX-Storage
 
     * Use temporary files in test suite, instead of cwd
 
-0.13 Sat. May 24, 2008
+0.13    2008-05-24
     * MooseX::Storage::Engine
       - added find_type_handler_for($name) method 
         to make finding type handlers easier
@@ -114,8 +114,7 @@ Revision history for MooseX-Storage
     ~ removed Build.PL since Module::Install
       no longer supports it
 
-0.12 Fri. March 14, 2008
-
+0.12    2008-03-14
     - added build_requires for Test::Deep (awwaiid)
     - upped the Moose dependency to support the custom
       meta-attribute-traits
@@ -133,8 +132,7 @@ Revision history for MooseX-Storage
         DoNotSerialize
         - added tests for this
 
-0.11 Thurs. Jan. 10, 2008
-
+0.11    2008-01-10
     - upped the Test::JSON dependency 
       so that we use the version that 
       supports JSON::Any
@@ -147,7 +145,7 @@ Revision history for MooseX-Storage
         expand/collapse so that certain JSON engines
         will not choke on them
 
-0.10 Thurs. Jan. 10, 2008
+0.10    2009-01-10
     ~~ updated copyright information ~~
 
     * MooseX::Storage::Deferred
@@ -156,7 +154,7 @@ Revision history for MooseX-Storage
         formatter and/or IO engine you want to use
         - added tests for this
 
-0.09 Tue. Oct. 23, 2007
+0.09    2007-10-23
     * MooseX::Storage::Util
       - added support to deal with utf8 strings correctly
       
@@ -170,11 +168,11 @@ Revision history for MooseX-Storage
     
     * Change build system to Module::Install
 
-0.08 Wed. Oct. 10, 2007
+0.08    2007-10-10
     * MooseX::Storage::Format::JSON
       - added support to deal with utf8 strings correctly
 
-0.07 Thurs. Sept. 27, 2007
+0.07    2007-09-27
     + MooseX::Storage::Format::Storable
       - this will use Storable to freeze/thaw objects
         - added tests for this
@@ -187,13 +185,13 @@ Revision history for MooseX-Storage
       - fixed tests in 030_with_checksum.t
         (thanks to sartak)
 
-0.06 Tues. Aug. 7, 2007
+0.06    2007-08-07
     * MooseX::Storage::Engine
       - added the Bool type and fixed a few bugs
         that it exposed (thanks to Sartak)
         - added tests for this
 
-0.05 Sun. July 15. 2007
+0.05    2007-07-15
     * MooseX::Storage::Base::WithChecksum
       - Fixed minor issue where the WithChecksum would 
         choke with a bad checksum due to odd Data::Dumper
@@ -204,14 +202,14 @@ Revision history for MooseX-Storage
         JSON.pm since this is what Test::JSON uses and 
         subtle (and annoying) issues can arise.
 
-0.04 Tues. July 3, 2007
+0.04    2007-07-03
     * MooseX::Storage::Util
         - made this more robust when it tries
           to use YAML and JSON loaders and fails
           to find one
             - fixed tests to reflect this
 
-0.03 Wed. June 27, 2007
+0.03    2007-06-27
     * MooseX::Storage::Util
         - this is a collection of useful tools 
           for working with MooseX::Storage data
@@ -222,7 +220,7 @@ Revision history for MooseX-Storage
         - fixed checksum test to skip if Digest::SHA1 
           (our default) is not available
 
-0.02 Fri. June 8, 2007
+0.02    2007-06-08
     * MooseX::Storage::Base::WithChecksum
       - added a simple base role which makes a checksum of 
         the data structure before packing, and checks the
@@ -240,7 +238,7 @@ Revision history for MooseX-Storage
       - added checks to make sure the file gets opened correctly
         and dies if it does not.
 
-0.01  Mon. April 30, 2007
+0.01    2007-04-30
     This was Chris's idea originally (blame him), and 
     we expanded on it to create what you see here :)
 
