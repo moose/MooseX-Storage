@@ -5,7 +5,7 @@ use Moose qw(confess);
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;
 use String::RewritePrefix ();
 
-our $VERSION   = '0.33';
+our $VERSION   = '0.34';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub import {

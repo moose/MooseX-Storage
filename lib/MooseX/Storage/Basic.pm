@@ -4,7 +4,7 @@ use Moose::Role;
 use MooseX::Storage::Engine;
 use String::RewritePrefix;
 
-our $VERSION   = '0.33';
+our $VERSION   = '0.34';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub pack {
