@@ -19,15 +19,19 @@ Alternatively, to install with Module::Build, you can use the following commands
 DEPENDENCIES
 
     Moose
-    JSON::Any
-    Best (in order to load a YAML file)
-    IO::File
+    String::RewritePrefix
+    Test::More
+    Test::Deep
+    Test::Fatal
+    Test::Requires
     
 OPTIONAL DEPENDENCIES
 
+    JSON::Any
+    IO::File
     IO::AtomicFile
     Test::YAML::Valid
-    Test::JSON
+    Test::Deep::JSON
     Digest
     Digest::SHA1
     Data::Dumper
