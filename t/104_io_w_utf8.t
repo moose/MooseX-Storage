@@ -13,12 +13,12 @@ use Test::Requires {
 
 BEGIN {
     # NOTE:
-    # this is because JSON::XS is
+    # this is because JSON::XS (and Cpanel::JSON::XS) is
     # the only one which really gets
     # utf8 correct
     # - SL
     BEGIN {
-        $ENV{JSON_ANY_ORDER}  = qw(XS);
+        $ENV{JSON_ANY_ORDER}  = 'XS CPANEL';
         $ENV{JSON_ANY_CONFIG} = "utf8=0,canonical=1";
     }
     plan tests => 8;
