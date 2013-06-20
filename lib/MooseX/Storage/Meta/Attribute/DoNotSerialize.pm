@@ -1,4 +1,3 @@
-
 package MooseX::Storage::Meta::Attribute::DoNotSerialize;
 use Moose;
 

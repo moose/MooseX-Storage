@@ -1,4 +1,3 @@
-
 package MooseX::Storage::Engine::IO::AtomicFile;
 use Moose;
 

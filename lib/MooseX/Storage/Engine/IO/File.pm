@@ -1,4 +1,3 @@
-
 package MooseX::Storage::Engine::IO::File;
 use Moose;
 

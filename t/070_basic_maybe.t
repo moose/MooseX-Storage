@@ -36,7 +36,7 @@ BEGIN {
         object  => Foo->new( number => 2 ),
     );
     isa_ok( $foo, 'Foo' );
-    
+
     cmp_deeply(
         $foo->pack,
         {
@@ -47,10 +47,10 @@ BEGIN {
             float     => 10.5,
             array     => [ 1 .. 10 ],
             hash      => { map { $_ => undef } ( 1 .. 10 ) },
-            object    => { 
-                            __CLASS__ => 'Foo',                
-                            number    => 2 
-                         },            
+            object    => {
+                            __CLASS__ => 'Foo',
+                            number    => 2
+                         },
         },
         '... got the right frozen class'
     );
@@ -66,11 +66,11 @@ BEGIN {
             float     => 10.5,
             array     => [ 1 .. 10 ],
             hash      => { map { $_ => undef } ( 1 .. 10 ) },
-            object    => { 
-                            __CLASS__ => 'Foo',                
-                            number    => 2 
-                         },            
-        }        
+            object    => {
+                            __CLASS__ => 'Foo',
+                            number    => 2
+                         },
+        }
     );
     isa_ok( $foo, 'Foo' );
 
@@ -100,25 +100,25 @@ BEGIN {
 
     use Scalar::Util 'looks_like_number';
 
-    with Storage;    
-    
-    subtype 'Natural' 
+    with Storage;
+
+    subtype 'Natural'
         => as 'Int'
         => where { $_ > 0 };
-        
-    subtype 'HalfNum' 
+
+    subtype 'HalfNum'
         => as 'Num'
-        => where { "$_" =~ /\.5$/ };    
-    
+        => where { "$_" =~ /\.5$/ };
+
     subtype 'FooString'
         => as 'Str'
         => where { lc($_) eq 'foo' };
-        
-    subtype 'IntArray' 
+
+    subtype 'IntArray'
         => as 'ArrayRef'
         => where { scalar grep { looks_like_number($_) } @{$_} };
 
-    subtype 'UndefHash' 
+    subtype 'UndefHash'
         => as 'HashRef'
         => where { scalar grep { !defined($_) } values %{$_} };
 
@@ -140,7 +140,7 @@ BEGIN {
         object => Foo->new( number => 2 ),
     );
     isa_ok( $foo, 'Foo' );
-    
+
     cmp_deeply(
         $foo->pack,
         {
@@ -150,10 +150,10 @@ BEGIN {
             float     => 10.5,
             array     => [ 1 .. 10 ],
             hash      => { map { $_ => undef } ( 1 .. 10 ) },
-            object    => { 
-                            __CLASS__ => 'Foo',                
-                            number    => 2 
-                         },            
+            object    => {
+                            __CLASS__ => 'Foo',
+                            number    => 2
+                         },
         },
         '... got the right frozen class'
     );
@@ -168,11 +168,11 @@ BEGIN {
             float     => 10.5,
             array     => [ 1 .. 10 ],
             hash      => { map { $_ => undef } ( 1 .. 10 ) },
-            object    => { 
-                            __CLASS__ => 'Foo',                
-                            number    => 2 
-                         },            
-        }        
+            object    => {
+                            __CLASS__ => 'Foo',
+                            number    => 2
+                         },
+        }
     );
     isa_ok( $foo, 'Foo' );
 

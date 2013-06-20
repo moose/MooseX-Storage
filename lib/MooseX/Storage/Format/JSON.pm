@@ -1,4 +1,3 @@
-
 package MooseX::Storage::Format::JSON;
 use Moose::Role;
 

@@ -11,7 +11,7 @@ BEGIN {
 
 =pod
 
-This tests that the version and authority 
+This tests that the version and authority
 checks are performed upon object expansion.
 
 =cut
@@ -20,27 +20,27 @@ checks are performed upon object expansion.
     package Bar;
     use Moose;
     use MooseX::Storage;
-    
+
     our $VERSION   = '0.01';
     our $AUTHORITY = 'cpan:JRANDOM';
 
     with Storage;
-    
+
     has 'number' => (is => 'ro', isa => 'Int');
-    
+
     package Foo;
     use Moose;
     use MooseX::Storage;
 
     our $VERSION   = '0.01';
-    our $AUTHORITY = 'cpan:JRANDOM';    
+    our $AUTHORITY = 'cpan:JRANDOM';
 
-    with Storage;    
+    with Storage;
 
-    has 'bar' => ( 
-        is  => 'ro', 
-        isa => 'Bar' 
-    );    
+    has 'bar' => (
+        is  => 'ro',
+        isa => 'Bar'
+    );
 }
 
 {
@@ -48,7 +48,7 @@ checks are performed upon object expansion.
         bar => Bar->new(number => 1)
     );
     isa_ok( $foo, 'Foo' );
-    
+
     cmp_deeply(
         $foo->pack,
         {
@@ -56,7 +56,7 @@ checks are performed upon object expansion.
             bar => {
                 __CLASS__ => 'Bar-0.01-cpan:JRANDOM',
                 number    => 1,
-            }         
+            }
         },
         '... got the right frozen class'
     );
@@ -69,16 +69,16 @@ checks are performed upon object expansion.
             bar => {
                 __CLASS__ => 'Bar-0.01-cpan:JRANDOM',
                 number    => 1,
-            }         
-        },     
+            }
+        },
     );
     isa_ok( $foo, 'Foo' );
     isa_ok( $foo->bar, 'Bar' );
     is( $foo->bar->number, 1 , '... got the right number too' );
-    
+
 }
 
-Moose::Meta::Class->create('Bar', 
+Moose::Meta::Class->create('Bar',
     version   => '0.02',
     authority => 'cpan:JRANDOM',
 );
@@ -90,12 +90,12 @@ ok(exception {
             bar => {
                 __CLASS__ => 'Bar-0.01-cpan:JRANDOM',
                 number    => 1,
-            }         
-        }     
+            }
+        }
     );
 }, '... could not unpack, versions are different ' . $@);
 
-Moose::Meta::Class->create('Bar', 
+Moose::Meta::Class->create('Bar',
     version   => '0.01',
     authority => 'cpan:DSTATIC',
 );
@@ -107,7 +107,7 @@ ok(exception {
             bar => {
                 __CLASS__ => 'Bar-0.01-cpan:JRANDOM',
                 number    => 1,
-            }         
-        }     
+            }
+        }
     );
 }, '... could not unpack, authorities are different');

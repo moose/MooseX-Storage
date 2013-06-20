@@ -1,4 +1,3 @@
-
 package MooseX::Storage::Format::Storable;
 use Moose::Role;
 

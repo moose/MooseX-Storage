@@ -1,4 +1,3 @@
-
 package MooseX::Storage::Engine;
 use Moose;
 use Scalar::Util qw(refaddr);
