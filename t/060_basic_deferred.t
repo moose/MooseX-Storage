@@ -7,13 +7,13 @@ use Test::Deep;
 use Storable;
 
 use Test::Requires {
-    'Test::JSON' => 0.01, # skip all if not installed
+    'Test::Deep::JSON' => 0, # skip all if not installed
     'JSON::Any' => 0.01,
     'YAML::Any' => 0.01,
 };
 
 BEGIN {
-    plan tests => 31;
+    plan tests => 30;
     use_ok('MooseX::Storage');
 }
 
@@ -47,11 +47,20 @@ diag('Using implementation: ', YAML::Any->implementation);
 
     my $json = $foo->freeze({ 'format' => 'JSON' });
 
-    is_valid_json($json, '.. this is valid JSON');
-
-    is_json(
+    cmp_deeply(
         $json,
-'{"array":[1,2,3,4,5,6,7,8,9,10],"hash":{"6":null,"3":null,"7":null,"9":null,"2":null,"8":null,"1":null,"4":null,"10":null,"5":null},"float":10.5,"object":{"number":2,"__CLASS__":"Foo"},"number":10,"__CLASS__":"Foo","string":"foo"}',
+        json({
+            number => 10,
+            string => 'foo',
+            float  => 10.5,
+            array  => [ 1 .. 10 ],
+            hash   => { map { $_ => undef } ( 1 .. 10 ) },
+            __CLASS__ => 'Foo',
+            object => {
+                number => 2,
+                __CLASS__ => 'Foo'
+            },
+        }),
         '... got the right JSON'
     );
 }

@@ -21,10 +21,10 @@ auto_install; # Needed for features to work. RT#67170
 feature 'JSON',
   -default     => 1,
   'JSON::Any'  => '1.15',
-  'Test::JSON' => '0.06';
+  'Test::Deep::JSON' => '0';
 
 author_requires 'JSON::Any'  => '1.15';
-author_requires 'Test::JSON' => '0.06';
+author_requires 'Test::Deep::JSON' => '0';
 
 feature 'YAML',
   -default            => 1,
