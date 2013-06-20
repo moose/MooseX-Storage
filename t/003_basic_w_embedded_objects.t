@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 47;
+use Test::Deep;
 
 BEGIN {
     use_ok('MooseX::Storage');
@@ -55,7 +56,7 @@ ArrayRef and HashRef type handlers.
     );
     isa_ok( $foo, 'Foo' );
     
-    is_deeply(
+    cmp_deeply(
         $foo->pack,
         {
             __CLASS__ => 'Foo',
@@ -101,7 +102,7 @@ ArrayRef and HashRef type handlers.
     );
     isa_ok( $baz, 'Baz' );
     
-    is_deeply(
+    cmp_deeply(
         $baz->pack,
         {
             __CLASS__ => 'Baz',

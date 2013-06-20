@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 13;
+use Test::Deep;
 use Test::Fatal;
 
 BEGIN {
@@ -44,7 +45,7 @@ BEGIN {
     is($foo->baz, 'BAZ', '... got the value we expected');
     is($foo->gorch, 'GORCH', '... got the value we expected');
     
-    is_deeply(
+    cmp_deeply(
         $foo->pack,
         {
             __CLASS__ => 'Foo',
@@ -82,7 +83,7 @@ BEGIN {
     is( $bar->zot, $$,          "   ->zot => $$" );
     
     my $bpack = $bar->pack;
-    is_deeply(
+    cmp_deeply(
         $bpack,
         {   __CLASS__   => 'Bar',
             zot         => $$,

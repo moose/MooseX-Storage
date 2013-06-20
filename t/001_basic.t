@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 14;
+use Test::Deep;
 
 BEGIN {
     use_ok('MooseX::Storage');
@@ -42,7 +43,7 @@ BEGIN {
     );
     isa_ok( $foo, 'Foo' );
 
-    is_deeply(
+    cmp_deeply(
         $foo->pack,
         {
             __CLASS__ => 'Foo',
@@ -87,8 +88,8 @@ BEGIN {
     is( $foo->string, 'foo', '... got the right string' );
     ok( $foo->boolean,       '... got the right boolean' );
     is( $foo->float,  10.5,  '... got the right float' );
-    is_deeply( $foo->array, [ 1 .. 10 ], '... got the right array' );
-    is_deeply(
+    cmp_deeply( $foo->array, [ 1 .. 10 ], '... got the right array' );
+    cmp_deeply(
         $foo->hash,
         { map { $_ => undef } ( 1 .. 10 ) },
         '... got the right hash'
@@ -97,6 +98,6 @@ BEGIN {
     isa_ok( $foo->object, 'Foo' );
     is( $foo->object->number, 2,
         '... got the right number (in the embedded object)' );
-    is_deeply( $foo->union, [ 1 .. 3 ], '... got the right array (in the union)' );
+    cmp_deeply( $foo->union, [ 1 .. 3 ], '... got the right array (in the union)' );
     is( $foo->union2,  'A String',  '... got the right string (in the union)' );
 }

@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Deep;
 use Storable;
 
 use Test::Requires {
@@ -67,8 +68,8 @@ diag('Using implementation: ', YAML::Any->implementation);
     is( $foo->number, 10,    '... got the right number' );
     is( $foo->string, 'foo', '... got the right string' );
     is( $foo->float,  10.5,  '... got the right float' );
-    is_deeply( $foo->array, [ 1 .. 10 ], '... got the right array' );
-    is_deeply(
+    cmp_deeply( $foo->array, [ 1 .. 10 ], '... got the right array' );
+    cmp_deeply(
         $foo->hash,
         { map { $_ => undef } ( 1 .. 10 ) },
         '... got the right hash'
@@ -93,7 +94,7 @@ diag('Using implementation: ', YAML::Any->implementation);
     my $stored = $foo->freeze({ 'format' => 'Storable' });
 
     my $struct = Storable::thaw($stored);
-    is_deeply(
+    cmp_deeply(
         $struct,
         {
             '__CLASS__' => 'Foo',
@@ -131,8 +132,8 @@ diag('Using implementation: ', YAML::Any->implementation);
     is( $foo->number, 10,    '... got the right number' );
     is( $foo->string, 'foo', '... got the right string' );
     is( $foo->float,  10.5,  '... got the right float' );
-    is_deeply( $foo->array, [ 1 .. 10 ], '... got the right array' );
-    is_deeply(
+    cmp_deeply( $foo->array, [ 1 .. 10 ], '... got the right array' );
+    cmp_deeply(
         $foo->hash,
         { map { $_ => undef } ( 1 .. 10 ) },
         '... got the right hash'
@@ -162,8 +163,8 @@ diag('Using implementation: ', YAML::Any->implementation);
     is( $bar->number, 10,    '... got the right number' );
     is( $bar->string, 'foo', '... got the right string' );
     is( $bar->float,  10.5,  '... got the right float' );
-    is_deeply( $bar->array, [ 1 .. 10 ], '... got the right array' );
-    is_deeply(
+    cmp_deeply( $bar->array, [ 1 .. 10 ], '... got the right array' );
+    cmp_deeply(
         $bar->hash,
         { map { $_ => undef } ( 1 .. 10 ) },
         '... got the right hash'

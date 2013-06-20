@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 18;
+use Test::Deep;
 use Test::Fatal;
 
 BEGIN {
@@ -86,7 +87,7 @@ This test demonstrates two things:
     my $t = Tree->new(node => 100);
     isa_ok($t, 'Tree');
     
-    is_deeply(
+    cmp_deeply(
         $t->pack, 
         {
             __CLASS__ => 'Tree',
@@ -100,12 +101,12 @@ This test demonstrates two things:
     
     $t->add_child($t2);
     
-    is_deeply($t->children, [ $t2 ], '... got the right children in $t');
+    cmp_deeply($t->children, [ $t2 ], '... got the right children in $t');
     
     is($t2->parent, $t, '... created the cycle correctly');
     isa_ok($t2->parent, 'Tree');        
     
-    is_deeply(
+    cmp_deeply(
         $t->pack, 
         {
             __CLASS__ => 'Tree',
@@ -120,7 +121,7 @@ This test demonstrates two things:
         },
     '... got the right packed version (with parent attribute skipped in child)');    
     
-    is_deeply(
+    cmp_deeply(
         $t2->pack, 
         {
             __CLASS__ => 'Tree',

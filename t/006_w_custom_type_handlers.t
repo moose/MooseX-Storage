@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 9;
+use Test::Deep;
 use Test::Fatal;
 
 BEGIN {
@@ -67,7 +68,7 @@ isa_ok($foo, 'Foo');
 
 isa_ok($foo->bar, 'Bar');
 
-is_deeply(
+cmp_deeply(
 $foo->pack,
 {
     __CLASS__ => "Foo",

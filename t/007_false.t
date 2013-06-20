@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 8;
+use Test::Deep;
 
 BEGIN {
     use_ok('MooseX::Storage');
@@ -32,7 +33,7 @@ BEGIN {
     
     is($foo->boolean, 0, '... got the right boolean value');
     
-    is_deeply(
+    cmp_deeply(
         $foo->pack,
         {
             __CLASS__ => 'Foo',

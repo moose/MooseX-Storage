@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Deep;
 
 use Test::Requires {
     'MooseX::Storage::Format::JSONpm' => 0.01, # skip all if not installed
@@ -64,7 +65,7 @@ for my $jsonpm (
 
     my $json = eval { Bar->new(x => 10, y => 20)->freeze({ format => $p }) };
 
-    is_deeply(
+    cmp_deeply(
         JSON->new->decode($json),
         {
             '__CLASS__' => 'Bar-0.01',

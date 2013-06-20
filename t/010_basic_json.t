@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Deep;
 
 use Test::Requires {
     'Test::JSON' => 0.01, # skip all if not installed
@@ -65,8 +66,8 @@ BEGIN {
     is( $foo->number, 10,    '... got the right number' );
     is( $foo->string, 'foo', '... got the right string' );
     is( $foo->float,  10.5,  '... got the right float' );
-    is_deeply( $foo->array, [ 1 .. 10 ], '... got the right array' );
-    is_deeply(
+    cmp_deeply( $foo->array, [ 1 .. 10 ], '... got the right array' );
+    cmp_deeply(
         $foo->hash,
         { map { $_ => undef } ( 1 .. 10 ) },
         '... got the right hash'

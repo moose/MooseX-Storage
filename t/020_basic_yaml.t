@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Deep;
 
 use Test::Requires {
     'YAML::Any' => 0.01, # skip all if not installed
@@ -53,8 +54,8 @@ BEGIN {
     is( $bar->number, 10,    '... got the right number' );
     is( $bar->string, 'foo', '... got the right string' );
     is( $bar->float,  10.5,  '... got the right float' );
-    is_deeply( $bar->array, [ 1 .. 10 ], '... got the right array' );
-    is_deeply(
+    cmp_deeply( $bar->array, [ 1 .. 10 ], '... got the right array' );
+    cmp_deeply(
         $bar->hash,
         { map { $_ => undef } ( 1 .. 10 ) },
         '... got the right hash'

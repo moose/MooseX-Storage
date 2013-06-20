@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 8;
+use Test::Deep;
 use Test::Fatal;
 
 BEGIN {
@@ -50,7 +51,7 @@ checks are performed upon object expansion.
     );
     isa_ok( $foo, 'Foo' );
     
-    is_deeply(
+    cmp_deeply(
         $foo->pack,
         {
             __CLASS__ => 'Foo-0.01-cpan:JRANDOM',

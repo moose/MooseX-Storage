@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Deep;
 use File::Temp qw(tempdir);
 use File::Spec::Functions;
 my $dir = tempdir;
@@ -55,8 +56,8 @@ my $file = catfile( $dir, 'temp.json' );
     is($foo->number, 10, '... got the right number');
     is($foo->string, 'foo', '... got the right string');
     is($foo->float, 10.5, '... got the right float');
-    is_deeply($foo->array, [ 1 .. 10], '... got the right array');
-    is_deeply($foo->hash, { map { $_ => undef } (1 .. 10) }, '... got the right hash');
+    cmp_deeply($foo->array, [ 1 .. 10], '... got the right array');
+    cmp_deeply($foo->hash, { map { $_ => undef } (1 .. 10) }, '... got the right hash');
 
     isa_ok($foo->object, 'Foo');
     is($foo->object->number, 2, '... got the right number (in the embedded object)');
