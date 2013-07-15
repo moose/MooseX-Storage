@@ -1,5 +1,6 @@
 Revision history for MooseX-Storage
 
+0.35    2013-07-15
  * properly skip optional tests when the required JSON backends aren't
    available
 
