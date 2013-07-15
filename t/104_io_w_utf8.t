@@ -6,24 +6,22 @@ use File::Temp qw(tempdir);
 use File::Spec::Functions;
 my $dir = tempdir( CLEANUP => 1 );
 
+# NOTE:
+# this is because JSON::XS (and Cpanel::JSON::XS) is
+# the only one which really gets utf8 correct
+# - SL
+BEGIN {
+    $ENV{JSON_ANY_ORDER}  = 'XS CPANEL';
+    $ENV{JSON_ANY_CONFIG} = "utf8=0,canonical=1";
+}
+
 use Test::Requires {
     'JSON::Any' => 0.01, # skip all if not installed
     'IO::AtomicFile' => 0.01,
 };
 
-BEGIN {
-    # NOTE:
-    # this is because JSON::XS (and Cpanel::JSON::XS) is
-    # the only one which really gets
-    # utf8 correct
-    # - SL
-    BEGIN {
-        $ENV{JSON_ANY_ORDER}  = 'XS CPANEL';
-        $ENV{JSON_ANY_CONFIG} = "utf8=0,canonical=1";
-    }
-    plan tests => 8;
-    use_ok('MooseX::Storage');
-}
+plan tests => 8;
+use_ok('MooseX::Storage');
 
 use utf8;
 

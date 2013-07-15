@@ -1,5 +1,8 @@
 Revision history for MooseX-Storage
 
+ * properly skip optional tests when the required JSON backends aren't
+   available
+
 0.34    2013-06-20
  * JSON storage works when Cpanel::JSON::XS is the only JSON backend installed
 

@@ -3,25 +3,22 @@ use warnings;
 
 use Test::More;
 
+# NOTE:
+# this is because JSON::XS (and Cpanel::JSON::XS) is
+# the only one which really gets utf8 correct
+# - SL
+BEGIN {
+    $ENV{JSON_ANY_ORDER}  = 'XS CPANEL';
+    $ENV{JSON_ANY_CONFIG} = "utf8=0,canonical=1";
+}
+
 use Test::Requires {
     'Encode' => 0.01, # skip all if not installed
     'JSON::Any' => 0.01,
 };
 
-BEGIN {
-    # NOTE:
-    # this is because JSON::XS (and Cpanel::JSON::XS) is
-    # the only one which really gets
-    # utf8 correct
-    # - SL
-    BEGIN {
-        $ENV{JSON_ANY_ORDER}  = 'XS CPANEL';
-        $ENV{JSON_ANY_CONFIG} = "utf8=0,canonical=1";
-    }
-
-    plan tests => 16;
-    use_ok('MooseX::Storage');
-}
+plan tests => 16;
+use_ok('MooseX::Storage');
 
 {
     package Foo;
