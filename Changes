@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ * convert to Dist::Zilla, with new optional prereq handling
 
 0.35    2013-07-15
  * properly skip optional tests when the required JSON backends aren't
