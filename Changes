@@ -1,4 +1,6 @@
-Revision history for MooseX-Storage
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
 
 0.35    2013-07-15
  * properly skip optional tests when the required JSON backends aren't

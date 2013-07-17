@@ -1,12 +1,8 @@
-
 package MooseX::Storage;
 use Moose qw(confess);
 
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;
 use String::RewritePrefix ();
-
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
 
 sub import {
     my $pkg = caller();

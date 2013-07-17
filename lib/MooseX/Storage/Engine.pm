@@ -2,9 +2,6 @@ package MooseX::Storage::Engine;
 use Moose;
 use Scalar::Util qw(refaddr);
 
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
-
 # the class marker when
 # serializing an object.
 our $CLASS_MARKER = '__CLASS__';

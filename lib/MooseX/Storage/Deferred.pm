@@ -1,9 +1,6 @@
 package MooseX::Storage::Deferred;
 use Moose::Role;
 
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'MooseX::Storage::Basic';
 
 sub __get_method {

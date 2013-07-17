@@ -4,9 +4,6 @@ use Moose qw(confess blessed);
 use MooseX::Storage::Engine ();
 use utf8 ();
 
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
-
 sub peek {
     my ($class, $data, %options) = @_;
 
