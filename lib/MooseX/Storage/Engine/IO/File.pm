@@ -4,28 +4,25 @@ use Moose;
 use utf8 ();
 use IO::File;
 
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
-
 has 'file' => (
-	is       => 'ro',
-	isa      => 'Str',	
-	required => 1,
+    is       => 'ro',
+    isa      => 'Str',
+    required => 1,
 );
 
-sub load { 
-	my ($self) = @_;
-	my $fh = IO::File->new($self->file, 'r')
-	    || confess "Unable to open file (" . $self->file . ") for loading : $!";
-	return do { local $/; <$fh>; };
+sub load {
+    my ($self) = @_;
+    my $fh = IO::File->new($self->file, 'r')
+        || confess "Unable to open file (" . $self->file . ") for loading : $!";
+    return do { local $/; <$fh>; };
 }
 
 sub store {
-	my ($self, $data) = @_;
-	my $fh = IO::File->new($self->file, 'w')
-		|| confess "Unable to open file (" . $self->file . ") for storing : $!";
-	$fh->binmode(':utf8') if utf8::is_utf8($data);
-	print $fh $data;
+    my ($self, $data) = @_;
+    my $fh = IO::File->new($self->file, 'w')
+        || confess "Unable to open file (" . $self->file . ") for storing : $!";
+    $fh->binmode(':utf8') if utf8::is_utf8($data);
+    print $fh $data;
 }
 
 1;
@@ -64,7 +61,7 @@ This provides the actual means to store data to a file.
 
 =head1 BUGS
 
-All complex software has bugs lurking in it, and this module is no 
+All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 

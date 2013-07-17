@@ -3,9 +3,6 @@ use Moose::Role;
 
 use Storable ();
 
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
-
 requires 'pack';
 requires 'unpack';
 
@@ -69,7 +66,7 @@ across machines or just locally.
 
 One important thing to note is that this module does not mix well
 with the other Format modules. Since Storable serialized perl data
-structures in it's own format, those roles are lagely unnecessary.
+structures in it's own format, those roles are largely unnecessary.
 
 However, there is always the possibility that having a set of
 C<freeze/thaw> hooks can be useful, so because of that this module

@@ -24,10 +24,10 @@ BEGIN {
     has 'float'  => (is => 'ro', isa => 'Num');
     has 'array'  => (is => 'ro', isa => 'ArrayRef');
     has 'hash'   => (is => 'ro', isa => 'HashRef');
-	has 'object' => (is => 'ro', isa => 'Object');
-	
-	## add some custom freeze/thaw hooks here ...
-	
+    has 'object' => (is => 'ro', isa => 'Object');
+
+    ## add some custom freeze/thaw hooks here ...
+
     sub thaw {
         my ( $class, $data ) = @_;
         my $self = $class->unpack( $data );
@@ -53,7 +53,7 @@ my $file = catfile($dir,'temp.storable');
         float  => 10.5,
         array  => [ 1 .. 10 ],
         hash   => { map { $_ => undef } (1 .. 10) },
-    	object => Foo->new( number => 2 ),
+        object => Foo->new( number => 2 ),
     );
     isa_ok($foo, 'Foo');
 

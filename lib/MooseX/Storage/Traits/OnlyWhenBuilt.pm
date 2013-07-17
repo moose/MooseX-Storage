@@ -1,9 +1,6 @@
 package MooseX::Storage::Traits::OnlyWhenBuilt;
 use Moose::Role;
 
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
-
 requires 'pack';
 requires 'unpack';
 
@@ -63,8 +60,10 @@ MooseX::Storage::Traits::OnlyWhenBuilt - A custom trait to bypass serialization
 Sometimes you don't want a particular attribute to be part of the
 serialization if it has not been built yet. If you invoke C<Storage()>
 as outlined in the C<Synopsis>, only attributes that have been built
-(ie, where the predicate returns 'true') will be serialized.
+(i.e., where the predicate returns 'true') will be serialized.
 This avoids any potentially expensive computations.
+
+=for stopwords culted
 
 See the SYNOPSIS for a nice example that can be easily cargo-culted.
 

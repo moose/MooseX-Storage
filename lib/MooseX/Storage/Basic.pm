@@ -4,9 +4,6 @@ use Moose::Role;
 use MooseX::Storage::Engine;
 use String::RewritePrefix;
 
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
-
 sub pack {
     my ( $self, %args ) = @_;
     my $e = $self->_storage_get_engine_class(%args)->new( object => $self );
@@ -72,8 +69,6 @@ MooseX::Storage::Basic - The simplest level of serialization
   package Point;
   use Moose;
   use MooseX::Storage;
-
-  our $VERSION = '0.01';
 
   with Storage;
 

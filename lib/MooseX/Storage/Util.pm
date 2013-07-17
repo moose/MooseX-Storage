@@ -4,9 +4,6 @@ use Moose qw(confess blessed);
 use MooseX::Storage::Engine ();
 use utf8 ();
 
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
-
 sub peek {
     my ($class, $data, %options) = @_;
 
@@ -30,7 +27,7 @@ sub peek {
 }
 
 sub _inflate_json {
-    my ($class, $json) = @_;
+    my ($self, $json) = @_;
 
     eval { require JSON::Any; JSON::Any->import };
     confess "Could not load JSON module because : $@" if $@;
@@ -46,7 +43,7 @@ sub _inflate_json {
 }
 
 sub _inflate_yaml {
-    my ($class, $yaml) = @_;
+    my ($self, $yaml) = @_;
 
     require Best;
     eval { Best->import([[ qw[YAML::Syck YAML] ]]) };
@@ -74,7 +71,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Util - A MooseX::Storage swiss-army chainsaw
+MooseX::Storage::Util - A MooseX::Storage Swiss Army chainsaw
 
 =head1 DESCRIPTION
 
@@ -126,6 +123,8 @@ found in the key for you.
 =item B<meta>
 
 =back
+
+=for stopwords TODO
 
 =head1 TODO
 

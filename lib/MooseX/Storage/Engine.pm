@@ -2,9 +2,6 @@ package MooseX::Storage::Engine;
 use Moose;
 use Scalar::Util qw(refaddr);
 
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
-
 # the class marker when
 # serializing an object.
 our $CLASS_MARKER = '__CLASS__';
@@ -29,13 +26,13 @@ has 'class'  => (is => 'rw', isa => 'Str');
 sub collapse_object {
     my ( $self, %options ) = @_;
 
-	# NOTE:
-	# mark the root object as seen ...
-	$self->seen->{refaddr $self->object} = undef;
-	
+    # NOTE:
+    # mark the root object as seen ...
+    $self->seen->{refaddr $self->object} = undef;
+
     $self->map_attributes('collapse_attribute', \%options);
     $self->storage->{$CLASS_MARKER} = $self->object->meta->identifier;
-	return $self->storage;
+    return $self->storage;
 }
 
 sub expand_object {
@@ -44,12 +41,12 @@ sub expand_object {
     $options{check_version}       = 1 unless exists $options{check_version};
     $options{check_authority}     = 1 unless exists $options{check_authority};
 
-	# NOTE:
-	# mark the root object as seen ...
-	$self->seen->{refaddr $data} = undef;
+    # NOTE:
+    # mark the root object as seen ...
+    $self->seen->{refaddr $data} = undef;
 
     $self->map_attributes('expand_attribute', $data, \%options);
-	return $self->storage;
+    return $self->storage;
 }
 
 ## this is the internal API ...
@@ -70,13 +67,13 @@ sub expand_attribute {
 sub collapse_attribute_value {
     my ($self, $attr, $options)  = @_;
     # Faster, but breaks attributes without readers, do we care?
-	#my $value = $attr->get_read_method_ref->($self->object);
-	my $value = $attr->get_value($self->object);
+    #my $value = $attr->get_read_method_ref->($self->object);
+    my $value = $attr->get_value($self->object);
 
-	# NOTE:
-	# this might not be enough, we might
-	# need to make it possible for the
-	# cycle checker to return the value
+    # NOTE:
+    # this might not be enough, we might
+    # need to make it possible for the
+    # cycle checker to return the value
     $self->check_for_cycle_in_collapse($attr, $value)
         if ref $value;
 
@@ -86,14 +83,14 @@ sub collapse_attribute_value {
             || confess "Cannot convert " . $attr->type_constraint->name;
         $value = $type_converter->{collapse}->($value, $options);
     }
-	return $value;
+    return $value;
 }
 
 sub expand_attribute_value {
     my ($self, $attr, $value, $options)  = @_;
 
-	# NOTE:
-	# (see comment in method above ^^)
+    # NOTE:
+    # (see comment in method above ^^)
     if( ref $value and not(
         $options->{disable_cycle_check} or
         $self->class->does('MooseX::Storage::Traits::DisableCycleDetection')
@@ -105,7 +102,7 @@ sub expand_attribute_value {
         my $type_converter = $self->find_type_handler($attr->type_constraint, $value);
         $value = $type_converter->{expand}->($value, $options);
     }
-	return $value;
+    return $value;
 }
 
 # NOTE:
@@ -287,14 +284,14 @@ my %TYPES = (
 );
 
 sub add_custom_type_handler {
-    my ($class, $type_name, %handlers) = @_;
+    my ($self, $type_name, %handlers) = @_;
     (exists $handlers{expand} && exists $handlers{collapse})
         || confess "Custom type handlers need an expand *and* a collapse method";
     $TYPES{$type_name} = \%handlers;
 }
 
 sub remove_custom_type_handler {
-    my ($class, $type_name) = @_;
+    my ($self, $type_name) = @_;
     delete $TYPES{$type_name} if exists $TYPES{$type_name};
 }
 

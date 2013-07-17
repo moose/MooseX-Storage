@@ -6,9 +6,6 @@ with 'MooseX::Storage::Basic';
 use Digest       ();
 use Data::Dumper ();
 
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
-
 our $DIGEST_MARKER = '__DIGEST__';
 
 around pack => sub {

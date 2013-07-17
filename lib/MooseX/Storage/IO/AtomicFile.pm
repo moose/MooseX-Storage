@@ -3,9 +3,6 @@ use Moose::Role;
 
 use MooseX::Storage::Engine::IO::AtomicFile;
 
-our $VERSION   = '0.35';
-our $AUTHORITY = 'cpan:STEVAN';
-
 with 'MooseX::Storage::IO::File';
 
 sub store {

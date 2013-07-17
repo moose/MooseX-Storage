@@ -1,4 +1,7 @@
-Revision history for MooseX-Storage
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
+ * convert to Dist::Zilla, with new optional prereq handling
 
 0.35    2013-07-15
  * properly skip optional tests when the required JSON backends aren't
@@ -92,8 +95,6 @@ Revision history for MooseX-Storage
 0.17    2009-04-06
    * Change MooseX::Storage::Engine to use get_all_attributes,
      rather than the deprecated compute_all_applicable_attributes (t0m)
-
-0.16    (not actually released)
    * Don't fail tests when Best is unavailable (t0m)
 
 0.15    2008-09-29
