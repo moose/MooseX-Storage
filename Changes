@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.36-TRIAL  2013-07-16 21:41:39 PDT-0700 (Karen Etheridge)
  * convert to Dist::Zilla, with new optional prereq handling
 
 0.35    2013-07-15
