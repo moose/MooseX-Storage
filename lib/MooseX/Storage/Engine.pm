@@ -284,14 +284,14 @@ my %TYPES = (
 );
 
 sub add_custom_type_handler {
-    my ($class, $type_name, %handlers) = @_;
+    my ($self, $type_name, %handlers) = @_;
     (exists $handlers{expand} && exists $handlers{collapse})
         || confess "Custom type handlers need an expand *and* a collapse method";
     $TYPES{$type_name} = \%handlers;
 }
 
 sub remove_custom_type_handler {
-    my ($class, $type_name) = @_;
+    my ($self, $type_name) = @_;
     delete $TYPES{$type_name} if exists $TYPES{$type_name};
 }
 

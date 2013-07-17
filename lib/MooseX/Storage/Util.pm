@@ -27,7 +27,7 @@ sub peek {
 }
 
 sub _inflate_json {
-    my ($class, $json) = @_;
+    my ($self, $json) = @_;
 
     eval { require JSON::Any; JSON::Any->import };
     confess "Could not load JSON module because : $@" if $@;
@@ -43,7 +43,7 @@ sub _inflate_json {
 }
 
 sub _inflate_yaml {
-    my ($class, $yaml) = @_;
+    my ($self, $yaml) = @_;
 
     require Best;
     eval { Best->import([[ qw[YAML::Syck YAML] ]]) };
