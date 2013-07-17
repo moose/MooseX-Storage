@@ -72,8 +72,6 @@ MooseX::Storage::Deferred - A role for undecisive programmers
   use Moose;
   use MooseX::Storage;
 
-  our $VERSION = '0.01';
-
   with 'MooseX::Storage::Deferred';
 
   has 'x' => (is => 'rw', isa => 'Int');

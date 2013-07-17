@@ -70,8 +70,6 @@ MooseX::Storage::Basic - The simplest level of serialization
   use Moose;
   use MooseX::Storage;
 
-  our $VERSION = '0.01';
-
   with Storage;
 
   has 'x' => (is => 'rw', isa => 'Int');

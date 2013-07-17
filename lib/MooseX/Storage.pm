@@ -115,8 +115,6 @@ MooseX::Storage - A serialization framework for Moose classes
   use Moose;
   use MooseX::Storage;
 
-  our $VERSION = '0.01';
-
   with Storage('format' => 'JSON', 'io' => 'File');
 
   has 'x' => (is => 'rw', isa => 'Int');
