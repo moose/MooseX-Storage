@@ -71,7 +71,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Storage::Util - A MooseX::Storage swiss-army chainsaw
+MooseX::Storage::Util - A MooseX::Storage Swiss Army chainsaw
 
 =head1 DESCRIPTION
 
@@ -123,6 +123,8 @@ found in the key for you.
 =item B<meta>
 
 =back
+
+=for stopwords TODO
 
 =head1 TODO
 

@@ -178,7 +178,7 @@ The first (base) level is C<pack> and C<unpack>. In this level the
 class is serialized into a Perl HASH reference, it is tagged with the
 class name and each instance attribute is stored. Very simple.
 
-This level is not optional, it is the bare minumum that
+This level is not optional, it is the bare minimum that
 MooseX::Storage provides and all other levels build on top of this.
 
 See L<MooseX::Storage::Basic> for the fundamental implementation and
@@ -193,6 +193,8 @@ specific serialization format and Perl land.
 
 This level is optional, if you don't want/need it, you don't have to
 have it. You can just use C<pack>/C<unpack> instead.
+
+=for stopwords io
 
 =item B<io>
 
@@ -218,7 +220,7 @@ The following traits are currently bundled with C<MooseX::Storage>:
 
 =item OnlyWhenBuilt
 
-Only attributes that have been built (ie, where the predicate returns
+Only attributes that have been built (i.e., where the predicate returns
 'true') will be serialized. This avoids any potentially expensive computations.
 
 See L<MooseX::Storage::Traits::OnlyWhenBuilt> for details.
@@ -238,8 +240,10 @@ MooseX::Storage enabled objects are supported.
 
 With Array and Hash references the first level down is inspected and
 any objects found are serialized/deserialized for you. We do not do
-this recusively by default, however this feature may become an
+this recursively by default, however this feature may become an
 option eventually.
+
+=for stopwords subtypes
 
 The specific serialize/deserialize routine is determined by the
 Moose type constraint a specific attribute has. In most cases subtypes
@@ -290,6 +294,8 @@ that is not under the default namespace prefix, start with an equal sign:
 
   Storage(format => '=My::Private::JSONFormat');
 
+=for stopwords parameterized
+
 To use a parameterized role (for which, see L<MooseX::Role::Parameterized>) you
 can pass an arrayref of the role name (in short or long form, as above) and its
 parameters:
@@ -313,6 +319,8 @@ parameters:
 =item B<meta>
 
 =back
+
+=for stopwords TODO
 
 =head1 TODO
 
@@ -347,3 +355,5 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
+
+

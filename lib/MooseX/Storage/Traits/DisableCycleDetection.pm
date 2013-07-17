@@ -57,6 +57,8 @@ references, so if you know what you are doing, you can bypass this check.
 This trait is applied to all objects that inherit from it. To use this
 on a per-case basis, see C<disable_cycle_check> in L<MooseX::Storage::Basic>.
 
+=for stopwords culted
+
 See the SYNOPSIS for a nice example that can be easily cargo-culted.
 
 =head1 METHODS

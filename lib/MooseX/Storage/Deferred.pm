@@ -64,6 +64,8 @@ __END__
 
 =head1 NAME
 
+=for stopwords undecisive
+
 MooseX::Storage::Deferred - A role for undecisive programmers
 
 =head1 SYNOPSIS
@@ -111,6 +113,8 @@ SYNOPSIS for more info)
 =over 4
 
 =item I<JSON>
+
+=for stopwords JSONpm
 
 =item I<JSONpm>
 

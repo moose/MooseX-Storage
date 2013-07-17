@@ -38,6 +38,8 @@ MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize - A custom meta-attribut
 
 =head1 DESCRIPTION
 
+=for stopwords culted
+
 Sometimes you don't want a particular attribute to be part of the
 serialization, in this case, you want to make sure that attribute
 uses this custom meta-attribute-trait. See the SYNOPSIS for a nice
