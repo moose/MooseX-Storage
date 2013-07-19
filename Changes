@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ * fixed compile tests so that modules using optional features are skipped
+   (from 0.36-TRIAL)
 
 0.36-TRIAL  2013-07-16 21:41:39 PDT-0700 (Karen Etheridge)
  * convert to Dist::Zilla, with new optional prereq handling
