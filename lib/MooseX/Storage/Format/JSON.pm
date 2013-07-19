@@ -4,7 +4,6 @@ use Moose::Role;
 no warnings 'once';
 
 use JSON::Any;
-use utf8 ();
 
 requires 'pack';
 requires 'unpack';

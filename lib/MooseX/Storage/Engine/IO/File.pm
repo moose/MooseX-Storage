@@ -1,7 +1,6 @@
 package MooseX::Storage::Engine::IO::File;
 use Moose;
 
-use utf8 ();
 use IO::File;
 
 has 'file' => (

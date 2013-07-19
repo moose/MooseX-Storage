@@ -1,7 +1,6 @@
 package MooseX::Storage::Engine::IO::AtomicFile;
 use Moose;
 
-use utf8 ();
 use IO::AtomicFile;
 
 extends 'MooseX::Storage::Engine::IO::File';

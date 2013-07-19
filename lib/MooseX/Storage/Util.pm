@@ -2,7 +2,6 @@ package MooseX::Storage::Util;
 use Moose qw(confess blessed);
 
 use MooseX::Storage::Engine ();
-use utf8 ();
 
 sub peek {
     my ($class, $data, %options) = @_;
