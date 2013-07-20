@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ * re-release with new compile test, which properly declares all its prerequisites
 
 0.37-TRIAL  2013-07-19 17:41:17 PDT-0700 (Karen Etheridge)
  * fixed compile tests so that modules using optional features are skipped
