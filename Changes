@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.37-TRIAL  2013-07-19 17:41:17 PDT-0700 (Karen Etheridge)
  * fixed compile tests so that modules using optional features are skipped
    (from 0.36-TRIAL)
 
