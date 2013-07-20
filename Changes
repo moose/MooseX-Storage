@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.38-TRIAL  2013-07-20 09:42:03 PDT-0700 (Karen Etheridge)
  * re-release with new compile test, which properly declares all its prerequisites
 
 0.37-TRIAL  2013-07-19 17:41:17 PDT-0700 (Karen Etheridge)
