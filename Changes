@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.39      2013-07-26 17:02:26 PDT-0700 (Karen Etheridge)
  * re-release as stable (full working Dist::Zilla conversion)
 
 0.38-TRIAL  2013-07-20 09:42:03 PDT-0700 (Karen Etheridge)
