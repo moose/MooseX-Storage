@@ -44,16 +44,10 @@ sub _inflate_json {
 sub _inflate_yaml {
     my ($self, $yaml) = @_;
 
-    require Best;
-    eval { Best->import([[ qw[YAML::Syck YAML] ]]) };
+    eval { require YAML::Any; YAML::Any->import };
     confess "Could not load YAML module because : $@" if $@;
 
-    my $inflater = Best->which('YAML::Syck')->can('Load');
-
-    (defined $inflater)
-        || confess "Could not load the YAML inflator";
-
-    my $data = eval { $inflater->($yaml) };
+    my $data = eval { Load($yaml) };
     if ($@) {
         confess "There was an error when attempting to peek at YAML : $@";
     }
