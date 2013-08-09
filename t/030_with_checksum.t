@@ -116,7 +116,12 @@ BEGIN {
 
 SKIP: {
     eval { require Digest::HMAC_SHA1 };
-    skip join( " ", "no Digest::HMAC", ( $@ =~ /\@INC/ ? () : do { chomp(my $e = $@); "($e)" } ) ), 15 if $@;
+    if ($@)
+    {
+        my $message = join( " ", "no Digest::HMAC", ( $@ =~ /\@INC/ ? () : do { chomp(my $e = $@); "($e)" } ) );
+        die $message if $ENV{AUTHOR_TESTING};
+        skip $message, 15;
+    }
 
     local $::DEBUG = 1;
 
