@@ -9,15 +9,10 @@ BEGIN {
     use_ok('MooseX::Storage');
 }
 
-=pod
-
-This test demonstrates two things:
-
-- cycles will not work in the default engine
-- you can use a special metaclass to tell
-  MooseX::Storage to skip an attribute
-
-=cut
+# This test demonstrates two things:
+#
+# - cycles will not work in the default engine
+# - you can use a special metaclass to tell MooseX::Storage to skip an attribute
 
 {
 
