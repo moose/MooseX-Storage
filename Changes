@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.41      2013-09-03 01:05:15Z (Karen Etheridge)
   - re-release with updated Dist::Zilla plugins to clear the dynamic_config
     flag in metadata
   - repository has moved to the GitHub Moose organization
