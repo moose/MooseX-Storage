@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - re-release with updated Dist::Zilla plugins to clear the dynamic_config
+    flag in metadata
 
 0.40      2013-08-29 01:57:00Z (Karen Etheridge)
   - replaced last use of Best (held over since 2010!) to YAML::Any
