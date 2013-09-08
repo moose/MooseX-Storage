@@ -4,6 +4,7 @@ Revision history for {{$dist->name}}
   - all features are now configured as x_default => 1 in metadata (not yet
     supported by any cpan clients), signalling to automatically add to prereqs
     when installing non-interactively
+  - re-release with properly encoded META.yml
 
 0.41      2013-09-03 01:05:15Z (Karen Etheridge)
   - re-release with updated Dist::Zilla plugins to clear the dynamic_config
