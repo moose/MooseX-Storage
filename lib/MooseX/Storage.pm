@@ -3,6 +3,7 @@ use Moose qw(confess);
 
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;
 use String::RewritePrefix ();
+use Module::Runtime 'use_module';
 
 sub import {
     my $pkg = caller();
@@ -39,7 +40,7 @@ sub _expand_role {
         my ($class, $param) = @$value;
 
         $class = $self->_rewrite_role_name($base => $class);
-        Class::MOP::load_class($class);
+        use_module($class);
 
         my $role = $class->meta->generate_role(parameters => $param);
 
@@ -47,7 +48,7 @@ sub _expand_role {
         return $role->name;
     } else {
         my $class = $self->_rewrite_role_name($base, $value);
-        Class::MOP::load_class($class);
+        use_module($class);
 
         my $role = $class;
 
