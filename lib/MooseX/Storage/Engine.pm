@@ -214,6 +214,7 @@ my %TYPES = (
     'Num'      => { expand => sub { $_[0] + 0 }, collapse => sub { $_[0] + 0 } },
     # These are boring ones, so they use the identity function ...
     'Str'      => { expand => sub { shift }, collapse => sub { shift } },
+    'Value'    => { expand => sub { shift }, collapse => sub { shift } },
     'Bool'     => { expand => sub { shift }, collapse => sub { shift } },
     # These are the trickier ones, (see notes)
     # NOTE:
@@ -326,8 +327,11 @@ sub find_type_handler {
     # most cases. It is probably not
     # 100% ideal though, but until I
     # come up with a decent test case
-    # it will do for now.
-    foreach my $type (keys %TYPES) {
+    # it will do for now.  We need to
+    # check more-specific types first.
+    my %seen;
+    my @fallback = grep { !$seen{$_}++ } qw/Int Num Str Value/, keys %TYPES;
+    foreach my $type ( @fallback ) {
         return $TYPES{$type}
             if $type_constraint->is_subtype_of($type);
     }
