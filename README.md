@@ -2,6 +2,10 @@
 
 MooseX::Storage - A serialization framework for Moose classes
 
+# VERSION
+
+version 0.44
+
 # SYNOPSIS
 
     package Point;
@@ -72,7 +76,7 @@ of your class.
     This level is not optional, it is the bare minimum that
     MooseX::Storage provides and all other levels build on top of this.
 
-    See [MooseX::Storage::Basic](http://search.cpan.org/perldoc?MooseX::Storage::Basic) for the fundamental implementation and
+    See [MooseX::Storage::Basic](https://metacpan.org/pod/MooseX::Storage::Basic) for the fundamental implementation and
     options to `pack` and `unpack`
 
 - __format__
@@ -108,7 +112,7 @@ The following traits are currently bundled with `MooseX::Storage`:
     Only attributes that have been built (i.e., where the predicate returns
     'true') will be serialized. This avoids any potentially expensive computations.
 
-    See [MooseX::Storage::Traits::OnlyWhenBuilt](http://search.cpan.org/perldoc?MooseX::Storage::Traits::OnlyWhenBuilt) for details.
+    See [MooseX::Storage::Traits::OnlyWhenBuilt](https://metacpan.org/pod/MooseX::Storage::Traits::OnlyWhenBuilt) for details.
 
 ## How we serialize
 
@@ -173,7 +177,7 @@ you load or store it will not be reflected in the stored class.
 
         Storage(format => '=My::Private::JSONFormat');
 
-    To use a parameterized role (for which, see [MooseX::Role::Parameterized](http://search.cpan.org/perldoc?MooseX::Role::Parameterized)) you
+    To use a parameterized role (for which, see [MooseX::Role::Parameterized](https://metacpan.org/pod/MooseX::Role::Parameterized)) you
     can pass an arrayref of the role name (in short or long form, as above) and its
     parameters:
 
@@ -202,19 +206,35 @@ All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 
-# AUTHOR
+# AUTHORS
 
-Chris Prather <chris.prather@iinteractive.com>
-
-Stevan Little <stevan.little@iinteractive.com>
-
-Yuval Kogman <yuval.kogman@iinteractive.com>
+- Chris Prather <chris.prather@iinteractive.com>
+- Stevan Little <stevan.little@iinteractive.com>
+- יובל קוג'מן (Yuval Kogman) <nothingmuch@woobling.org>
 
 # COPYRIGHT AND LICENSE
 
-Copyright 2007-2008 by Infinity Interactive, Inc.
+This software is copyright (c) 2007 by Infinity Interactive, Inc..
 
-[http://www.iinteractive.com](http://www.iinteractive.com)
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+# CONTRIBUTORS
+
+- Chris Prather <chris@prather.org>
+- Cory Watson <gphat@Crankwizzah.local>
+- Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>
+- Florian Ragwitz <rafl@debian.org>
+- Johannes Plunien <plu@pqpq.de>
+- Jonathan Rockway <jon@jrock.us>
+- Jonathan Yu <frequency@cpan.org>
+- Jos Boumans <jos@dwim.org>
+- Karen Etheridge <ether@cpan.org>
+- Ricardo SIGNES <rjbs@cpan.org>
+- Ricardo Signes <rjbs@cpan.org>
+- Robert Boone <robo4288@gmail.com>
+- Shawn M Moore <sartak@gmail.com>
+- Tomas Doran (t0m) <t0m@state51.co.uk>
+- Tomas Doran <bobtfish@bobtfish.net>
+- Yuval Kogman <nothingmuch@woobling.org>
+- t0m <bobtfish@bobtfish.net>
