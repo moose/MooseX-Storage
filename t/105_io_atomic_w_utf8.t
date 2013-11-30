@@ -15,10 +15,10 @@ BEGIN {
     $ENV{JSON_ANY_CONFIG} = "utf8=0,canonical=1";
 }
 
-use Test::Requires {
-    'JSON::Any' => 0.01, # skip all if not installed
-    'IO::AtomicFile' => 0.01,
-};
+use Test::Requires qw(
+    JSON::Any
+    IO::AtomicFile
+);
 
 plan tests => 8;
 use_ok('MooseX::Storage');

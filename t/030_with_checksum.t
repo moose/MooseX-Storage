@@ -5,11 +5,11 @@ use Test::More;
 use Test::Fatal;
 use Test::Deep;
 
-use Test::Requires {
-    'Digest' => 0.01, # skip all if not installed
-    'Digest::SHA' => 0.00,
-    'JSON::Any' => 0.01,
-};
+use Test::Requires qw(
+    Digest
+    Digest::SHA
+    JSON::Any
+);
 
 BEGIN {
     plan tests => 26;

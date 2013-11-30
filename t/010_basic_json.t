@@ -4,10 +4,10 @@ use warnings;
 use Test::More;
 use Test::Deep;
 
-use Test::Requires {
-    'JSON::Any' => 0.01,
-    'Test::Deep::JSON' => 0,
-};
+use Test::Requires qw(
+    JSON::Any
+    Test::Deep::JSON
+);
 
 BEGIN {
     plan tests => 11;

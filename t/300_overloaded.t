@@ -3,9 +3,7 @@ use warnings;
 use Test::More;
 use Test::Fatal;
 
-use Test::Requires {
-    'JSON::Any' => 0.01, # skip all if not installed
-};
+use Test::Requires 'JSON::Any';
 
 {
     package Thing;

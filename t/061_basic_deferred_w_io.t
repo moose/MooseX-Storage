@@ -8,10 +8,10 @@ use File::Spec::Functions;
 
 my $dir = tempdir;
 
-use Test::Requires {
-    'IO::AtomicFile' => 0.01, # skip all if not installed
-    'JSON::Any' => 0.01,
-};
+use Test::Requires qw(
+    IO::AtomicFile
+    JSON::Any
+);
 
 BEGIN {
     plan tests => 20;

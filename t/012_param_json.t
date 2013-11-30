@@ -4,9 +4,7 @@ use warnings;
 use Test::More;
 use Test::Deep;
 
-use Test::Requires {
-    'MooseX::Storage::Format::JSONpm' => 0.01, # skip all if not installed
-};
+use Test::Requires 'MooseX::Storage::Format::JSONpm';
 
 BEGIN {
     plan tests => 6;

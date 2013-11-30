@@ -6,11 +6,11 @@ use Test::More;
 use Test::Deep;
 use Storable;
 
-use Test::Requires {
-    'Test::Deep::JSON' => 0, # skip all if not installed
-    'JSON::Any' => 0.01,
-    'YAML::Any' => 0.01,
-};
+use Test::Requires qw(
+    Test::Deep::JSON
+    JSON::Any
+    YAML::Any
+);
 
 BEGIN {
     plan tests => 30;

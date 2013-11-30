@@ -7,9 +7,7 @@ use File::Temp qw(tempdir);
 use File::Spec::Functions;
 my $dir = tempdir;
 
-use Test::Requires {
-    'JSON::Any' => 0.01, # skip all if not installed
-};
+use Test::Requires 'JSON::Any';
 
 BEGIN {
     plan tests => 10;

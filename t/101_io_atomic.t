@@ -7,10 +7,10 @@ use File::Temp qw(tempdir);
 use File::Spec::Functions;
 my $dir = tempdir( CLEANUP => 1 );
 
-use Test::Requires {
-    'JSON::Any' => 0.01, # skip all if not installed
-    'IO::AtomicFile' => 0.01,
-};
+use Test::Requires qw(
+    JSON::Any
+    IO::AtomicFile
+);
 
 BEGIN {
     plan tests => 10;

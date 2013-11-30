@@ -5,11 +5,11 @@ use warnings;
 use Test::More;
 use Test::Deep;
 
-use Test::Requires {
-    'YAML::Any' => 0.01, # skip all if not installed
-    'YAML::XS'  => 0.01,
-    'Test::Without::Module' => 0.01,
-};
+use Test::Requires qw(
+    YAML::Any
+    YAML::XS
+    Test::Without::Module
+);
 
 BEGIN {
     Test::Without::Module->import(YAML::Any->order);
