@@ -2,35 +2,35 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
-0.43      2013-09-11 01:47:40Z (Karen Etheridge)
+0.43      2013-09-11 01:47:40Z
   - removed use of deprecated Class::MOP::load_class
 
-0.42      2013-09-08 18:00:22Z (Karen Etheridge)
+0.42      2013-09-08 18:00:22Z
   - all features are now configured as x_default => 1 in metadata (not yet
     supported by any cpan clients), signalling to automatically add to prereqs
     when installing non-interactively
   - re-release with properly encoded META.yml
 
-0.41      2013-09-03 01:05:15Z (Karen Etheridge)
+0.41      2013-09-03 01:05:15Z
   - re-release with updated Dist::Zilla plugins to clear the dynamic_config
     flag in metadata
   - repository has moved to the GitHub Moose organization
 
-0.40      2013-08-29 01:57:00Z (Karen Etheridge)
+0.40      2013-08-29 01:57:00Z
   - replaced last use of Best (held over since 2010!) to YAML::Any
   - fixed another test making use of optional features
 
-0.39      2013-07-26 17:02:26 PDT-0700 (Karen Etheridge)
+0.39      2013-07-27 00:02:26Z
   - re-release as stable (full working Dist::Zilla conversion)
 
-0.38-TRIAL  2013-07-20 09:42:03 PDT-0700 (Karen Etheridge)
+0.38      2013-07-20 16:42:03Z (TRIAL RELEASE)
   - re-release with new compile test, which properly declares all its prerequisites
 
-0.37-TRIAL  2013-07-19 17:41:17 PDT-0700 (Karen Etheridge)
+0.37      2013-07-20 00:41:17Z (TRIAL RELEASE)
   - fixed compile tests so that modules using optional features are skipped
     (from 0.36-TRIAL)
 
-0.36-TRIAL  2013-07-16 21:41:39 PDT-0700 (Karen Etheridge)
+0.36      2013-07-17 04:41:39Z (TRIAL RELEASE)
   - convert to Dist::Zilla, with new optional prereq handling
 
 0.35    2013-07-15
