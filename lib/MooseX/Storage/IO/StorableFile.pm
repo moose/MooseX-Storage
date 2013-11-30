@@ -1,4 +1,5 @@
 package MooseX::Storage::IO::StorableFile;
+# ABSTRACT: An Storable File I/O role
 use Moose::Role;
 
 use Storable ();
@@ -31,10 +32,6 @@ no Moose::Role;
 __END__
 
 =pod
-
-=head1 NAME
-
-MooseX::Storage::IO::StorableFile - An Storable File I/O role
 
 =head1 SYNOPSIS
 
@@ -98,19 +95,4 @@ All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
 
-=head1 AUTHOR
-
-Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright 2007-2008 by Infinity Interactive, Inc.
-
-L<http://www.iinteractive.com>
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
-
 =cut
-
-

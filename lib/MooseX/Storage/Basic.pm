@@ -1,4 +1,5 @@
 package MooseX::Storage::Basic;
+# ABSTRACT: The simplest level of serialization
 use Moose::Role;
 
 use MooseX::Storage::Engine;
@@ -59,10 +60,6 @@ no Moose::Role;
 __END__
 
 =pod
-
-=head1 NAME
-
-MooseX::Storage::Basic - The simplest level of serialization
 
 =head1 SYNOPSIS
 
@@ -129,20 +126,5 @@ the class' C<new> function, or override ones from the serialized data.
 All complex software has bugs lurking in it, and this module is no
 exception. If you find a bug please either email me, or add the bug
 to cpan-RT.
-
-=head1 AUTHOR
-
-Chris Prather E<lt>chris.prather@iinteractive.comE<gt>
-
-Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright 2007-2008 by Infinity Interactive, Inc.
-
-L<http://www.iinteractive.com>
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut
