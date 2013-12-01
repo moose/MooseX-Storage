@@ -74,7 +74,7 @@ sub _injected_storage_role_generator {
 
     # NOTE:
     # you don't have to have a format
-    # role, this just means you dont
+    # role, this just means you don't
     # get anything other than pack/unpack
     push @roles, __PACKAGE__->_expand_role(Format => $params{format});
 
@@ -84,7 +84,7 @@ sub _injected_storage_role_generator {
     # too, the exception being StorableFile
     #
     # NOTE:
-    # we dont need this code anymore, cause
+    # we don't need this code anymore, cause
     # the role composition will catch it for
     # us. This allows the StorableFile to work
     #(exists $params{'format'})
