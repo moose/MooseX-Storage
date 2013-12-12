@@ -240,7 +240,7 @@ my %TYPES = (
         collapse => sub {
             my ( $array, @args ) = @_;
             # NOTE:
-            # we need to make a copy cause
+            # we need to make a copy because
             # otherwise it will affect the
             # other real version.
             [ map {
@@ -263,7 +263,7 @@ my %TYPES = (
         collapse => sub {
             my ( $hash, @args ) = @_;
             # NOTE:
-            # we need to make a copy cause
+            # we need to make a copy because
             # otherwise it will affect the
             # other real version.
             +{ map {

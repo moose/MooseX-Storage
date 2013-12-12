@@ -1,5 +1,5 @@
 package MooseX::Storage::Deferred;
-# ABSTRACT: A role for undecisive programmers
+# ABSTRACT: A role for indecisive programmers
 use Moose::Role;
 
 with 'MooseX::Storage::Basic';
@@ -62,8 +62,6 @@ no Moose::Role;
 __END__
 
 =pod
-
-=for stopwords undecisive
 
 =head1 SYNOPSIS
 

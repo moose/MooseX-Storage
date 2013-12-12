@@ -84,7 +84,7 @@ sub _injected_storage_role_generator {
     # too, the exception being StorableFile
     #
     # NOTE:
-    # we don't need this code anymore, cause
+    # we don't need this code anymore, because
     # the role composition will catch it for
     # us. This allows the StorableFile to work
     #(exists $params{'format'})
