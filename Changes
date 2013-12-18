@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - new 'Value' type handler added (thanks David Golden)
 
 0.44      2013-11-30 20:09:54Z
   - re-release to fix compile test
