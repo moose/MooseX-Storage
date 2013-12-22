@@ -4,7 +4,7 @@ MooseX::Storage - A serialization framework for Moose classes
 
 # VERSION
 
-version 0.44
+version 0.45
 
 # SYNOPSIS
 
@@ -224,17 +224,16 @@ the same terms as the Perl 5 programming language system itself.
 - Chris Prather <chris@prather.org>
 - Cory Watson <gphat@Crankwizzah.local>
 - Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>
+- David Golden <dagolden@cpan.org>
+- David Steinbrunner <dsteinbrunner@pobox.com>
 - Florian Ragwitz <rafl@debian.org>
 - Johannes Plunien <plu@pqpq.de>
 - Jonathan Rockway <jon@jrock.us>
 - Jonathan Yu <frequency@cpan.org>
 - Jos Boumans <jos@dwim.org>
 - Karen Etheridge <ether@cpan.org>
-- Ricardo SIGNES <rjbs@cpan.org>
 - Ricardo Signes <rjbs@cpan.org>
 - Robert Boone <robo4288@gmail.com>
 - Shawn M Moore <sartak@gmail.com>
-- Tomas Doran (t0m) <t0m@state51.co.uk>
 - Tomas Doran <bobtfish@bobtfish.net>
 - Yuval Kogman <nothingmuch@woobling.org>
-- t0m <bobtfish@bobtfish.net>
