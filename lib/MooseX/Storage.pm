@@ -154,14 +154,6 @@ MooseX::Storage is a serialization framework for Moose, it provides
 a very flexible and highly pluggable way to serialize Moose classes
 to a number of different formats and styles.
 
-=head2 Important Note
-
-This is still an early release of this module, so use with caution.
-It's outward facing serialization API should be considered stable,
-but I still reserve the right to make tweaks if I need too. Anything
-beyond the basic pack/unpack, freeze/thaw and load/store should not
-be relied on.
-
 =head2 Levels of Serialization
 
 There are 3 levels to the serialization, each of which builds upon
