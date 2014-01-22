@@ -3,8 +3,6 @@ package MooseX::Storage::Format::JSON;
 
 use Moose::Role;
 
-no warnings 'once';
-
 use JSON::Any;
 
 requires 'pack';
