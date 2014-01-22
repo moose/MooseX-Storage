@@ -1,5 +1,6 @@
 package MooseX::Storage::Format::YAML;
 # ABSTRACT: A YAML serialization role
+
 use Moose::Role;
 
 # When I add YAML::LibYAML

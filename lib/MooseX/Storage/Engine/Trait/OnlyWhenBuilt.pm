@@ -1,5 +1,6 @@
 package MooseX::Storage::Engine::Trait::OnlyWhenBuilt;
 # ABSTRACT: An engine trait to bypass serialization
+
 use Moose::Role;
 
 # we should

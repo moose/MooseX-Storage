@@ -1,7 +1,7 @@
 package MooseX::Storage::Base::WithChecksum;
 # ABSTRACT: A more secure serialization role
-use Moose::Role;
 
+use Moose::Role;
 with 'MooseX::Storage::Basic';
 
 use Digest       ();

@@ -1,7 +1,7 @@
 package MooseX::Storage::Deferred;
 # ABSTRACT: A role for indecisive programmers
-use Moose::Role;
 
+use Moose::Role;
 with 'MooseX::Storage::Basic';
 
 sub __get_method {

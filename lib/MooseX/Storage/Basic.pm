@@ -1,7 +1,7 @@
 package MooseX::Storage::Basic;
 # ABSTRACT: The simplest level of serialization
-use Moose::Role;
 
+use Moose::Role;
 use MooseX::Storage::Engine;
 use String::RewritePrefix;
 

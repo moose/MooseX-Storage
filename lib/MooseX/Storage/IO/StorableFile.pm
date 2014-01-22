@@ -1,7 +1,7 @@
 package MooseX::Storage::IO::StorableFile;
 # ABSTRACT: An Storable File I/O role
-use Moose::Role;
 
+use Moose::Role;
 use Storable ();
 
 requires 'pack';

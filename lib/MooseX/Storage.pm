@@ -1,5 +1,6 @@
 package MooseX::Storage;
 # ABSTRACT: A serialization framework for Moose classes
+
 use Moose qw(confess);
 
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;

@@ -1,5 +1,6 @@
 package MooseX::Storage::Format::JSON;
 # ABSTRACT: A JSON serialization role
+
 use Moose::Role;
 
 no warnings 'once';

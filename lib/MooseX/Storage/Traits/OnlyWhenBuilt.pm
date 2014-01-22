@@ -1,5 +1,6 @@
 package MooseX::Storage::Traits::OnlyWhenBuilt;
 # ABSTRACT: A custom trait to bypass serialization
+
 use Moose::Role;
 
 requires 'pack';

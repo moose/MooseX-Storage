@@ -1,7 +1,7 @@
 package MooseX::Storage::Engine::IO::File;
 # ABSTRACT: The actually file storage mechanism.
-use Moose;
 
+use Moose;
 use IO::File;
 
 has 'file' => (
