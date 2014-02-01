@@ -3,6 +3,7 @@ package MooseX::Storage::Engine::IO::File;
 
 use Moose;
 use IO::File;
+use Carp 'confess';
 use namespace::autoclean;
 
 has 'file' => (

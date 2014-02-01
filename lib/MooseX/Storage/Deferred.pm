@@ -3,6 +3,7 @@ package MooseX::Storage::Deferred;
 
 use Moose::Role;
 with 'MooseX::Storage::Basic';
+use Carp 'confess';
 use namespace::autoclean;
 
 sub __get_method {

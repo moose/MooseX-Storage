@@ -2,7 +2,8 @@ package MooseX::Storage::Engine;
 # ABSTRACT: The meta-engine to handle collapsing and expanding objects
 
 use Moose;
-use Scalar::Util qw(refaddr);
+use Scalar::Util qw(refaddr blessed);
+use Carp 'confess';
 use namespace::autoclean;
 
 # the class marker when

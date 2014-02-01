@@ -3,6 +3,7 @@ package MooseX::Storage::Engine::IO::AtomicFile;
 
 use Moose;
 use IO::AtomicFile;
+use Carp 'confess';
 use namespace::autoclean;
 
 extends 'MooseX::Storage::Engine::IO::File';

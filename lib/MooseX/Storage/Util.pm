@@ -1,9 +1,10 @@
 package MooseX::Storage::Util;
 # ABSTRACT: A MooseX::Storage Swiss Army chainsaw
 
-use Moose qw(confess blessed);
-
+use Moose;
 use MooseX::Storage::Engine ();
+use Scalar::Util 'blessed';
+use Carp 'confess';
 use namespace::autoclean;
 
 sub peek {
