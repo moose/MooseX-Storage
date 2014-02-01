@@ -2,6 +2,7 @@ package MooseX::Storage::Meta::Attribute::DoNotSerialize;
 # ABSTRACT: A custom meta-attribute to bypass serialization
 
 use Moose;
+use namespace::autoclean;
 extends 'Moose::Meta::Attribute';
    with 'MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize';
 

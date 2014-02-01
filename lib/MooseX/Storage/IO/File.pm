@@ -3,6 +3,7 @@ package MooseX::Storage::IO::File;
 
 use Moose::Role;
 use MooseX::Storage::Engine::IO::File;
+use namespace::autoclean;
 
 requires 'thaw';
 requires 'freeze';

@@ -6,6 +6,7 @@ use Moose qw(confess);
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;
 use String::RewritePrefix ();
 use Module::Runtime 'use_module';
+use namespace::autoclean;
 
 sub import {
     my $pkg = caller();

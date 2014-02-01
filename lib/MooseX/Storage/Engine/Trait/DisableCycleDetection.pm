@@ -2,6 +2,7 @@ package MooseX::Storage::Engine::Trait::DisableCycleDetection;
 # ABSTRACT: A custom trait to bypass cycle detection
 
 use Moose::Role;
+use namespace::autoclean;
 
 around 'check_for_cycle_in_collapse' => sub {
     my ($orig, $self, $attr, $value) = @_;

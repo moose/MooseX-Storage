@@ -2,8 +2,8 @@ package MooseX::Storage::Format::Storable;
 # ABSTRACT: A Storable serialization role
 
 use Moose::Role;
-
 use Storable ();
+use namespace::autoclean;
 
 requires 'pack';
 requires 'unpack';

@@ -8,6 +8,7 @@ use Moose::Role;
 # -dcp
 
 use YAML::Any qw(Load Dump);
+use namespace::autoclean;
 
 requires 'pack';
 requires 'unpack';

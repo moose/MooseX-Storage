@@ -3,6 +3,7 @@ package MooseX::Storage::Engine::IO::File;
 
 use Moose;
 use IO::File;
+use namespace::autoclean;
 
 has 'file' => (
     is       => 'ro',

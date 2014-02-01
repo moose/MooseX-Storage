@@ -2,8 +2,8 @@ package MooseX::Storage::Format::JSON;
 # ABSTRACT: A JSON serialization role
 
 use Moose::Role;
-
 use JSON::Any;
+use namespace::autoclean;
 
 requires 'pack';
 requires 'unpack';

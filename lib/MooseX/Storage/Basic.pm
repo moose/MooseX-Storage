@@ -4,6 +4,7 @@ package MooseX::Storage::Basic;
 use Moose::Role;
 use MooseX::Storage::Engine;
 use String::RewritePrefix;
+use namespace::autoclean;
 
 sub pack {
     my ( $self, %args ) = @_;

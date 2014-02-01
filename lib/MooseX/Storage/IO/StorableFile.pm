@@ -3,6 +3,7 @@ package MooseX::Storage::IO::StorableFile;
 
 use Moose::Role;
 use Storable ();
+use namespace::autoclean;
 
 requires 'pack';
 requires 'unpack';

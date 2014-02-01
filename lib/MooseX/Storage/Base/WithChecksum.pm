@@ -6,6 +6,7 @@ with 'MooseX::Storage::Basic';
 
 use Digest       ();
 use Data::Dumper ();
+use namespace::autoclean;
 
 our $DIGEST_MARKER = '__DIGEST__';
 

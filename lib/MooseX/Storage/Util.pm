@@ -4,6 +4,7 @@ package MooseX::Storage::Util;
 use Moose qw(confess blessed);
 
 use MooseX::Storage::Engine ();
+use namespace::autoclean;
 
 sub peek {
     my ($class, $data, %options) = @_;

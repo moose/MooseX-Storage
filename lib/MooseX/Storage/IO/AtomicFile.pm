@@ -3,6 +3,7 @@ package MooseX::Storage::IO::AtomicFile;
 
 use Moose::Role;
 use MooseX::Storage::Engine::IO::AtomicFile;
+use namespace::autoclean;
 
 with 'MooseX::Storage::IO::File';
 

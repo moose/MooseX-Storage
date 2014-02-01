@@ -2,6 +2,7 @@ package MooseX::Storage::Engine::Trait::OnlyWhenBuilt;
 # ABSTRACT: An engine trait to bypass serialization
 
 use Moose::Role;
+use namespace::autoclean;
 
 # we should
 # only serialize the attribute if it's already built. So, go ahead

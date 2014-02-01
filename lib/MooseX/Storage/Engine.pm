@@ -3,6 +3,7 @@ package MooseX::Storage::Engine;
 
 use Moose;
 use Scalar::Util qw(refaddr);
+use namespace::autoclean;
 
 # the class marker when
 # serializing an object.
