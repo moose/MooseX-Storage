@@ -86,7 +86,7 @@ __END__
   # unpack the hash into a class
   my $p2 = Point->unpack({ __CLASS__ => 'Point-0.01', x => 10, y => 10 });
 
-  # unpack the hash, with insertion of paramaters
+  # unpack the hash, with injection of additional paramaters
   my $p3 = Point->unpack( $p->pack, inject => { x => 11 } );
 
 =head1 DESCRIPTION
@@ -107,9 +107,9 @@ you know what you are doing, you can bypass this check.
 This trait is applied on a perl-case basis. To set this flag for all objects
 that inherit from this role, see L<MooseX::Storage::Traits::DisableCycleDetection>.
 
-=item B<unpack ($data [, insert => { key => val, ... } ] )>
+=item B<unpack ($data [, inject => { key => val, ... } ] )>
 
-Providing the C<insert> argument let's you supply additional arguments to
+Providing the C<inject> argument let's you supply additional arguments to
 the class' C<new> function, or override ones from the serialized data.
 
 =back
