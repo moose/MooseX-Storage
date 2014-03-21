@@ -109,7 +109,7 @@ that inherit from this role, see L<MooseX::Storage::Traits::DisableCycleDetectio
 
 =item B<unpack ($data [, inject => { key => val, ... } ] )>
 
-Providing the C<inject> argument let's you supply additional arguments to
+Providing the C<inject> argument lets you supply additional arguments to
 the class' C<new> function, or override ones from the serialized data.
 
 =back
