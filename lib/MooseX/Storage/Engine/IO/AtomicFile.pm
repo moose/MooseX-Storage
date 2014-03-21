@@ -1,5 +1,5 @@
 package MooseX::Storage::Engine::IO::AtomicFile;
-# ABSTRACT: The actually atomic file storage mechanism.
+# ABSTRACT: The actual atomic file storage mechanism.
 
 use Moose;
 use IO::AtomicFile;
