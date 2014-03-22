@@ -6,8 +6,7 @@ use Test::Fatal;
 use Test::Deep;
 
 use Test::Requires qw(
-    Digest
-    Digest::SHA
+    Digest::HMAC_SHA1
     JSON::Any
 );
 

@@ -1,7 +1,7 @@
 package MooseX::Storage;
 # ABSTRACT: A serialization framework for Moose classes
 
-use Moose;
+use Moose 0.99;
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;
 use String::RewritePrefix ();
 use Module::Runtime 'use_module';
