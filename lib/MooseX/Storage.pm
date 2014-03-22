@@ -200,13 +200,23 @@ to also be used, the exception being the C<StorableFile> role.
 
 =head2 Behaviour modifiers
 
-The serialization behaviour can be changed by supplying C<traits>.
+The serialization behaviour can be changed by supplying C<traits> to either
+the class or an individual attribute.
+
 This can be done as follows:
 
   use MooseX::Storage;
+
+  # adjust behaviour for the entire class
   with Storage( traits => [Trait1, Trait2,...] );
 
-The following traits are currently bundled with C<MooseX::Storage>:
+  # adjust behaviour for an attribute
+  has my_attr => (
+    traits => [Trait1, Trait2, ...],
+    ...
+  );
+
+The following B<class traits> are currently bundled with L<MooseX::Storage>:
 
 =over 4
 
@@ -216,6 +226,27 @@ Only attributes that have been built (i.e., where the predicate returns
 'true') will be serialized. This avoids any potentially expensive computations.
 
 See L<MooseX::Storage::Traits::OnlyWhenBuilt> for details.
+
+=item DisableCycleDetection
+
+=for stopwords serialisable
+
+Disables the default checks for circular references, which is necessary if you
+use such references in your serialisable objects.
+
+See L<MooseX::Storage::Traits::DisableCycleDetection> for details.
+
+=back
+
+The following B<attribute traits> are currently bundled with L<MooseX::Storage>:
+
+=over 4
+
+=item DoNotSerialize
+
+Skip serialization entirely for this attribute.
+
+See L<MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize> for details.
 
 =back
 
