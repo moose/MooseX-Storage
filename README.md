@@ -4,7 +4,7 @@ MooseX::Storage - A serialization framework for Moose classes
 
 # VERSION
 
-version 0.45
+version 0.46
 
 # SYNOPSIS
 
@@ -53,14 +53,6 @@ MooseX::Storage is a serialization framework for Moose, it provides
 a very flexible and highly pluggable way to serialize Moose classes
 to a number of different formats and styles.
 
-## Important Note
-
-This is still an early release of this module, so use with caution.
-It's outward facing serialization API should be considered stable,
-but I still reserve the right to make tweaks if I need too. Anything
-beyond the basic pack/unpack, freeze/thaw and load/store should not
-be relied on.
-
 ## Levels of Serialization
 
 There are 3 levels to the serialization, each of which builds upon
@@ -99,13 +91,23 @@ of your class.
 
 ## Behaviour modifiers
 
-The serialization behaviour can be changed by supplying `traits`.
+The serialization behaviour can be changed by supplying `traits` to either
+the class or an individual attribute.
+
 This can be done as follows:
 
     use MooseX::Storage;
+
+    # adjust behaviour for the entire class
     with Storage( traits => [Trait1, Trait2,...] );
 
-The following traits are currently bundled with `MooseX::Storage`:
+    # adjust behaviour for an attribute
+    has my_attr => (
+      traits => [Trait1, Trait2, ...],
+      ...
+    );
+
+The following __class traits__ are currently bundled with [MooseX::Storage](https://metacpan.org/pod/MooseX::Storage):
 
 - OnlyWhenBuilt
 
@@ -113,6 +115,21 @@ The following traits are currently bundled with `MooseX::Storage`:
     'true') will be serialized. This avoids any potentially expensive computations.
 
     See [MooseX::Storage::Traits::OnlyWhenBuilt](https://metacpan.org/pod/MooseX::Storage::Traits::OnlyWhenBuilt) for details.
+
+- DisableCycleDetection
+
+    Disables the default checks for circular references, which is necessary if you
+    use such references in your serialisable objects.
+
+    See [MooseX::Storage::Traits::DisableCycleDetection](https://metacpan.org/pod/MooseX::Storage::Traits::DisableCycleDetection) for details.
+
+The following __attribute traits__ are currently bundled with [MooseX::Storage](https://metacpan.org/pod/MooseX::Storage):
+
+- DoNotSerialize
+
+    Skip serialization entirely for this attribute.
+
+    See [MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize](https://metacpan.org/pod/MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize) for details.
 
 ## How we serialize
 
@@ -198,7 +215,7 @@ This is an early release, so that is my excuse for now :)
 
 For the time being, please read the tests and feel free to email me
 if you have any questions. This module can also be discussed on IRC
-in the \#moose channel on irc.perl.org.
+in the #moose channel on irc.perl.org.
 
 # BUGS
 
@@ -224,6 +241,7 @@ the same terms as the Perl 5 programming language system itself.
 - Chris Prather <chris@prather.org>
 - Cory Watson <gphat@Crankwizzah.local>
 - Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>
+- Dan Brook <dan@broquaint.com>
 - David Golden <dagolden@cpan.org>
 - David Steinbrunner <dsteinbrunner@pobox.com>
 - Florian Ragwitz <rafl@debian.org>
