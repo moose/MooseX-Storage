@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - numerous small documentation clarifications and fixes
 
 0.45      2013-12-22 00:48:10Z
   - new 'Value' type handler added (thanks David Golden)
