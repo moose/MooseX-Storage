@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 49;
+use Test::More tests => 58;
 use Test::Deep;
 
 BEGIN {
@@ -161,8 +161,10 @@ ArrayRef and HashRef type handlers.
             map {
                 [
                     map {
-                        Foo->new( bars =>
-                                [ map { Bar->new( number => $_ ) } ( 1 .. 10 ) ]
+                        Foo->new(
+                            bars => [
+                                map { Bar->new( number => $_ ) } ( 1 .. 10 )
+                            ]
                             )
                     } ( 1 .. 10 )
                 ]
@@ -173,8 +175,10 @@ ArrayRef and HashRef type handlers.
             map {
                 {
                     map {
-                        $_ => Foo->new( bars =>
-                                [ map { Bar->new( number => $_ ) } ( 1 .. 10 ) ]
+                        $_ => Foo->new(
+                            bars => [
+                                map { Bar->new( number => $_ ) } ( 1 .. 10 )
+                            ]
                             )
                         } ( 1 .. 10 )
                 }
@@ -185,8 +189,10 @@ ArrayRef and HashRef type handlers.
             map {
                 $_ => [
                     map {
-                        Foo->new( bars =>
-                                [ map { Bar->new( number => $_ ) } ( 1 .. 10 ) ]
+                        Foo->new(
+                            bars => [
+                                map { Bar->new( number => $_ ) } ( 1 .. 10 )
+                            ]
                             )
                     } ( 1 .. 10 )
                     ]
@@ -197,8 +203,10 @@ ArrayRef and HashRef type handlers.
             map {
                 $_ => {
                     map {
-                        $_ => Foo->new( bars =>
-                                [ map { Bar->new( number => $_ ) } ( 1 .. 10 ) ]
+                        $_ => Foo->new(
+                            bars => [
+                                map { Bar->new( number => $_ ) } ( 1 .. 10 )
+                            ]
                             )
                     } ( 1 .. 10 )
                     }
@@ -442,4 +450,223 @@ ArrayRef and HashRef type handlers.
         },
         '... got the right frozen class'
     );
+}
+
+{
+    my $qux = Qux->unpack(
+        {
+            __CLASS__ => 'Qux',
+            foos_aa   => [
+                map {
+                    [
+                        map {
+                            {
+                                __CLASS__ => 'Foo',
+                                bars      => [
+                                    map {
+                                        {
+                                            __CLASS__ => 'Bar',
+                                            number    => $_,
+                                        }
+                                    } ( 1 .. 10 )
+                                ],
+                            }
+                        } ( 1 .. 10 )
+                    ]
+                } ( 1 .. 10 )
+            ],
+
+            foos_ah => [
+                map {
+                    {
+                        map {
+                            $_ => {
+                                __CLASS__ => 'Foo',
+                                bars      => [
+                                    map {
+                                        {
+                                            __CLASS__ => 'Bar',
+                                            number    => $_,
+                                        }
+                                    } ( 1 .. 10 )
+                                ],
+                                }
+                            } ( 1 .. 10 )
+                    }
+                } ( 1 .. 10 )
+            ],
+
+            foos_ha => {
+                map {
+                    $_ => [
+                        map {
+                            {
+                                __CLASS__ => 'Foo',
+                                bars      => [
+                                    map {
+                                        {
+                                            __CLASS__ => 'Bar',
+                                            number    => $_,
+                                        }
+                                    } ( 1 .. 10 )
+                                ],
+                            }
+                        } ( 1 .. 10 )
+                        ]
+                } ( 1 .. 10 )
+            },
+
+            foos_hh => {
+                map {
+                    $_ => {
+                        map {
+                            $_ => {
+                                __CLASS__ => 'Foo',
+                                bars      => [
+                                    map {
+                                        {
+                                            __CLASS__ => 'Bar',
+                                            number    => $_,
+                                        }
+                                    } ( 1 .. 10 )
+                                ],
+                                }
+                        } ( 1 .. 10 )
+                        }
+                } ( 1 .. 10 )
+            },
+
+            bazs_aa => [
+                map {
+                    [
+                        map {
+                            {
+                                __CLASS__ => 'Baz',
+                                bars      => {
+                                    map {
+                                        (
+                                            $_ => {
+                                                __CLASS__ => 'Bar',
+                                                number    => $_,
+                                            }
+                                            )
+                                    } ( 1 .. 10 )
+                                },
+                            }
+                        } ( 1 .. 10 )
+                    ]
+                } ( 1 .. 10 )
+            ],
+
+            bazs_ah => [
+                map {
+                    {
+                        map {
+                            $_ => {
+                                __CLASS__ => 'Baz',
+                                bars      => {
+                                    map {
+                                        (
+                                            $_ => {
+                                                __CLASS__ => 'Bar',
+                                                number    => $_,
+                                            }
+                                            )
+                                    } ( 1 .. 10 )
+                                },
+                                }
+                            } ( 1 .. 10 )
+                    }
+                } ( 1 .. 10 )
+            ],
+
+            bazs_ha => {
+                map {
+                    $_ => [
+                        map {
+                            {
+                                __CLASS__ => 'Baz',
+                                bars      => {
+                                    map {
+                                        (
+                                            $_ => {
+                                                __CLASS__ => 'Bar',
+                                                number    => $_,
+                                            }
+                                            )
+                                    } ( 1 .. 10 )
+                                },
+                            }
+                        } ( 1 .. 10 )
+                        ]
+                } ( 1 .. 10 )
+            },
+
+            bazs_hh => {
+                map {
+                    $_ => {
+                        map {
+                            $_ => {
+                                __CLASS__ => 'Baz',
+                                bars      => {
+                                    map {
+                                        (
+                                            $_ => {
+                                                __CLASS__ => 'Bar',
+                                                number    => $_,
+                                            }
+                                            )
+                                    } ( 1 .. 10 )
+                                },
+                                }
+                        } ( 1 .. 10 )
+                        }
+                } ( 1 .. 10 )
+            },
+        }
+    );
+    isa_ok( $qux, 'Qux' );
+
+
+    my $deep_check_isa;
+    $deep_check_isa = sub {
+        my ($what) = @_;
+
+        if ( ref $what eq 'HASH' ) {
+            subtest 'HASH' => sub {
+                foreach my $k ( keys %{$what} ) {
+                    $deep_check_isa->( $what->{$k} );
+                }
+            };
+        }
+        elsif ( ref $what eq 'ARRAY' ) {
+            subtest 'ARRAY' => sub {
+                foreach my $i ( 1 .. scalar @{$what} ) {
+                    $deep_check_isa->( $what->[ $i - 1 ] );
+                }
+            };
+        }
+        elsif ( ref $what eq 'Foo' ) {
+            foreach my $i ( 1 .. scalar @{ $what->bars } ) {
+                isa_ok( $what->bars->[ $i - 1 ], 'Bar' );
+                is( $what->bars->[ $i - 1 ]->number,
+                    $i, "... got the right number ($i) in the Bar" );
+            }
+        }
+        elsif ( ref $what eq 'Baz' ) {
+            foreach my $k ( keys %{ $what->bars } ) {
+                isa_ok( $what->bars->{$k}, 'Bar' );
+                is( $what->bars->{$k}->number,
+                    $k, "... got the right number ($k) in the Bar" );
+            }
+        }
+    };
+
+    for my $test (
+        'foos_aa', 'foos_ah', 'foos_ha', 'foos_hh',
+        'bazs_aa', 'bazs_ah', 'bazs_ha', 'bazs_hh',
+        )
+    {
+        subtest $test => sub { $deep_check_isa->( $qux->$test ) };
+    }
 }
