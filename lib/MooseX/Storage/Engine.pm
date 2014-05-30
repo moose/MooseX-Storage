@@ -211,7 +211,8 @@ my %OBJECT_HANDLERS = (
 );
 
 
-my %TYPES = (
+my %TYPES;
+%TYPES = (
     # NOTE:
     # we need to make sure that we properly numify the numbers
     # before and after them being futzed with, because some of
@@ -252,6 +253,8 @@ my %TYPES = (
             [ map {
                 blessed($_)
                     ? $OBJECT_HANDLERS{collapse}->($_, @args)
+                    : $TYPES{ref($_)}
+                    ? $TYPES{ref($_)}->{collapse}->($_, @args)
                     : $_
             } @$array ]
         }
@@ -275,6 +278,8 @@ my %TYPES = (
             +{ map {
                 blessed($hash->{$_})
                     ? ($_ => $OBJECT_HANDLERS{collapse}->($hash->{$_}, @args))
+                    : $TYPES{ref($hash->{$_})}
+                    ? ($_ => $TYPES{ref($hash->{$_})}{collapse}->($hash->{$_}, @args))
                     : ($_ => $hash->{$_})
             } keys %$hash }
         }
@@ -289,6 +294,13 @@ my %TYPES = (
     #    collapse => sub {}, # use B::Deparse ...
     #}
 );
+
+%TYPES = (
+    %TYPES,
+    'HASH'  => $TYPES{HashRef},
+    'ARRAY' => $TYPES{ArrayRef},
+);
+
 
 sub add_custom_type_handler {
     my ($self, $type_name, %handlers) = @_;
