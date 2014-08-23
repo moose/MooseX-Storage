@@ -17,6 +17,10 @@ use Test::Requires qw(
     JSON::Any
 );
 
+binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
+binmode STDOUT, ':utf8';
+binmode STDERR, ':utf8';
+
 plan tests => 16;
 use_ok('MooseX::Storage');
 
