@@ -11,6 +11,7 @@ use Test::Requires qw(
     JSON::Any
     YAML::Any
 );
+diag 'using JSON backend: ', JSON::Any->handlerType;
 
 BEGIN {
     plan tests => 30;

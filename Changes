@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - report the versions of all JSON backends during tests, in an attempt to
+    track down an elusive bug
 
 0.46      2014-03-23 18:26:44Z
   - numerous small documentation clarifications and fixes

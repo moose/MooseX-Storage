@@ -19,6 +19,7 @@ use Test::Requires qw(
     JSON::Any
     IO::AtomicFile
 );
+diag 'using JSON backend: ', JSON::Any->handlerType;
 
 plan tests => 8;
 use_ok('MooseX::Storage');

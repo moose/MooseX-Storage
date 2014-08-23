@@ -9,6 +9,7 @@ use Test::Requires qw(
     Digest::HMAC_SHA1
     JSON::Any
 );
+diag 'using JSON backend: ', JSON::Any->handlerType;
 
 BEGIN {
     plan tests => 26;

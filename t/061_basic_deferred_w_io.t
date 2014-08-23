@@ -12,6 +12,7 @@ use Test::Requires qw(
     IO::AtomicFile
     JSON::Any
 );
+diag 'using JSON backend: ', JSON::Any->handlerType;
 
 BEGIN {
     plan tests => 20;
