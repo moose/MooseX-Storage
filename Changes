@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.47      2014-08-23 22:34:21Z
   - report the versions of all JSON and YAML backends during tests, in an
     attempt to track down an elusive bug
   - now properly serializing attributes that are set to the undefined value
