@@ -1,8 +1,6 @@
+/.ackrc
 /.build/
-!.gitignore
-/cover_db/
-*.gc??
-/test-mydeps-*
-/nytprof*
-.*.sw[a-z]
-/MooseX-Storage-*
+!/.gitignore
+/.latest
+/MooseX-Storage-*/
+/MooseX-Storage-*.tar.gz
