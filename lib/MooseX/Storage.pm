@@ -54,9 +54,10 @@ sub _expand_role {
         my $class = $self->_rewrite_role_name($base, $value);
         use_module($class);
 
-        if ($class->meta->isa(
-            'MooseX::Role::Parameterized::Meta::Role::Parameterizable'
-        )) {
+        if ($class->meta->isa('MooseX::Role::Parameterized::Meta::Role::Parameterizable')
+            or ($class->meta->meta->can('does_role')
+                && $class->meta->meta->does_role('MooseX::Role::Parameterized::Meta::Trait::Parameterizable'))
+        ) {
             my $role = $class->meta->generate_role(parameters => undef);
             $HORRIBLE_GC_AVOIDANCE_HACK{ $role->name } = $role;
             return $role->name;

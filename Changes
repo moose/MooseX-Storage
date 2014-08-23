@@ -5,6 +5,9 @@ Revision history for {{$dist->name}}
     attempt to track down an elusive bug
   - now properly serializing attributes that are set to the undefined value
     (github #6, thanks, Jason Pope!)
+  - fix compatibility problem with MooseX::Role::Parameterized 1.03+ and
+    MooseX::Storage::Format::JSONpm (some internal details changed that we
+    were relying on)
 
 0.46      2014-03-23 18:26:44Z
   - numerous small documentation clarifications and fixes
