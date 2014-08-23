@@ -10,6 +10,7 @@ use Test::Requires qw(
     YAML::XS
     Test::Without::Module
 );
+diag 'using YAML backend: ', YAML::Any->implementation;
 
 BEGIN {
     Test::Without::Module->import(YAML::Any->order);

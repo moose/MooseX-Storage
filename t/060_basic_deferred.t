@@ -12,13 +12,12 @@ use Test::Requires qw(
     YAML::Any
 );
 diag 'using JSON backend: ', JSON::Any->handlerType;
+diag 'using YAML backend: ', YAML::Any->implementation;
 
 BEGIN {
     plan tests => 30;
     use_ok('MooseX::Storage');
 }
-
-diag('Using implementation: ', YAML::Any->implementation);
 
 {
     package Foo;
