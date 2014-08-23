@@ -82,5 +82,3 @@ SKIP: {
     is('Foo', $classname,
        '... got the right class name from the yaml item');
 }
-
-

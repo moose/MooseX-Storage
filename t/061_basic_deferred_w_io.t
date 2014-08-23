@@ -94,5 +94,3 @@ ok(!(-e $file), '... the file has been deleted');
     isa_ok($foo->object, 'Foo');
     is($foo->object->number, 2, '... got the right number (in the embedded object)');
 }
-
-

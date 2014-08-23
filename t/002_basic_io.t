@@ -64,4 +64,3 @@ my $file = catfile($dir, 'temp.json');
     isa_ok($foo->object, 'Foo');
     is($foo->object->number, 2, '... got the right number (in the embedded object)');
 }
-

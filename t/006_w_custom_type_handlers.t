@@ -86,8 +86,3 @@ $foo->pack,
     is($foo->bar->baz, 'BAZ', '... got the right stuff');
     is($foo->bar->boo, 'BOO', '... got the right stuff');
 }
-
-
-
-
-

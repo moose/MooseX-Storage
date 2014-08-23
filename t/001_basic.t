@@ -9,7 +9,6 @@ BEGIN {
 }
 
 {
-
     package Foo;
     use Moose;
     use MooseX::Storage;

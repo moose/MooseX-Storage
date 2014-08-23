@@ -36,7 +36,6 @@ BEGIN {
         -1,
         "there are newlines in our JSON, because it is pretty",
     ) or diag $json;
-
 }
 
 {

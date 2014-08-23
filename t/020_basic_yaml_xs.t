@@ -64,4 +64,3 @@ BEGIN {
     is( $bar->object->number, 2,
         '... got the right number (in the embedded object)' );
 }
-

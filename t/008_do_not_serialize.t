@@ -94,8 +94,3 @@ BEGIN {
     my $bar2 = Bar->unpack( $bpack, inject => { foo => bless {} } );
     ok( $bar2,                  "   Unpacked correctly with foo => Object");
 }
-
-
-
-
-

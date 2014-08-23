@@ -93,7 +93,6 @@ ArrayRef and HashRef type handlers.
     }
 }
 
-
 {
     my $baz = Baz->new(
         bars => { map { ($_ => Bar->new(number => $_)) } (1 .. 10) }

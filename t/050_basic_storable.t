@@ -11,7 +11,6 @@ BEGIN {
 }
 
 {
-
     package Foo;
     use Moose;
     use MooseX::Storage;
@@ -89,4 +88,3 @@ BEGIN {
     is( $foo->object->number, 2,
         '... got the right number (in the embedded object)' );
 }
-

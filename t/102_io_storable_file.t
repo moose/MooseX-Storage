@@ -55,4 +55,3 @@ my $file = catfile($dir,'temp.storable');
     isa_ok($foo->object, 'Foo');
     is($foo->object->number, 2, '... got the right number (in the embedded object)');
 }
-
