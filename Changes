@@ -3,6 +3,8 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
   - report the versions of all JSON and YAML backends during tests, in an
     attempt to track down an elusive bug
+  - now properly serializing attributes that are set to the undefined value
+    (github #6, thanks, Jason Pope!)
 
 0.46      2014-03-23 18:26:44Z
   - numerous small documentation clarifications and fixes
