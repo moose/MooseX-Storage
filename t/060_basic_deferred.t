@@ -105,8 +105,8 @@ BEGIN {
         $struct,
         {
             '__CLASS__' => 'Foo',
-            'float'     => 10.5,
             'number'    => 10,
+            'float'     => 10.5,
             'string'    => 'foo',
             'array'     => [ 1 .. 10],
             'hash'      => { map { $_ => undef } 1 .. 10 },
@@ -122,9 +122,9 @@ BEGIN {
 {
     my $stored = Storable::nfreeze({
         '__CLASS__' => 'Foo',
-        'float'     => 10.5,
         'number'    => 10,
         'string'    => 'foo',
+        'float'     => 10.5,
         'array'     => [ 1 .. 10],
         'hash'      => { map { $_ => undef } 1 .. 10 },
         'object'    => {
