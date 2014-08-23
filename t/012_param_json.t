@@ -4,7 +4,7 @@ use warnings;
 use Test::More;
 use Test::Deep;
 
-use Test::Requires 'MooseX::Storage::Format::JSONpm';
+use Test::Requires qw(MooseX::Storage::Format::JSONpm JSON::MaybeXS);
 
 BEGIN {
     plan tests => 6;
@@ -61,7 +61,7 @@ for my $jsonpm (
     my $json = eval { Bar->new(x => 10, y => 20)->freeze({ format => $p }) };
 
     cmp_deeply(
-        JSON->new->decode($json),
+        decode_json($json),
         {
             '__CLASS__' => 'Bar-0.01',
             x => 10,

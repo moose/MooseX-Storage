@@ -10,9 +10,9 @@ my $dir = tempdir;
 
 use Test::Requires qw(
     IO::AtomicFile
-    JSON::Any
+    JSON::MaybeXS
 );
-diag 'using JSON backend: ', JSON::Any->handlerType;
+diag 'using JSON backend: ', JSON;
 
 BEGIN {
     plan tests => 24;

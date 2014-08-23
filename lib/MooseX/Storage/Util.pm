@@ -32,12 +32,14 @@ sub peek {
 sub _inflate_json {
     my ($self, $json) = @_;
 
-    eval { require JSON::Any; JSON::Any->import };
+    eval { require JSON::MaybeXS; JSON::MaybeXS->import };
     confess "Could not load JSON module because : $@" if $@;
 
+    # this is actually a bad idea, but for consistency, we'll have to keep
+    # doing it...
     utf8::encode($json) if utf8::is_utf8($json);
 
-    my $data = eval { JSON::Any->jsonToObj($json) };
+    my $data = eval { JSON::MaybeXS->new({ utf8 => 1 })->decode($json) };
     if ($@) {
         confess "There was an error when attempting to peek at JSON: $@";
     }

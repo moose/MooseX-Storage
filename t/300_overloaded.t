@@ -3,8 +3,8 @@ use warnings;
 use Test::More;
 use Test::Fatal;
 
-use Test::Requires 'JSON::Any';
-diag 'using JSON backend: ', JSON::Any->handlerType;
+use Test::Requires 'JSON::MaybeXS';
+diag 'using JSON backend: ', JSON;
 
 {
     package Thing;

@@ -8,10 +8,10 @@ use File::Spec::Functions;
 my $dir = tempdir( CLEANUP => 1 );
 
 use Test::Requires qw(
-    JSON::Any
+    JSON::MaybeXS
     IO::AtomicFile
 );
-diag 'using JSON backend: ', JSON::Any->handlerType;
+diag 'using JSON backend: ', JSON;
 
 BEGIN {
     plan tests => 14;

@@ -3,20 +3,11 @@ use warnings;
 
 use Test::More;
 
-# NOTE:
-# this is because JSON::XS (and Cpanel::JSON::XS) is
-# the only one which really gets utf8 correct
-# - SL
-BEGIN {
-    $ENV{JSON_ANY_ORDER}  = 'XS CPANEL';
-    $ENV{JSON_ANY_CONFIG} = "utf8=0,canonical=1";
-}
-
 use Test::Requires qw(
     Encode
-    JSON::Any
+    JSON::MaybeXS
 );
-diag 'using JSON backend: ', JSON::Any->handlerType;
+diag 'using JSON backend: ', JSON;
 
 binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
 binmode STDOUT, ':utf8';

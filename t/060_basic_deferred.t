@@ -8,10 +8,10 @@ use Storable;
 
 use Test::Requires qw(
     Test::Deep::JSON
-    JSON::Any
+    JSON::MaybeXS
     YAML::Any
 );
-diag 'using JSON backend: ', JSON::Any->handlerType;
+diag 'using JSON backend: ', JSON;
 diag 'using YAML backend: ', YAML::Any->implementation;
 
 BEGIN {

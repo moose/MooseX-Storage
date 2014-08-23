@@ -7,8 +7,8 @@ use File::Temp qw(tempdir);
 use File::Spec::Functions;
 my $dir = tempdir;
 
-use Test::Requires 'JSON::Any';
-diag 'using JSON backend: ', JSON::Any->handlerType;
+use Test::Requires 'JSON::MaybeXS';
+diag 'using JSON backend: ', JSON;
 
 BEGIN {
     plan tests => 14;

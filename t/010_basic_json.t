@@ -5,10 +5,10 @@ use Test::More;
 use Test::Deep;
 
 use Test::Requires qw(
-    JSON::Any
+    JSON::MaybeXS
     Test::Deep::JSON
 );
-diag 'using JSON backend: ', JSON::Any->handlerType;
+diag 'using JSON backend: ', JSON;
 
 BEGIN {
     plan tests => 11;

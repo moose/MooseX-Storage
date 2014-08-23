@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - switched the JSON serializer from JSON::Any to JSON::MaybeXS
 
 0.47      2014-08-23 22:34:21Z
   - report the versions of all JSON and YAML backends during tests, in an

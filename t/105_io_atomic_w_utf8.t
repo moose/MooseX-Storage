@@ -6,24 +6,17 @@ use File::Temp qw(tempdir);
 use File::Spec::Functions;
 my $dir = tempdir;
 
-# NOTE:
-# this is because JSON::XS (and Cpanel::JSON::XS) is
-# the only one which really gets utf8 correct
-# - SL
-BEGIN {
-    $ENV{JSON_ANY_ORDER}  = 'XS CPANEL';
-    $ENV{JSON_ANY_CONFIG} = "utf8=0,canonical=1";
-}
-
 use Test::Requires qw(
-    JSON::Any
+    JSON::MaybeXS
     IO::AtomicFile
 );
-diag 'using JSON backend: ', JSON::Any->handlerType;
+diag 'using JSON backend: ', JSON;
 
 binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
+
+diag 'using JSON backend: ', JSON;
 
 plan tests => 8;
 use_ok('MooseX::Storage');
