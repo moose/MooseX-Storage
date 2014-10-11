@@ -31,4 +31,3 @@ is( exception {
 }, undef, 'Can stringify without deep recursion');
 
 done_testing;
-

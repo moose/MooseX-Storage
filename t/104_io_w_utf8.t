@@ -84,4 +84,3 @@ unlink $file;
       "Escritório",
       '... got the string we expected');
 }
-

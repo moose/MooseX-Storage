@@ -19,4 +19,3 @@ is( exception {
     use Moose;
     with qw/ClassOne ClassTwo/;
 }, undef, 'Can include two roles which both use MooseX::Storage');
-
