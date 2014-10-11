@@ -10,14 +10,21 @@ requires 'unpack';
 
 sub thaw {
     my ( $class, $json, @args ) = @_;
+
+    # TODO ugh! this is surely wrong and should be fixed.
     utf8::encode($json) if utf8::is_utf8($json);
+
     $class->unpack( JSON::Any->new->jsonToObj($json), @args );
 }
 
 sub freeze {
     my ( $self, @args ) = @_;
+
     my $json = JSON::Any->new(canonical => 1)->objToJson( $self->pack(@args) );
+
+    # TODO ugh! this is surely wrong and should be fixed.
     utf8::decode($json) if !utf8::is_utf8($json) and utf8::valid($json); # if it's valid utf8 mark it as such
+
     return $json;
 }
 
