@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.48      2014-10-12 02:01:31Z
   - switched the JSON serializer from JSON::Any to JSON::MaybeXS
   - interactive prompting at install time is now back!
 
