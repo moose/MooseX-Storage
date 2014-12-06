@@ -5,6 +5,7 @@ use Moose;
 use MooseX::Storage::Engine ();
 use Scalar::Util 'blessed';
 use Carp 'confess';
+use JSON::MaybeXS 1.001000;
 use namespace::autoclean;
 
 sub peek {
