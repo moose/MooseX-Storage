@@ -393,9 +393,13 @@ use case is adding new non-Moose classes to the type registry for
 serialization. Here is an example of this for DateTime objects. This
 assumes a C<DateTime> type has been registered.
 
+    use DateTime::Format::ISO8601;
+    
+    my $dt_parser = DateTime::Format::ISO8601->new();
+
     MooseX::Storage::Engine->add_custom_type_handler(
         'DateTime' => (
-            expand   => sub { DateTime->new(shift) },
+            expand   => sub { $dt_parser->parser_datetime(shift) },
             collapse => sub { (shift)->iso8601 },
         )
     );
