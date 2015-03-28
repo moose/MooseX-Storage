@@ -211,7 +211,8 @@ my %OBJECT_HANDLERS = (
 );
 
 
-my %TYPES = (
+my %TYPES;
+%TYPES = (
     # NOTE:
     # we need to make sure that we properly numify the numbers
     # before and after them being futzed with, because some of
@@ -237,9 +238,17 @@ my %TYPES = (
         expand => sub {
             my ( $array, @args ) = @_;
             foreach my $i (0 .. $#{$array}) {
-                next unless ref($array->[$i]) eq 'HASH'
-                         && exists $array->[$i]->{$CLASS_MARKER};
-                $array->[$i] = $OBJECT_HANDLERS{expand}->($array->[$i], @args);
+                if (ref($array->[$i]) eq 'HASH') {
+                    if (exists($array->[$i]{$CLASS_MARKER})) {
+                        $array->[$i] = $OBJECT_HANDLERS{expand}->($array->[$i], @args);
+                    }
+                    else {
+                        $array->[$i] = $TYPES{HashRef}{expand}->($array->[$i], @args);
+                    }
+                }
+                elsif (ref($array->[$i]) eq 'ARRAY') {
+                    $array->[$i] = $TYPES{ArrayRef}{expand}->($array->[$i], @args);
+                }
             }
             $array;
         },
@@ -252,6 +261,8 @@ my %TYPES = (
             [ map {
                 blessed($_)
                     ? $OBJECT_HANDLERS{collapse}->($_, @args)
+                    : $TYPES{ref($_)}
+                    ? $TYPES{ref($_)}->{collapse}->($_, @args)
                     : $_
             } @$array ]
         }
@@ -260,9 +271,17 @@ my %TYPES = (
         expand   => sub {
             my ( $hash, @args ) = @_;
             foreach my $k (keys %$hash) {
-                next unless ref($hash->{$k}) eq 'HASH'
-                         && exists $hash->{$k}->{$CLASS_MARKER};
-                $hash->{$k} = $OBJECT_HANDLERS{expand}->($hash->{$k}, @args);
+                if (ref($hash->{$k}) eq 'HASH' ) {
+                    if (exists($hash->{$k}->{$CLASS_MARKER})) {
+                        $hash->{$k} = $OBJECT_HANDLERS{expand}->($hash->{$k}, @args);
+                    }
+                    else {
+                        $hash->{$k} = $TYPES{HashRef}{expand}->($hash->{$k}, @args);
+                    }
+                }
+                elsif (ref($hash->{$k}) eq 'ARRAY') {
+                    $hash->{$k} = $TYPES{ArrayRef}{expand}->($hash->{$k}, @args);
+                }
             }
             $hash;
         },
@@ -275,6 +294,8 @@ my %TYPES = (
             +{ map {
                 blessed($hash->{$_})
                     ? ($_ => $OBJECT_HANDLERS{collapse}->($hash->{$_}, @args))
+                    : $TYPES{ref($hash->{$_})}
+                    ? ($_ => $TYPES{ref($hash->{$_})}{collapse}->($hash->{$_}, @args))
                     : ($_ => $hash->{$_})
             } keys %$hash }
         }
@@ -289,6 +310,13 @@ my %TYPES = (
     #    collapse => sub {}, # use B::Deparse ...
     #}
 );
+
+%TYPES = (
+    %TYPES,
+    'HASH'  => $TYPES{HashRef},
+    'ARRAY' => $TYPES{ArrayRef},
+);
+
 
 sub add_custom_type_handler {
     my ($self, $type_name, %handlers) = @_;
