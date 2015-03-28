@@ -224,16 +224,6 @@ my %TYPES;
     'Value'    => { expand => sub { shift }, collapse => sub { shift } },
     'Bool'     => { expand => sub { shift }, collapse => sub { shift } },
     # These are the trickier ones, (see notes)
-    # NOTE:
-    # Because we are nice guys, we will check
-    # your ArrayRef and/or HashRef one level
-    # down and inflate any objects we find.
-    # But this is where it ends, it is too
-    # expensive to try and do this any more
-    # recursively, when it is probably not
-    # nessecary in most of the use cases.
-    # However, if you need more then this, subtype
-    # and add a custom handler.
     'ArrayRef' => {
         expand => sub {
             my ( $array, @args ) = @_;
