@@ -239,12 +239,9 @@ my %TYPES;
             my ( $array, @args ) = @_;
             foreach my $i (0 .. $#{$array}) {
                 if (ref($array->[$i]) eq 'HASH') {
-                    if (exists($array->[$i]{$CLASS_MARKER})) {
-                        $array->[$i] = $OBJECT_HANDLERS{expand}->($array->[$i], @args);
-                    }
-                    else {
-                        $array->[$i] = $TYPES{HashRef}{expand}->($array->[$i], @args);
-                    }
+                    $array->[$i] = exists($array->[$i]{$CLASS_MARKER})
+                        ? $OBJECT_HANDLERS{expand}->($array->[$i], @args)
+                        : $TYPES{HashRef}{expand}->($array->[$i], @args);
                 }
                 elsif (ref($array->[$i]) eq 'ARRAY') {
                     $array->[$i] = $TYPES{ArrayRef}{expand}->($array->[$i], @args);
@@ -272,12 +269,9 @@ my %TYPES;
             my ( $hash, @args ) = @_;
             foreach my $k (keys %$hash) {
                 if (ref($hash->{$k}) eq 'HASH' ) {
-                    if (exists($hash->{$k}->{$CLASS_MARKER})) {
-                        $hash->{$k} = $OBJECT_HANDLERS{expand}->($hash->{$k}, @args);
-                    }
-                    else {
-                        $hash->{$k} = $TYPES{HashRef}{expand}->($hash->{$k}, @args);
-                    }
+                    $hash->{$k} = exists($hash->{$k}->{$CLASS_MARKER})
+                        ? $OBJECT_HANDLERS{expand}->($hash->{$k}, @args)
+                        : $TYPES{HashRef}{expand}->($hash->{$k}, @args);
                 }
                 elsif (ref($hash->{$k}) eq 'ARRAY') {
                     $hash->{$k} = $TYPES{ArrayRef}{expand}->($hash->{$k}, @args);
