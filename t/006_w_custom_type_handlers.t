@@ -3,7 +3,6 @@ use warnings;
 
 use Test::More tests => 9;
 use Test::Deep;
-use Test::Fatal;
 
 BEGIN {
     use_ok('MooseX::Storage');
