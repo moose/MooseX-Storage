@@ -1,4 +1,6 @@
-Revision history for MooseX-Storage
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
 
 0.49      2015-03-29 00:24:43Z
   - now handling more deeply-nested objects (PR#7, RT#81236, thanks Dmitry
