@@ -1,6 +1,8 @@
 package MooseX::Storage::Basic;
 # ABSTRACT: The simplest level of serialization
+
 our $VERSION = '0.50';
+
 use Moose::Role;
 use MooseX::Storage::Engine;
 use String::RewritePrefix;

@@ -1,6 +1,8 @@
 package MooseX::Storage::Engine::IO::File;
 # ABSTRACT: The actual file storage mechanism.
+
 our $VERSION = '0.50';
+
 use Moose;
 use IO::File;
 use Carp 'confess';

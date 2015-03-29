@@ -1,6 +1,8 @@
 package MooseX::Storage::IO::StorableFile;
 # ABSTRACT: An Storable File I/O role
+
 our $VERSION = '0.50';
+
 use Moose::Role;
 use Storable ();
 use namespace::autoclean;

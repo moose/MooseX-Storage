@@ -1,6 +1,8 @@
 package MooseX::Storage::Util;
 # ABSTRACT: A MooseX::Storage Swiss Army chainsaw
+
 our $VERSION = '0.50';
+
 use Moose;
 use MooseX::Storage::Engine ();
 use Scalar::Util 'blessed';

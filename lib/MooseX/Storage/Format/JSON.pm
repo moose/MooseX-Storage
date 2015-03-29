@@ -1,6 +1,8 @@
 package MooseX::Storage::Format::JSON;
 # ABSTRACT: A JSON serialization role
+
 our $VERSION = '0.50';
+
 use Moose::Role;
 use JSON::MaybeXS 1.001000;
 use namespace::autoclean;

@@ -1,6 +1,8 @@
 package MooseX::Storage::Engine::IO::AtomicFile;
 # ABSTRACT: The actual atomic file storage mechanism.
+
 our $VERSION = '0.50';
+
 use Moose;
 use IO::AtomicFile;
 use Carp 'confess';
