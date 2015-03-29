@@ -9,9 +9,8 @@ extends 'Moose::Meta::Attribute';
    with 'MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize';
 
 # register this alias ...
-package Moose::Meta::Attribute::Custom::DoNotSerialize;
-
-our $VERSION = '0.50';
+package # hide from PAUSE
+    Moose::Meta::Attribute::Custom::DoNotSerialize;
 
 sub register_implementation { 'MooseX::Storage::Meta::Attribute::DoNotSerialize' }
 

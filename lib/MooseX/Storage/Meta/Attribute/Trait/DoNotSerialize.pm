@@ -7,9 +7,8 @@ use Moose::Role;
 use namespace::autoclean;
 
 # register this alias ...
-package Moose::Meta::Attribute::Custom::Trait::DoNotSerialize;
-
-our $VERSION = '0.50';
+package # hide from PAUSE
+    Moose::Meta::Attribute::Custom::Trait::DoNotSerialize;
 
 sub register_implementation { 'MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize' }
 
