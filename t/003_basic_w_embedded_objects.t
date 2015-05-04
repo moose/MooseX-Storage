@@ -33,7 +33,7 @@ ArrayRef and HashRef type handlers.
 
     has 'bars' => (
         is  => 'ro',
-        isa => 'ArrayRef'
+        isa => 'ArrayRef[Bar]'
     );
 
     package Baz;
@@ -44,7 +44,7 @@ ArrayRef and HashRef type handlers.
 
     has 'bars' => (
         is  => 'ro',
-        isa => 'HashRef'
+        isa => 'HashRef[Bar]'
     );
 
     package Qux;
