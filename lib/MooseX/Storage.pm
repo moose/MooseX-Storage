@@ -160,7 +160,7 @@ to a number of different formats and styles.
 
 =head2 Levels of Serialization
 
-There are 3 levels to the serialization, each of which builds upon
+There are three levels to the serialization, each of which builds upon
 the other and each of which can be customized to the specific needs
 of your class.
 
@@ -254,14 +254,14 @@ See L<MooseX::Storage::Meta::Attribute::Trait::DoNotSerialize> for details.
 
 =head2 How we serialize
 
-There are always limits to any serialization framework, there are just
+There are always limits to any serialization framework -- there are just
 some things which are really difficult to serialize properly and some
 things which cannot be serialized at all.
 
 =head2 What can be serialized?
 
 Currently only numbers, string, ARRAY refs, HASH refs and other
-MooseX::Storage enabled objects are supported.
+MooseX::Storage-enabled objects are supported.
 
 With Array and Hash references the first level down is inspected and
 any objects found are serialized/deserialized for you. We do not do
@@ -271,7 +271,7 @@ option eventually.
 =for stopwords subtypes
 
 The specific serialize/deserialize routine is determined by the
-Moose type constraint a specific attribute has. In most cases subtypes
+L<Moose> type constraint a specific attribute has. In most cases subtypes
 of the supported types are handled correctly, and there is a facility
 for adding handlers for custom types as well. This will get documented
 eventually, but it is currently still in development.
@@ -279,7 +279,7 @@ eventually, but it is currently still in development.
 =head2 What can not be serialized?
 
 We do not support CODE references yet, but this support might be added
-in using B::Deparse or some other deep magic.
+in using L<B::Deparse> or some other deep magic.
 
 Scalar refs are not supported, mostly because there is no way to know
 if the value being referenced will be there when the object is inflated.
@@ -359,7 +359,7 @@ in the #moose channel on irc.perl.org.
 =head1 BUGS
 
 All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+exception. If you find a bug please or add the bug to cpan-RT
+at L<https://rt.cpan.org/Dist/Display.html?Queue=MooseX-Storage>.
 
 =cut

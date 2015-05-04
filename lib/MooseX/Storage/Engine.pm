@@ -232,7 +232,7 @@ my %TYPES = (
     # But this is where it ends, it is too
     # expensive to try and do this any more
     # recursively, when it is probably not
-    # nessecary in most of the use cases.
+    # necessary in most of the use cases.
     # However, if you need more then this, subtype
     # and add a custom handler.
     'ArrayRef' => {
@@ -357,7 +357,7 @@ sub find_type_handler {
     # - SL
 
     # NOTE:
-    # if this method hasnt returned by now
+    # if this method hasn't returned by now
     # then we have no been able to find a
     # type constraint handler to match
     confess "Cannot handle type constraint (" . $type_constraint->name . ")";
@@ -380,7 +380,7 @@ __END__
 
 There really aren't any major user serviceable parts here. However the typical
 use case is adding new non-Moose classes to the type registry for
-serialization. Here is an example of this for DateTime objects. This
+serialization. Here is an example of this for L<DateTime> objects. This
 assumes a C<DateTime> type has been registered.
 
     MooseX::Storage::Engine->add_custom_type_handler(
@@ -461,7 +461,7 @@ assumes a C<DateTime> type has been registered.
 =head1 BUGS
 
 All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+exception. If you find a bug please or add the bug to cpan-RT
+at L<https://rt.cpan.org/Dist/Display.html?Queue=MooseX-Storage>.
 
 =cut

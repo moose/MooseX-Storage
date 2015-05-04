@@ -75,7 +75,7 @@ See the SYNOPSIS for a nice example that can be easily cargo-culted.
 =head1 BUGS
 
 All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please either email me, or add the bug
-to cpan-RT.
+exception. If you find a bug please or add the bug to cpan-RT
+at L<https://rt.cpan.org/Dist/Display.html?Queue=MooseX-Storage>.
 
 =cut
