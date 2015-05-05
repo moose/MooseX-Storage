@@ -248,10 +248,10 @@ my %TYPES;
             # otherwise it will affect the
             # other real version.
             [ map {
-                blessed($_)
-                    ? $OBJECT_HANDLERS{collapse}->($_, @args)
-                    : $TYPES{ref($_)}
+                $TYPES{ref($_)}
                     ? $TYPES{ref($_)}->{collapse}->($_, @args)
+                    : blessed($_)
+                    ? $OBJECT_HANDLERS{collapse}->($_, @args)
                     : $_
             } @$array ]
         }
