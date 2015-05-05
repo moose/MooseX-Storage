@@ -1,12 +1,8 @@
 use strict;
 use warnings;
 
-use Test::More tests => 5;
-
-BEGIN {
-    use_ok('MooseX::Storage');
-    use_ok('MooseX::Storage::Util');
-}
+use Test::More tests => 3;
+use MooseX::Storage::Util;
 
 my $packed = {
     __CLASS__ => 'Foo',

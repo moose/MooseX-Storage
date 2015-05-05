@@ -13,8 +13,7 @@ binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_out
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
 
-plan tests => 16;
-use_ok('MooseX::Storage');
+plan tests => 15;
 
 {
     package Foo;

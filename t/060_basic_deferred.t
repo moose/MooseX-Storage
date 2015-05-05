@@ -14,10 +14,7 @@ use Test::Requires qw(
 diag 'using JSON backend: ', JSON;
 diag 'using YAML backend: ', YAML::Any->implementation;
 
-BEGIN {
-    plan tests => 34;
-    use_ok('MooseX::Storage');
-}
+plan tests => 33;
 
 {
     package Foo;

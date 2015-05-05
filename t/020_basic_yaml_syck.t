@@ -15,8 +15,7 @@ diag 'using YAML backend: ', YAML::Any->implementation;
 BEGIN {
     Test::Without::Module->import(YAML::Any->order);
     Test::Without::Module->unimport('YAML::Syck');
-    plan tests => 10;
-    use_ok('MooseX::Storage');
+    plan tests => 9;
 }
 
 {

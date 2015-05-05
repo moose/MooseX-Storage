@@ -10,10 +10,7 @@ use Test::Requires qw(
 );
 diag 'using JSON backend: ', JSON;
 
-BEGIN {
-    plan tests => 11;
-    use_ok('MooseX::Storage');
-}
+plan tests => 10;
 
 {
     package Foo;

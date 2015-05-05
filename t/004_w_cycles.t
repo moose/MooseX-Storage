@@ -1,13 +1,10 @@
 use strict;
 use warnings;
 
-use Test::More tests => 18;
+use Test::More tests => 17;
 use Test::Deep;
 use Test::Fatal;
 
-BEGIN {
-    use_ok('MooseX::Storage');
-}
 
 # This test demonstrates two things:
 #

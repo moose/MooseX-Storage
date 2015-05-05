@@ -10,10 +10,7 @@ my $dir = tempdir;
 use Test::Requires 'JSON::MaybeXS';
 diag 'using JSON backend: ', JSON;
 
-BEGIN {
-    plan tests => 14;
-    use_ok('MooseX::Storage');
-}
+plan tests => 13;
 
 {
     package Foo;

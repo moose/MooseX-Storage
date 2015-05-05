@@ -4,10 +4,6 @@ use warnings;
 use Test::More 'no_plan';#tests => 6;
 use Test::Deep;
 
-BEGIN {
-    use_ok('MooseX::Storage');
-}
-
 {   package Point;
     use Moose;
     use MooseX::Storage;

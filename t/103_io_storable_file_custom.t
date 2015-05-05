@@ -1,16 +1,12 @@
 use strict;
 use warnings;
 
-use Test::More tests => 15;
+use Test::More tests => 14;
 use Test::Deep;
 use Storable ();
 use File::Temp qw(tempdir);
 use File::Spec::Functions;
 my $dir = tempdir( CLEANUP => 1 );
-
-BEGIN {
-    use_ok('MooseX::Storage');
-}
 
 {
     package Foo;

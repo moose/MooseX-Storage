@@ -1,13 +1,9 @@
 use strict;
 use warnings;
 
-use Test::More tests => 8;
+use Test::More tests => 7;
 use Test::Deep;
 use Test::Fatal;
-
-BEGIN {
-    use_ok('MooseX::Storage');
-}
 
 =pod
 

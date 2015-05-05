@@ -6,10 +6,7 @@ use Test::Deep;
 
 use Test::Requires qw(MooseX::Storage::Format::JSONpm JSON::MaybeXS);
 
-BEGIN {
-    plan tests => 6;
-    use_ok('MooseX::Storage');
-}
+plan tests => 5;
 
 {
     package Foo;

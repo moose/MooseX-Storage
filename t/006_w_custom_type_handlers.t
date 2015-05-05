@@ -1,13 +1,8 @@
 use strict;
 use warnings;
 
-use Test::More tests => 9;
+use Test::More tests => 7;
 use Test::Deep;
-
-BEGIN {
-    use_ok('MooseX::Storage');
-    use_ok('MooseX::Storage::Engine');
-}
 
 =pod
 
@@ -38,6 +33,7 @@ inflate and deflate needs.
         );
     }
 
+    use MooseX::Storage::Engine;
     MooseX::Storage::Engine->add_custom_type_handler(
         'Bar' => (
             expand   => sub { Bar->decode(shift) },
