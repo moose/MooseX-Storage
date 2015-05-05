@@ -1,7 +1,7 @@
 package MooseX::Storage::Engine::IO::File;
 # ABSTRACT: The actual file storage mechanism.
 
-our $VERSION = '0.50';
+our $VERSION = '0.51';
 
 use Moose;
 use IO::File;
