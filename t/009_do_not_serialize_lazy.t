@@ -11,7 +11,7 @@ use Test::Deep;
     with Storage( traits => [qw|OnlyWhenBuilt|] );
 
     has 'x' => (is => 'rw', lazy_build => 1 );
-    has 'y' => (is => 'rw', lazy_build => 1 );
+    has 'y' => (is => 'rw', predicate => '_has_y' );
     has 'z' => (is => 'rw', builder => '_build_z' );
 
 
