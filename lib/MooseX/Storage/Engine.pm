@@ -316,7 +316,7 @@ sub find_type_handler {
           and not $type_constraint->parent->can('type_parameter'));
 
     # find_type_for is a method of a union type.  If we can call that method
-    # then we are dealign with a union and we need to ascertain which of
+    # then we are dealing with a union and we need to ascertain which of
     # the union's types we need to use for the value we are serializing.
     if($type_constraint->can('find_type_for')) {
         my $tc = $type_constraint->find_type_for($value);
