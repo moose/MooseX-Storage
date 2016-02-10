@@ -450,12 +450,4 @@ assumes a C<DateTime> type has been registered.
 
 =back
 
-=head2 Introspection
-
-=over 4
-
-=item B<meta>
-
-=back
-
 =cut

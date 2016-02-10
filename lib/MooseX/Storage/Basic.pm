@@ -116,12 +116,4 @@ the class' C<new> function, or override ones from the serialized data.
 
 =back
 
-=head2 Introspection
-
-=over 4
-
-=item B<meta>
-
-=back
-
 =cut

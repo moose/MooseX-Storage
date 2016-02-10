@@ -79,12 +79,4 @@ L<MooseX::Storage::IO::StorableFile> role instead.
 
 =back
 
-=head2 Introspection
-
-=over 4
-
-=item B<meta>
-
-=back
-
 =cut

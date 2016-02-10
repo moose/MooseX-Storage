@@ -68,14 +68,4 @@ This avoids any potentially expensive computations.
 
 See the SYNOPSIS for a nice example that can be easily cargo-culted.
 
-=head1 METHODS
-
-=head2 Introspection
-
-=over 4
-
-=item B<meta>
-
-=back
-
 =cut

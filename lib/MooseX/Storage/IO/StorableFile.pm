@@ -84,12 +84,4 @@ all sorts of hairy issues. But you have been warned.
 
 =back
 
-=head2 Introspection
-
-=over 4
-
-=item B<meta>
-
-=back
-
 =cut

@@ -114,14 +114,6 @@ found in the key for you.
 
 =back
 
-=head2 Introspection
-
-=over 4
-
-=item B<meta>
-
-=back
-
 =for stopwords TODO
 
 =head1 TODO

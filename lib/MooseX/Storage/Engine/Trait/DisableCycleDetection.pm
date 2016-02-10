@@ -43,14 +43,4 @@ references, so if you know what you are doing, you can bypass this check.
 This trait is applied to an instance of L<MooseX::Storage::Engine>, for the
 user-visible version shown in the SYNOPSIS, see L<MooseX::Storage::Traits::DisableCycleDetection>
 
-=head1 METHODS
-
-=head2 Introspection
-
-=over 4
-
-=item B<meta>
-
-=back
-
 =cut

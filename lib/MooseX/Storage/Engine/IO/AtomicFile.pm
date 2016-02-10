@@ -44,12 +44,4 @@ This provides the actual means to store data to a file atomically.
 
 =back
 
-=head2 Introspection
-
-=over 4
-
-=item B<meta>
-
-=back
-
 =cut

@@ -53,12 +53,4 @@ This provides the actual means to store data to a file.
 
 =back
 
-=head2 Introspection
-
-=over 4
-
-=item B<meta>
-
-=back
-
 =cut

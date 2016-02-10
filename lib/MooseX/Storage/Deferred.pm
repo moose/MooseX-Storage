@@ -154,12 +154,4 @@ and I will see what I can do.
 
 =back
 
-=head2 Introspection
-
-=over 4
-
-=item B<meta>
-
-=back
-
 =cut
