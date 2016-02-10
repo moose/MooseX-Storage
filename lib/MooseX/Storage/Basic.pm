@@ -1,7 +1,7 @@
 package MooseX::Storage::Basic;
 # ABSTRACT: The simplest level of serialization
 
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 
 use Moose::Role;
 use MooseX::Storage::Engine;

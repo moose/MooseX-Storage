@@ -1,7 +1,7 @@
 package MooseX::Storage::Engine::Trait::OnlyWhenBuilt;
 # ABSTRACT: An engine trait to bypass serialization
 
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 
 use Moose::Role;
 use namespace::autoclean;

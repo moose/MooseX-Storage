@@ -1,7 +1,7 @@
 package MooseX::Storage::Format::YAML;
 # ABSTRACT: A YAML serialization role
 
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 
 use Moose::Role;
 

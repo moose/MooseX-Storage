@@ -1,5 +1,7 @@
 Revision history for MooseX-Storage
 
+{{$NEXT}}
+
 0.51      2016-02-10 20:06:41Z (TRIAL RELEASE)
   - support serialization of "maybe" types created by MooseX::Types (PR#12)
 
