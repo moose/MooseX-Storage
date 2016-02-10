@@ -356,10 +356,4 @@ For the time being, please read the tests and feel free to email me
 if you have any questions. This module can also be discussed on IRC
 in the #moose channel on irc.perl.org.
 
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please or add the bug to cpan-RT
-at L<https://rt.cpan.org/Dist/Display.html?Queue=MooseX-Storage>.
-
 =cut

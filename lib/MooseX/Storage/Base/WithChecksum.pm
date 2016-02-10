@@ -126,10 +126,4 @@ are very welcome.
 
 =back
 
-=head1 BUGS
-
-All complex software has bugs lurking in it, and this module is no
-exception. If you find a bug please or add the bug to cpan-RT
-at L<https://rt.cpan.org/Dist/Display.html?Queue=MooseX-Storage>.
-
 =cut
