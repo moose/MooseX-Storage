@@ -113,12 +113,8 @@ sub expand_attribute_value {
     return $value;
 }
 
-# NOTE:
-# possibly these two methods will
-# be used by a cycle supporting
-# engine. However, I am not sure
-# if I can make a cycle one work
-# anyway.
+# NOTE: possibly these two methods will be used by a cycle supporting engine.
+# However, I am not sure if I can make a cycle one work anyway.
 
 sub check_for_cycle_in_collapse {
     my ($self, $attr, $value) = @_;
@@ -225,16 +221,11 @@ my %TYPES = (
     'Value'    => { expand => sub { shift }, collapse => sub { shift } },
     'Bool'     => { expand => sub { shift }, collapse => sub { shift } },
     # These are the trickier ones, (see notes)
-    # NOTE:
-    # Because we are nice guys, we will check
-    # your ArrayRef and/or HashRef one level
-    # down and inflate any objects we find.
-    # But this is where it ends, it is too
-    # expensive to try and do this any more
-    # recursively, when it is probably not
-    # necessary in most of the use cases.
-    # However, if you need more than this, subtype
-    # and add a custom handler.
+    # NOTE: Because we are nice guys, we will check your ArrayRef and/or
+    # HashRef one level down and inflate any objects we find.  But this is
+    # where it ends, it is too expensive to try and do this any more
+    # recursively, when it is probably not necessary in most of the use cases.
+    # However, if you need more than this, subtype and add a custom handler.
     'ArrayRef' => {
         expand => sub {
             my ( $array, @args ) = @_;
@@ -247,10 +238,8 @@ my %TYPES = (
         },
         collapse => sub {
             my ( $array, @args ) = @_;
-            # NOTE:
-            # we need to make a copy because
-            # otherwise it will affect the
-            # other real version.
+            # NOTE: we need to make a copy because otherwise it will affect
+            # the other real version.
             [ map {
                 blessed($_)
                     ? $OBJECT_HANDLERS{collapse}->($_, @args)
@@ -270,10 +259,8 @@ my %TYPES = (
         },
         collapse => sub {
             my ( $hash, @args ) = @_;
-            # NOTE:
-            # we need to make a copy because
-            # otherwise it will affect the
-            # other real version.
+            # NOTE: we need to make a copy because otherwise it will affect
+            # the other real version.
             +{ map {
                 blessed($hash->{$_})
                     ? ($_ => $OBJECT_HANDLERS{collapse}->($hash->{$_}, @args))
@@ -282,10 +269,8 @@ my %TYPES = (
         }
     },
     'Object'   => \%OBJECT_HANDLERS,
-    # NOTE:
-    # The sanity of enabling this feature by
-    # default is very questionable.
-    # - SL
+    # NOTE: The sanity of enabling this feature by default is very
+    # questionable.  - SL
     #'CodeRef' => {
     #    expand   => sub {}, # use eval ...
     #    collapse => sub {}, # use B::Deparse ...
@@ -307,10 +292,8 @@ sub remove_custom_type_handler {
 sub find_type_handler {
     my ($self, $type_constraint, $value) = @_;
 
-    # check if the type is a Maybe and
-    # if its parent is not parameterized.
-    # If both is true recurse this method
-    # using ->type_parameter.
+    # check if the type is a Maybe and if its parent is not parameterized.  If
+    # both is true recurse this method using ->type_parameter.
     if (my $parent = $type_constraint->parent) {
         return $self->find_type_handler($type_constraint->type_parameter, $value)
             if $parent eq 'Maybe' and not $parent->can('type_parameter');
@@ -331,20 +314,15 @@ sub find_type_handler {
         return $self->find_type_handler($tc, $value) if defined($tc);
     }
 
-    # this should handle most type usages
-    # since they they are usually just
-    # the standard set of built-ins
+    # this should handle most type usages since they they are usually just the
+    # standard set of built-ins
     return $TYPES{$type_constraint->name}
         if exists $TYPES{$type_constraint->name};
 
-    # the next possibility is they are
-    # a subtype of the built-in types,
-    # in which case this will DWIM in
-    # most cases. It is probably not
-    # 100% ideal though, but until I
-    # come up with a decent test case
-    # it will do for now.  We need to
-    # check more-specific types first.
+    # the next possibility is they are a subtype of the built-in types, in
+    # which case this will DWIM in most cases. It is probably not 100% ideal
+    # though, but until I come up with a decent test case it will do for now.
+    # We need to check more-specific types first.
     my %seen;
     my @fallback = grep { !$seen{$_}++ } qw/Int Num Str Value/, keys %TYPES;
     foreach my $type ( @fallback ) {
@@ -352,22 +330,14 @@ sub find_type_handler {
             if $type_constraint->is_subtype_of($type);
     }
 
-    # NOTE:
-    # the reason the above will work has to
-    # do with the fact that custom subtypes
-    # are mostly used for validation of
-    # the guts of a type, and not for some
-    # weird structural thing which would
-    # need to be accomodated by the serializer.
-    # Of course, mst or phaylon will probably
-    # do something to throw this assumption
-    # totally out the door ;)
-    # - SL
+    # NOTE: the reason the above will work has to do with the fact that custom
+    # subtypes are mostly used for validation of the guts of a type, and not
+    # for some weird structural thing which would need to be accomodated by
+    # the serializer.  Of course, mst or phaylon will probably do something to
+    # throw this assumption totally out the door ;) - SL
 
-    # NOTE:
-    # if this method hasn't returned by now
-    # then we have not been able to find a
-    # type constraint handler to match
+    # NOTE: if this method hasn't returned by now then we have not been able
+    # to find a type constraint handler to match
     confess "Cannot handle type constraint (" . $type_constraint->name . ")";
 }
 
