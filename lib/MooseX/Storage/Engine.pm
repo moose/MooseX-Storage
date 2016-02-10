@@ -233,7 +233,7 @@ my %TYPES = (
     # expensive to try and do this any more
     # recursively, when it is probably not
     # necessary in most of the use cases.
-    # However, if you need more then this, subtype
+    # However, if you need more than this, subtype
     # and add a custom handler.
     'ArrayRef' => {
         expand => sub {
@@ -358,7 +358,7 @@ sub find_type_handler {
     # are mostly used for validation of
     # the guts of a type, and not for some
     # weird structural thing which would
-    # need to be accomidated by the serializer.
+    # need to be accomodated by the serializer.
     # Of course, mst or phaylon will probably
     # do something to throw this assumption
     # totally out the door ;)
@@ -366,7 +366,7 @@ sub find_type_handler {
 
     # NOTE:
     # if this method hasn't returned by now
-    # then we have no been able to find a
+    # then we have not been able to find a
     # type constraint handler to match
     confess "Cannot handle type constraint (" . $type_constraint->name . ")";
 }
