@@ -1,6 +1,7 @@
 Revision history for MooseX-Storage
 
 {{$NEXT}}
+  - support serialization of "maybe" types created by MooseX::Types (PR#12)
 
 0.50      2015-05-05 20:09:42Z
   - revert changes in 0.49 for deeply-nested objects (see RT#104106)

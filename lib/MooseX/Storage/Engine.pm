@@ -311,9 +311,17 @@ sub find_type_handler {
     # if its parent is not parameterized.
     # If both is true recurse this method
     # using ->type_parameter.
-    return $self->find_type_handler($type_constraint->type_parameter, $value)
-        if ($type_constraint->parent && $type_constraint->parent eq 'Maybe'
-          and not $type_constraint->parent->can('type_parameter'));
+    if (my $parent = $type_constraint->parent) {
+        return $self->find_type_handler($type_constraint->type_parameter, $value)
+            if $parent eq 'Maybe' and not $parent->can('type_parameter');
+
+        # also account for the additional level added by MooseX::Types's use of maybe_type
+        if ($parent->isa('Moose::Meta::TypeConstraint::Parameterized')) {
+            my $parameter = $parent->parameterized_from;
+            return $self->find_type_handler($parent->type_parameter, $value)
+                if $parameter eq 'Maybe' and not $parameter->can('type_parameter');
+        }
+    }
 
     # find_type_for is a method of a union type.  If we can call that method
     # then we are dealing with a union and we need to ascertain which of
