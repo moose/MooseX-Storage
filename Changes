@@ -1,6 +1,8 @@
 Revision history for MooseX-Storage
 
 {{$NEXT}}
+  - when looking for a serializer for a type constraint, always use the
+    user-defined type handler first, before recursing into parent types
 
 0.51      2016-02-10 20:06:41Z (TRIAL RELEASE)
   - support serialization of "maybe" types created by MooseX::Types (PR#12)

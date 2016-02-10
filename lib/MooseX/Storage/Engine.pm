@@ -292,6 +292,12 @@ sub remove_custom_type_handler {
 sub find_type_handler {
     my ($self, $type_constraint, $value) = @_;
 
+    # this should handle most type usages since they they are usually just the
+    # standard set of built-ins -- but we should also respect any custom type
+    # handlers that the user may have defined
+    return $TYPES{$type_constraint->name}
+        if exists $TYPES{$type_constraint->name};
+
     # check if the type is a Maybe and if its parent is not parameterized.  If
     # both is true recurse this method using ->type_parameter.
     if (my $parent = $type_constraint->parent) {
@@ -313,11 +319,6 @@ sub find_type_handler {
         my $tc = $type_constraint->find_type_for($value);
         return $self->find_type_handler($tc, $value) if defined($tc);
     }
-
-    # this should handle most type usages since they they are usually just the
-    # standard set of built-ins
-    return $TYPES{$type_constraint->name}
-        if exists $TYPES{$type_constraint->name};
 
     # the next possibility is they are a subtype of the built-in types, in
     # which case this will DWIM in most cases. It is probably not 100% ideal
