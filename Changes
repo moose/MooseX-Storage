@@ -1,6 +1,6 @@
 Revision history for MooseX-Storage
 
-{{$NEXT}}
+0.52      2016-06-22 03:22:12Z
   - when looking for a serializer for a type constraint, always use the
     user-defined type handler first, before recursing into parent types
 
