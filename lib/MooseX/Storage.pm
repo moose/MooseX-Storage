@@ -2,7 +2,7 @@ package MooseX::Storage;
 # ABSTRACT: A serialization framework for Moose classes
 # KEYWORDS: moose extension serial serialization class object store storage types strings
 
-our $VERSION = '0.52';
+our $VERSION = '0.53';
 
 use Moose 0.99;
 use MooseX::Storage::Meta::Attribute::DoNotSerialize;

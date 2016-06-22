@@ -1,7 +1,7 @@
 package MooseX::Storage::Engine;
 # ABSTRACT: The meta-engine to handle collapsing and expanding objects
 
-our $VERSION = '0.52';
+our $VERSION = '0.53';
 
 use Moose;
 use Scalar::Util qw(refaddr blessed);
