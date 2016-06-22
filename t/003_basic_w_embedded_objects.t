@@ -7,7 +7,7 @@ use Test::Deep;
 =pod
 
 This test checks the single level
-expansion and collpasing of the
+expansion and collapsing of the
 ArrayRef and HashRef type handlers.
 
 =cut
