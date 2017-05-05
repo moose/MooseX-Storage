@@ -14,8 +14,6 @@ sub store {
     MooseX::Storage::Engine::IO::AtomicFile->new( file => $filename )->store( $self->freeze(@args) );
 }
 
-no Moose::Role;
-
 1;
 
 __END__

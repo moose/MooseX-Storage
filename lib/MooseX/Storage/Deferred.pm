@@ -59,8 +59,6 @@ sub store {
     $self->$code($filename, $type, @args);
 }
 
-no Moose::Role;
-
 1;
 
 __END__

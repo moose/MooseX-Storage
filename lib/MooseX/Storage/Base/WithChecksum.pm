@@ -91,8 +91,6 @@ sub _digest_object {
     }
 }
 
-no Moose::Role;
-
 1;
 
 __END__

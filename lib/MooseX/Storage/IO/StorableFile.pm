@@ -28,8 +28,6 @@ sub store {
     );
 }
 
-no Moose::Role;
-
 1;
 
 __END__

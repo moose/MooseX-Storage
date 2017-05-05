@@ -31,8 +31,6 @@ sub freeze {
     return $json;
 }
 
-no Moose::Role;
-
 1;
 
 __END__

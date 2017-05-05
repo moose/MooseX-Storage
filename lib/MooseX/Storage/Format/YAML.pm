@@ -25,8 +25,6 @@ sub freeze {
     Dump( $self->pack(@args) );
 }
 
-no Moose::Role;
-
 1;
 
 __END__
