@@ -4,7 +4,7 @@ use warnings;
 use Test::More;
 use Test::Deep;
 
-use Test::Requires qw(MooseX::Storage::Format::JSONpm JSON::MaybeXS);
+use Test::Needs qw(MooseX::Storage::Format::JSONpm JSON::MaybeXS);
 
 plan tests => 5;
 

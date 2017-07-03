@@ -3,7 +3,7 @@ use warnings;
 use Test::More 0.88;
 use Test::Fatal;
 
-use Test::Requires 'JSON::MaybeXS';
+use Test::Needs 'JSON::MaybeXS';
 diag 'using JSON backend: ', JSON;
 
 {

@@ -6,7 +6,7 @@ use File::Temp qw(tempdir);
 use File::Spec::Functions;
 my $dir = tempdir;
 
-use Test::Requires qw(
+use Test::Needs qw(
     JSON::MaybeXS
     IO::AtomicFile
 );

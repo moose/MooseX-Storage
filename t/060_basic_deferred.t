@@ -6,7 +6,7 @@ use Test::More;
 use Test::Deep;
 use Storable;
 
-use Test::Requires qw(
+use Test::Needs qw(
     Test::Deep::JSON
     JSON::MaybeXS
     YAML::Any

@@ -3,7 +3,7 @@ use warnings;
 
 use Test::More;
 
-use Test::Requires qw(
+use Test::Needs qw(
     Encode
     JSON::MaybeXS
 );
