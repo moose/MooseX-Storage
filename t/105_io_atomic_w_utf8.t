@@ -10,13 +10,11 @@ use Test::Needs qw(
     JSON::MaybeXS
     IO::AtomicFile
 );
-diag 'using JSON backend: ', JSON;
+diag 'using JSON backend: ', JSON::MaybeXS->JSON;
 
 binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
-
-diag 'using JSON backend: ', JSON;
 
 plan tests => 7;
 

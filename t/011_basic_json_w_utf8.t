@@ -7,7 +7,7 @@ use Test::Needs qw(
     Encode
     JSON::MaybeXS
 );
-diag 'using JSON backend: ', JSON;
+diag 'using JSON backend: ', JSON::MaybeXS->JSON;
 
 binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
 binmode STDOUT, ':utf8';

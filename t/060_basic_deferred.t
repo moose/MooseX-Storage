@@ -11,7 +11,7 @@ use Test::Needs qw(
     JSON::MaybeXS
     YAML::Any
 );
-diag 'using JSON backend: ', JSON;
+diag 'using JSON backend: ', JSON::MaybeXS->JSON;
 diag 'using YAML backend: ', YAML::Any->implementation;
 
 plan tests => 33;
@@ -49,7 +49,7 @@ plan tests => 33;
 
     cmp_deeply(
         $json,
-        json({
+        Test::Deep::JSON::json({
             undef => undef,
             number => 10,
             string => 'foo',

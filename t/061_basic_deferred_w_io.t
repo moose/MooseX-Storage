@@ -12,7 +12,7 @@ use Test::Needs qw(
     IO::AtomicFile
     JSON::MaybeXS
 );
-diag 'using JSON backend: ', JSON;
+diag 'using JSON backend: ', JSON::MaybeXS->JSON;
 
 plan tests => 23;
 

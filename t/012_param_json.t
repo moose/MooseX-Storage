@@ -6,6 +6,8 @@ use Test::Deep;
 
 use Test::Needs qw(MooseX::Storage::Format::JSONpm JSON::MaybeXS);
 
+JSON::MaybeXS->import;
+
 plan tests => 5;
 
 {

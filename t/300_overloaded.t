@@ -4,7 +4,7 @@ use Test::More 0.88;
 use Test::Fatal;
 
 use Test::Needs 'JSON::MaybeXS';
-diag 'using JSON backend: ', JSON;
+diag 'using JSON backend: ', JSON::MaybeXS->JSON;
 
 {
     package Thing;

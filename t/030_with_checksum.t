@@ -9,7 +9,7 @@ use Test::Needs qw(
     Digest::HMAC_SHA1
     JSON::MaybeXS
 );
-diag 'using JSON backend: ', JSON;
+diag 'using JSON backend: ', JSON::MaybeXS->JSON;
 
 plan tests => 25;
 
