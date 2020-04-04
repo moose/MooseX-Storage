@@ -1,6 +1,8 @@
 use strict;
 use warnings;
 
+use open ':std', ':encoding(UTF-8)'; # force stdin, stdout, stderr into utf8
+
 use Test::More;
 use File::Temp qw(tempdir);
 use File::Spec::Functions;
@@ -15,9 +17,6 @@ diag 'using JSON backend: ', JSON::MaybeXS->JSON;
 plan tests => 7;
 
 use utf8;
-binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
-binmode STDOUT, ':utf8';
-binmode STDERR, ':utf8';
 
 {
     package Foo;

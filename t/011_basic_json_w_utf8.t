@@ -1,6 +1,8 @@
 use strict;
 use warnings;
 
+use open ':std', ':encoding(UTF-8)'; # force stdin, stdout, stderr into utf8
+
 use Test::More;
 
 use Test::Needs qw(
@@ -8,10 +10,6 @@ use Test::Needs qw(
     JSON::MaybeXS
 );
 diag 'using JSON backend: ', JSON::MaybeXS->JSON;
-
-binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
-binmode STDOUT, ':utf8';
-binmode STDERR, ':utf8';
 
 plan tests => 15;
 
