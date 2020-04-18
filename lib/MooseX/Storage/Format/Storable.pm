@@ -1,7 +1,7 @@
 package MooseX::Storage::Format::Storable;
 # ABSTRACT: A Storable serialization role
 
-our $VERSION = '0.53';
+our $VERSION = '0.54';
 
 use Moose::Role;
 use Storable ();

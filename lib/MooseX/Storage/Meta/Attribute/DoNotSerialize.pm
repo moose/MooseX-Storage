@@ -1,7 +1,7 @@
 package MooseX::Storage::Meta::Attribute::DoNotSerialize;
 # ABSTRACT: A custom meta-attribute to bypass serialization
 
-our $VERSION = '0.53';
+our $VERSION = '0.54';
 
 use Moose;
 use namespace::autoclean;

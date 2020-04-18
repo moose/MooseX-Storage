@@ -1,7 +1,7 @@
 package MooseX::Storage::Deferred;
 # ABSTRACT: A role for indecisive programmers
 
-our $VERSION = '0.53';
+our $VERSION = '0.54';
 
 use Moose::Role;
 with 'MooseX::Storage::Basic';

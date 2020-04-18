@@ -1,7 +1,7 @@
 package MooseX::Storage::IO::File;
 # ABSTRACT: A basic File I/O role
 
-our $VERSION = '0.53';
+our $VERSION = '0.54';
 
 use Moose::Role;
 use MooseX::Storage::Engine::IO::File;

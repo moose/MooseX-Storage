@@ -1,7 +1,7 @@
 package MooseX::Storage::IO::StorableFile;
 # ABSTRACT: An Storable File I/O role
 
-our $VERSION = '0.53';
+our $VERSION = '0.54';
 
 use Moose::Role;
 use Storable ();
